@@ -39,7 +39,7 @@ namespace FFStudio
 /* Private Fields */
 
         private Tween tween;
-        private float Duration => 360 / angularSpeedInDegrees;
+        private float Duration => deltaAngle / angularSpeedInDegrees;
 
         private DropdownList< Vector3 > GetVectorValues()
         {
