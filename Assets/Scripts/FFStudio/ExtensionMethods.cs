@@ -152,6 +152,24 @@ namespace FFStudio
 			value.z = Mathf.Clamp( value.z, min.y, max.y );
 			return value;
 		}
+
+		public static Vector3 SetX( this Vector3 theVector, float newX )
+		{
+			theVector.x = newX;
+			return theVector;
+		}
+
+		public static Vector3 SetY( this Vector3 theVector, float newY )
+		{
+			theVector.y = newY;
+			return theVector;
+		}
+
+		public static Vector3 SetZ( this Vector3 theVector, float newZ )
+		{
+			theVector.z = newZ;
+			return theVector;
+		}
 	}
 }
 
