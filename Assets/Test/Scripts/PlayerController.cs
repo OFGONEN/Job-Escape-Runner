@@ -13,12 +13,13 @@ public class PlayerController : MonoBehaviour
 	[ MinMaxSlider( -90, +90 ) ]
 	public Vector2 angularClamping;
 
-	[ SerializeField ] private Rigidbody movingRigidbody;
-	[ SerializeField ] private Transform rotatingBody;
+	[ SerializeField ] private Rigidbody playerRigidbody;
+	[ SerializeField ] private Rigidbody rotatingBody;
+	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
-	private Vector3 Right	  			=>  movingRigidbody.transform.right;
-	private Vector3 Left  	  			=> -movingRigidbody.transform.right;
-	private Vector3 Forward 			=>  movingRigidbody.transform.forward;
+	private Vector3 Right	  			=>  playerRigidbody.transform.right;
+	private Vector3 Left  	  			=> -playerRigidbody.transform.right;
+	private Vector3 Forward 			=>  playerRigidbody.transform.forward;
 	private Vector3 ForwardLeft  		=> (  Left + Forward ) / 2;
 	private Vector3 ForwardRight 		=> ( Right + Forward ) / 2;
 	
@@ -40,14 +41,14 @@ public class PlayerController : MonoBehaviour
 		
 		if( Input.GetKey( KeyCode.LeftArrow ) )
 		{
-			movingRigidbody.AddForce( ForwardRight * force * Time.fixedDeltaTime, ForceMode.Force );
+			playerRigidbody.AddForce( ForwardRight * force * Time.fixedDeltaTime, ForceMode.Force );
 
 			totalDeltaAngle += angularSpeed * Time.fixedDeltaTime;
 		}
 		
 		if( Input.GetKey( KeyCode.RightArrow ) )
 		{
-			movingRigidbody.AddForce( ForwardLeft * force * Time.fixedDeltaTime, ForceMode.Force );
+			playerRigidbody.AddForce( ForwardLeft * force * Time.fixedDeltaTime, ForceMode.Force );
 
 			totalDeltaAngle -= angularSpeed * Time.fixedDeltaTime;
 		}
@@ -57,6 +58,26 @@ public class PlayerController : MonoBehaviour
 #endregion
 
 #region API
+	[ Button() ]
+	public void ActivateFullRagdoll()
+	{
+		/* Let all children go! */
+		rotatingBody.transform.SetParent( null );
+		rotatingBody.transform.GetChild( 0 ).SetParent( null );
+		
+		/* Make rigidbodies of ragdoll elements dynamic to activate them. */
+		rotatingBody.isKinematic = false;
+		
+		foreach( var rigidbody in ragdollRigidbodiesToActivate )
+			rigidbody.isKinematic = false;
+
+		/* Transfer players velocity to chair. */
+		rotatingBody.velocity        = playerRigidbody.velocity / 3;
+		rotatingBody.angularVelocity = playerRigidbody.angularVelocity / 10;
+
+		/* Completely stop player rigidbody as well. */
+		playerRigidbody.velocity = playerRigidbody.angularVelocity = Vector3.zero;
+	}
 #endregion
 
 #region Implementation
