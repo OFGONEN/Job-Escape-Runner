@@ -11,9 +11,9 @@ namespace FFStudio
 #region Fields
         public enum RotationMode { Local, World }
 
-        [ Range( 0, 360 ), Label( "Delta Angle (°)" )]
+        [ Label( "Delta Angle (°)" )]
         public float deltaAngle;
-        [ Label( "Angular Speed (°/s)" ) ]
+        [ Label( "Angular Speed (°/s)" ), Min( 0 ) ]
         public float angularSpeedInDegrees;
         
         public bool playOnStart;
@@ -39,7 +39,7 @@ namespace FFStudio
 /* Private Fields */
 
         private Tween tween;
-        private float Duration => deltaAngle / angularSpeedInDegrees;
+        private float Duration => Mathf.Abs( deltaAngle / angularSpeedInDegrees );
 
         private DropdownList< Vector3 > GetVectorValues()
         {
@@ -122,9 +122,9 @@ namespace FFStudio
 			/* Since we use SetRelative + RotateMode.FastBeyond360 combo, we need to specify a delta instead of end value. */
 
 			if( rotationMode == RotationMode.Local )
-                tween = transform.DOLocalRotate( rotationAxisMaskVector * deltaAngle, Duration, RotateMode.FastBeyond360 );
+			    tween = transform.DOLocalRotate( rotationAxisMaskVector * deltaAngle, Duration );
             else
-                tween = transform.DORotate( rotationAxisMaskVector * deltaAngle, Duration, RotateMode.FastBeyond360 );
+                tween = transform.DORotate( rotationAxisMaskVector * deltaAngle, Duration );
                 
             tween.SetRelative()
                  .SetEase( easing )
