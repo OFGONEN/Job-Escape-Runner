@@ -15,8 +15,19 @@ namespace FFStudio
 		[Foldout("UI Settings"), Tooltip("Duration of the movement for floating ui element")] public float ui_Entity_FloatingMove_TweenDuration;
         [Foldout("UI Settings"), Tooltip("Percentage of the screen to register a swipe")] public int swipeThreshold;
 
+        [ System.Serializable ]
+        public class PlayerSettings
+		{
+			public float force = 10000.0f;
 
-        private static GameSettings instance;
+			public float angularSpeed = 150.0f;
+			[ MinMaxSlider( -90, +90 ) ]
+			public Vector2 angularClamping = new Vector2( -30, +30 );
+		}
+
+		public PlayerSettings player;
+
+		private static GameSettings instance;
 
         private delegate GameSettings ReturnGameSettings();
         private static ReturnGameSettings returnInstance = LoadInstance;

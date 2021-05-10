@@ -865,9 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b59375a9b13244a821315e04b8ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10000
-  angularSpeed: 150
-  angularClamping: {x: -30, y: 30}
+  inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   playerRigidbody: {fileID: 1271377360}
   rotatingBody: {fileID: 2101531079}
   ragdollRigidbodiesToActivate:

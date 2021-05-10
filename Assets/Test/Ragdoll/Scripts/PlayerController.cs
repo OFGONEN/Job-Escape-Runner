@@ -7,26 +7,14 @@ using NaughtyAttributes;
 public class PlayerController : MonoBehaviour
 {
 #region Fields
-	public float force = 10.0f;
-
-	public float angularSpeed = 10.0f;
-	[ MinMaxSlider( -90, +90 ) ]
-	public Vector2 angularClamping;
+	public SharedVector3 inputDirection;
 
 	[ SerializeField ] private Rigidbody playerRigidbody;
 	[ SerializeField ] private Rigidbody rotatingBody;
 	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
-	private Vector3 Right	  			=>  playerRigidbody.transform.right;
-	private Vector3 Left  	  			=> -playerRigidbody.transform.right;
-	private Vector3 Forward 			=>  playerRigidbody.transform.forward;
-	private Vector3 ForwardLeft  		=> (  Left + Forward ) / 2;
-	private Vector3 ForwardRight 		=> ( Right + Forward ) / 2;
-	
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
-	
-	private float eulerYAngleBeforeCollision;
 #endregion
 
 #region Unity API
@@ -34,25 +22,20 @@ public class PlayerController : MonoBehaviour
 	{
 		startEulerYAngle = rotatingBody.rotation.y;
 	}
-
+	
 	private void FixedUpdate()
     {
-		// TODO: Read input from actual shared Vector2.
+		/* All cases regarding input and the value of inputDirection:
+		 * [INPUT]			[VALUE OF inputDirection]
+		 * Left  						< +1,  0, +1 >
+		 * Right 						< -1,  0, +1 >
+		 * Both  						<  0,  0, +1 >
+		 * None							<  0,  0,  0 > */
 		
-		if( Input.GetKey( KeyCode.LeftArrow ) )
-		{
-			playerRigidbody.AddForce( ForwardRight * force * Time.fixedDeltaTime, ForceMode.Force );
+		playerRigidbody.AddForce( inputDirection.sharedValue * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
 
-			totalDeltaAngle += angularSpeed * Time.fixedDeltaTime;
-		}
+		totalDeltaAngle += inputDirection.sharedValue.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
 		
-		if( Input.GetKey( KeyCode.RightArrow ) )
-		{
-			playerRigidbody.AddForce( ForwardLeft * force * Time.fixedDeltaTime, ForceMode.Force );
-
-			totalDeltaAngle -= angularSpeed * Time.fixedDeltaTime;
-		}
-
 		ClampAndSetTotalRotationDelta();
 	}
 #endregion
@@ -83,7 +66,9 @@ public class PlayerController : MonoBehaviour
 #region Implementation
 	private void ClampAndSetTotalRotationDelta()
 	{
-		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle, angularClamping.x, angularClamping.y );
+		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle,
+									   GameSettings.Instance.player.angularClamping.x,
+									   GameSettings.Instance.player.angularClamping.y );
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( startEulerYAngle + totalDeltaAngle );
 	}
