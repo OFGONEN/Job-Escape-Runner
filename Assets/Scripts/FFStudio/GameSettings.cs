@@ -15,6 +15,8 @@ namespace FFStudio
 		[Foldout("UI Settings"), Tooltip("Duration of the movement for floating ui element")] public float ui_Entity_FloatingMove_TweenDuration;
         [Foldout("UI Settings"), Tooltip("Percentage of the screen to register a swipe")] public int swipeThreshold;
 
+        [Tooltip("Time until finger held input expires")] public float input_finger_ExprireTime;
+
         [ System.Serializable ]
         public class PlayerSettings
 		{
