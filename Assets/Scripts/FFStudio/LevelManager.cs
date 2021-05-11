@@ -12,6 +12,7 @@ namespace FFStudio
         public EventListenerDelegateResponse levelLoadedListener;
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
+		public EventListenerDelegateResponse playerTriggeredFinishLine;
 		public EventListenerDelegateResponse playerTriggeredNetListener;
 
 		[Header("Fired Events")]
@@ -23,53 +24,62 @@ namespace FFStudio
         public SharedFloatProperty levelProgress;
         public PhysicMaterial obstaclePhysicMaterial;
 		public SharedReferenceProperty playerRigidbodyReference;
+		public SharedReferenceProperty levelFinishLineReference;
 
 
 		// Private Fields
+		private Transform levelFinishLine;
 		private Rigidbody playerRigidbody;
-		private UnityMessage update;
+		private UnityMessage playerMomentumCheck;
+		private UnityMessage levelProgressCheck;
 		private float playerMomentumTime;
+		private float finishLineDistance;
 		#endregion
 
 		#region UnityAPI
 
 		private void OnEnable()
         {
-            levelLoadedListener  .OnEnable();
-            levelRevealedListener.OnEnable();
-            levelStartedListener .OnEnable();
+            levelLoadedListener       .OnEnable();
+            levelRevealedListener     .OnEnable();
+            levelStartedListener      .OnEnable();
+			playerTriggeredFinishLine .OnEnable();
 			playerTriggeredNetListener.OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
+			levelFinishLineReference.changeEvent += OnLevelFinishLineChanged;
 		}
 
         private void OnDisable()
         {
-            levelLoadedListener  .OnDisable();
-            levelRevealedListener.OnDisable();
-            levelStartedListener .OnDisable();
+            levelLoadedListener       .OnDisable();
+            levelRevealedListener     .OnDisable();
+            levelStartedListener      .OnDisable();
+			playerTriggeredFinishLine .OnDisable();
 			playerTriggeredNetListener.OnDisable();
 
-
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
+			levelFinishLineReference.changeEvent -= OnLevelFinishLineChanged;
         }
 
         private void Awake()
         {
-
-            levelLoadedListener.response   = LevelLoadedResponse;
-            levelRevealedListener.response = LevelRevealedResponse;
-            levelStartedListener.response  = LevelStartedResponse;
-			playerTriggeredNetListener.response = PlayerTriggeredNetResponse;
+            levelLoadedListener.response        = LevelLoadedResponse;
+            levelRevealedListener.response      = LevelRevealedResponse;
+            levelStartedListener.response       = LevelStartedResponse;
+            playerTriggeredNetListener.response = PlayerTriggeredNetResponse;
+			playerTriggeredFinishLine.response  = PlayerTriggeredFinishLineResponse;
 
 			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
 
-			update = ExtensionMethods.EmptyMethod;
+			playerMomentumCheck = ExtensionMethods.EmptyMethod;
+			levelProgressCheck  = ExtensionMethods.EmptyMethod;
 		}
 
         private void Update()
         {
-			update();
+			playerMomentumCheck();
+			levelProgressCheck();
 		}
 
         #endregion
@@ -90,27 +100,63 @@ namespace FFStudio
 
         }
 
+        void PlayerTriggeredFinishLineResponse()
+        {
+            FFLogger.Log( "Finish Line Triggered" );
+            //TODO: close input
+            //TODO: start second phase ? 
+        }
+
         void PlayerTriggeredNetResponse()
         {
 			// level fail seqeunce
+            FFLogger.Log( "A Net Triggered" );
 			activatePlayerRagdoll.Raise();
 			levelFailedEvent.Raise();
+		}
+
+        void OnLevelFinishLineChanged()
+        {
+            if(levelFinishLineReference.sharedValue == null)
+            {
+				levelFinishLine = null;
+				levelProgressCheck = ExtensionMethods.EmptyMethod;
+			}
+            else 
+            {
+				levelFinishLine     = levelFinishLineReference.sharedValue as Transform;
+				finishLineDistance  = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
+
+				levelProgressCheck  = CheckLevelProgress;
+			}
 		}
         
         void OnPlayerRigidbodyChange()
         {
             if(playerRigidbodyReference.sharedValue == null)
             {
-				update = ExtensionMethods.EmptyMethod;
+				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 				playerMomentumTime = 0;
 			}
             else 
             {
                 playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
 				playerMomentumTime = 0;
-				update = CheckPlayerMomentum;
+				playerMomentumCheck = CheckPlayerMomentum;
 			}
         }
+
+        // This method is only for UI display of level progression not for actually deciding if the user finish the run
+        void CheckLevelProgress()
+        {
+			var distance = Vector3.Distance( playerRigidbody.position, levelFinishLine.position );
+			var progress = distance / finishLineDistance;
+
+			if(distance <= GameSettings.Instance.finishLineDistanceThreshold)
+				progress = 1;
+
+			levelProgress.SetValue( 1 - progress );
+		}
 
         void CheckPlayerMomentum()
         {
@@ -119,7 +165,7 @@ namespace FFStudio
                 FFLogger.Log( "Player lost momentum" );
 				activatePlayerRagdoll.Raise();
 				levelFailedEvent.Raise();
-				update = ExtensionMethods.EmptyMethod;
+				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 
 			if(playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.momentum_Magnitude)

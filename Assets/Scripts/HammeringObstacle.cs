@@ -70,7 +70,10 @@ public class HammeringObstacle : MonoBehaviour
         var controller = other.GetComponent<PlayerController>();
 
         if(controller)
+        {
             controller.ActivateFullRagdoll();
+			levelFailEvent.Raise();
+		}
     }
     #endregion
 }

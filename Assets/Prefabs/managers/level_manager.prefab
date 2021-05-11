@@ -49,6 +49,8 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: be5502ede7f194b4cad32082aa9196eb, type: 2}
   levelStartedListener:
     gameEvent: {fileID: 11400000, guid: efef06bf257ee27438d6c2aab4936226, type: 2}
+  playerTriggeredFinishLine:
+    gameEvent: {fileID: 11400000, guid: ad0b37e63f37f854189a36cc0ff28893, type: 2}
   playerTriggeredNetListener:
     gameEvent: {fileID: 11400000, guid: d07fda7452df6b54e9518e05761e5abf, type: 2}
   levelCompleted: {fileID: 11400000, guid: 28d976b368abc004a924d98b1751a17d, type: 2}
@@ -57,3 +59,4 @@ MonoBehaviour:
   levelProgress: {fileID: 11400000, guid: 72113ece5a5901b42b4046db2223b8d7, type: 2}
   obstaclePhysicMaterial: {fileID: 13400000, guid: ee88e9c714ea1de449bea018a53b6010, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
+  levelFinishLineReference: {fileID: 11400000, guid: a57d59503d5762a46a894a271f5a6336, type: 2}

@@ -20,7 +20,8 @@ namespace FFStudio
         [Foldout("Obstacle Settings")] public float obstacle_bounciness;
         [Foldout("Obstacle Settings")] public float obstacle_rotating_forceToApply;
 
-        [ System.Serializable ]
+		[Tooltip( "Threshold distance for level progress to be 1" )] public float finishLineDistanceThreshold = 2f;
+		[ System.Serializable ]
         public class PlayerSettings
 		{
 			public float force = 10000.0f;
