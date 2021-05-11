@@ -9,7 +9,7 @@ public class HammeringObstacle : MonoBehaviour
 {
     #region Fields
     public Transform rotatePivot;
-    public ColliderListener colliderListener;
+    public ColliderListener_EventRaiser colliderListener;
 
 
     [Header ("Angles"), HorizontalLine]

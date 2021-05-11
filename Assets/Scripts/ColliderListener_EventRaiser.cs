@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FFStudio;
 
-public class ColliderListener : MonoBehaviour
+public class ColliderListener_EventRaiser : MonoBehaviour
 {
     #region Fields
     public event TriggerEnter triggerEnter;
