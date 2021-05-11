@@ -13,14 +13,13 @@ namespace FFStudio
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
 
-        [Header("Level Releated")]
+        [Header("Fired Events")]
+        public GameEvent levelCompleted;
         public GameEvent levelFailedEvent;
 
         [Header("Level Releated")]
         public SharedFloatProperty levelProgress;
-
-        [Header("Fired Events")]
-        public GameEvent levelCompleted;
+        public PhysicMaterial obstaclePhysicMaterial;
 
         #endregion
 
@@ -46,6 +45,8 @@ namespace FFStudio
             levelLoadedListener.response   = LevelLoadedResponse;
             levelRevealedListener.response = LevelRevealedResponse;
             levelStartedListener.response  = LevelStartedResponse;
+
+            obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
         }
 
         #endregion

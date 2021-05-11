@@ -19,6 +19,7 @@ MonoBehaviour:
   ui_Entity_FloatingMove_TweenDuration: 0
   swipeThreshold: 0
   input_finger_ExprireTime: 1
+  obstacle_bounciness: 0.5
   player:
     force: 10000
     angularSpeed: 150
