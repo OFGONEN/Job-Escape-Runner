@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
 	[ Button() ]
 	public void ActivateFullRagdoll()
 	{
+		if( enabled == false )
+			return;
+
 		/* Let all children go! */
 		rotatingBody.transform.SetParent( null );
 		rotatingBody.transform.GetChild( 0 ).SetParent( null );
@@ -60,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
 		/* Completely stop player rigidbody as well. */
 		playerRigidbody.velocity = playerRigidbody.angularVelocity = Vector3.zero;
+
+		/* Disable the component. We are interested in the enabled flag actually. */
+		enabled = false;
 	}
 #endregion
 
