@@ -1155,7 +1155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b59375a9b13244a821315e04b8ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateRagdollListener:
+    gameEvent: {fileID: 11400000, guid: 783284a52a237dd4f94289115ae6c532, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
+  playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
   playerRigidbody: {fileID: 1271377360}
   rotatingBody: {fileID: 2101531079}
   ragdollRigidbodiesToActivate:

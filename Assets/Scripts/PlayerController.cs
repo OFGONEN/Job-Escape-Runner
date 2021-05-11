@@ -6,8 +6,17 @@ using NaughtyAttributes;
 
 public class PlayerController : MonoBehaviour
 {
-#region Fields
+	#region Fields
+	[Header( "Event Listeners" )]
+	public EventListenerDelegateResponse activateRagdollListener;
+
+	[HorizontalLine]
+
+	[Header("Shared Variables")]
 	public SharedVector3 inputDirection;
+	public SharedReferenceProperty playerRigidbodyReference;
+
+	[HorizontalLine]
 
 	[ SerializeField ] private Rigidbody playerRigidbody;
 	[ SerializeField ] private Rigidbody rotatingBody;
@@ -18,6 +27,24 @@ public class PlayerController : MonoBehaviour
 #endregion
 
 #region Unity API
+	private void OnEnable()
+	{
+		activateRagdollListener.OnEnable();
+
+		playerRigidbodyReference.SetValue( playerRigidbody );
+	}
+
+	private void OnDisable()
+	{
+		activateRagdollListener.OnDisable();
+
+		playerRigidbodyReference.SetValue( null );
+	}
+	
+	private void Awake()
+	{
+		activateRagdollListener.response = ActivateFullRagdoll;
+	}
 	private void Start()
 	{
 		startEulerYAngle = rotatingBody.rotation.y;

@@ -16,27 +16,38 @@ namespace FFStudio
         [Header("Fired Events")]
         public GameEvent levelCompleted;
         public GameEvent levelFailedEvent;
+		public GameEvent activatePlayerRagdoll;
 
-        [Header("Level Releated")]
+		[Header("Level Releated")]
         public SharedFloatProperty levelProgress;
         public PhysicMaterial obstaclePhysicMaterial;
+		public SharedReferenceProperty playerRigidbodyReference;
 
-        #endregion
 
-        #region UnityAPI
+		// Private Fields
+		private Rigidbody playerRigidbody;
+		private UnityMessage update;
+		private float playerMomentumTime;
+		#endregion
 
-        private void OnEnable()
+		#region UnityAPI
+
+		private void OnEnable()
         {
             levelLoadedListener  .OnEnable();
             levelRevealedListener.OnEnable();
             levelStartedListener .OnEnable();
-        }
+
+			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
+		}
 
         private void OnDisable()
         {
             levelLoadedListener  .OnDisable();
             levelRevealedListener.OnDisable();
             levelStartedListener .OnDisable();
+
+			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
         }
 
         private void Awake()
@@ -47,7 +58,14 @@ namespace FFStudio
             levelStartedListener.response  = LevelStartedResponse;
 
             obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
-        }
+
+			update = ExtensionMethods.EmptyMethod;
+		}
+
+        private void Update()
+        {
+			update();
+		}
 
         #endregion
 
@@ -66,6 +84,36 @@ namespace FFStudio
         {
 
         }
+        
+        void OnPlayerRigidbodyChange()
+        {
+            if(playerRigidbodyReference.sharedValue == null)
+            {
+				update = ExtensionMethods.EmptyMethod;
+				playerMomentumTime = 0;
+			}
+            else 
+            {
+                playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
+				playerMomentumTime = 0;
+				update = CheckPlayerMomentum;
+			}
+        }
+
+        void CheckPlayerMomentum()
+        {
+            if(playerMomentumTime >= GameSettings.Instance.player.momentum_CountDownTime)
+            {
+                FFLogger.Log( "Player lost momentum" );
+				activatePlayerRagdoll.Raise();
+				update = ExtensionMethods.EmptyMethod;
+			}
+
+			if(playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.momentum_Magnitude)
+				playerMomentumTime += Time.deltaTime;
+            else
+				playerMomentumTime = 0;
+		}
 
         #endregion
     }
