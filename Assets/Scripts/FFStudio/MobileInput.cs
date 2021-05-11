@@ -41,12 +41,10 @@ namespace FFStudio
 		{
 			if(finger.ScreenPosition.x <= Screen.width / 2)
 			{
-				FFLogger.Log( "Left" );
                 inputDirection.x = Mathf.Max(-1, inputDirection.x - 1); // Min value is -1 
             }
 			else 
 			{
-				FFLogger.Log( "Right" );
                 inputDirection.x = Mathf.Min(1, inputDirection.x + 1); // Max value is 1
             }
 
@@ -56,7 +54,6 @@ namespace FFStudio
 
 		public void FingerExpire(LeanFinger finger)
 		{
-			FFLogger.Log( "Expire" );
             shared_InputDirection.sharedValue = inputDirection = Vector3.zero;
         }
 

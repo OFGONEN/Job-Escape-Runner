@@ -18,6 +18,7 @@ namespace FFStudio
         [Tooltip("Time until finger held input expires")] public float input_finger_ExprireTime;
 
         [Foldout("Obstacle Settings")] public float obstacle_bounciness;
+        [Foldout("Obstacle Settings")] public float obstacle_rotating_forceToApply;
 
         [ System.Serializable ]
         public class PlayerSettings
