@@ -13,7 +13,8 @@ public class HammeringObstacle : MonoBehaviour
 
     [HorizontalLine]
 	public Transform rotatePivot;
-    public ColliderListener_EventRaiser colliderListener;
+	public Collider triggerCollider;
+	public ColliderListener_EventRaiser colliderListener;
 
 
     [Header ("Angles"), HorizontalLine]
@@ -57,7 +58,9 @@ public class HammeringObstacle : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
 
-        sequence.Append(rotatePivot.DORotate(endAngle, down_Duration).SetEase(down_Curve));
+		sequence.AppendCallback( () => triggerCollider.enabled = true );
+		sequence.Append(rotatePivot.DORotate(endAngle, down_Duration).SetEase(down_Curve));
+		sequence.AppendCallback( () => triggerCollider.enabled = false );
         sequence.Append(rotatePivot.DORotate(startAngle, up_Duration).SetEase(up_Curve));
 
         sequence.SetLoops( -1 );

@@ -1670,6 +1670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFailEvent: {fileID: 11400000, guid: ec850936269bc2e47b26cfebd8bdad97, type: 2}
   rotatePivot: {fileID: 241056817}
+  triggerCollider: {fileID: 1836358321}
   colliderListener: {fileID: 1836358324}
   startAngle: {x: 0, y: 0, z: 0}
   endAngle: {x: 0, y: 0, z: 53.47392}
