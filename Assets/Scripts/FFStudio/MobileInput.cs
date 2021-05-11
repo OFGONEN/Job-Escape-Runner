@@ -10,8 +10,9 @@ namespace FFStudio
 		[Header( "Fired Events" )]
 		public SwipeInputEvent swipeInputEvent;
 		public IntGameEvent tapInputEvent;
+		public StringGameEvent screenTapEvent;
 
-        [Header("Shared Variables")]
+		[Header("Shared Variables")]
         public SharedVector3 shared_InputDirection;
 
         [Header("Lean Components")]
@@ -42,13 +43,17 @@ namespace FFStudio
 			if(finger.ScreenPosition.x <= Screen.width / 2)
 			{
                 inputDirection.x = Mathf.Max(-1, inputDirection.x - 1); // Min value is -1 
-            }
+				screenTapEvent.eventValue = "left";
+			}
 			else 
 			{
                 inputDirection.x = Mathf.Min(1, inputDirection.x + 1); // Max value is 1
+				screenTapEvent.eventValue = "right";
             }
 
-            inputDirection.z = 1;
+			screenTapEvent.Raise();
+
+			inputDirection.z = 1;
             shared_InputDirection.sharedValue = inputDirection;
         }
 

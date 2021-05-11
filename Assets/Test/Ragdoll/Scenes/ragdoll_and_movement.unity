@@ -1313,8 +1313,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateRagdollListener:
     gameEvent: {fileID: 11400000, guid: 783284a52a237dd4f94289115ae6c532, type: 2}
+  screenTapListener:
+    gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
+  animator: {fileID: 1271377358}
   playerRigidbody: {fileID: 1271377360}
   rotatingBody: {fileID: 2101531079}
   ragdollRigidbodiesToActivate:
@@ -1332,7 +1335,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271377355}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 0f7ad8e777c61a04c801f787fa2afcc0, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 516927a610a5b624797feda8dd8aa6f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
