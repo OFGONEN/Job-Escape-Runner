@@ -7,8 +7,12 @@ using DG.Tweening;
 
 public class HammeringObstacle : MonoBehaviour
 {
-    #region Fields
-    public Transform rotatePivot;
+	#region Fields
+	[Header( "Fired Events" )]
+	public GameEvent levelFailEvent;
+
+    [HorizontalLine]
+	public Transform rotatePivot;
     public ColliderListener_EventRaiser colliderListener;
 
 

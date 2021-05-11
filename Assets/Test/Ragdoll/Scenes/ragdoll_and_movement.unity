@@ -1577,6 +1577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1459594eb195c884594c519a7c5210bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelFailEvent: {fileID: 11400000, guid: ec850936269bc2e47b26cfebd8bdad97, type: 2}
   rotatePivot: {fileID: 241056817}
   colliderListener: {fileID: 1836358324}
   startAngle: {x: 0, y: 0, z: 0}

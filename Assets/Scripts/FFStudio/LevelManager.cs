@@ -93,8 +93,8 @@ namespace FFStudio
         void PlayerTriggeredNetResponse()
         {
 			// level fail seqeunce
-
 			activatePlayerRagdoll.Raise();
+			levelFailedEvent.Raise();
 		}
         
         void OnPlayerRigidbodyChange()
@@ -118,6 +118,7 @@ namespace FFStudio
             {
                 FFLogger.Log( "Player lost momentum" );
 				activatePlayerRagdoll.Raise();
+				levelFailedEvent.Raise();
 				update = ExtensionMethods.EmptyMethod;
 			}
 
