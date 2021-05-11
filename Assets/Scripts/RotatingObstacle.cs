@@ -21,6 +21,8 @@ public class RotatingObstacle : MonoBehaviour
     private void OnTriggerEnter( Collider other )
     {
         other.GetComponentInChildren< Rigidbody >().AddForce(push_Direction * GameSettings.Instance.obstacle_rotating_forceToApply);
+
+        FFLogger.Log( "Pushed:" + other.gameObject );
     }
     #endregion
 
