@@ -12,8 +12,9 @@ namespace FFStudio
         public EventListenerDelegateResponse levelLoadedListener;
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
+		public EventListenerDelegateResponse playerTriggeredNetListener;
 
-        [Header("Fired Events")]
+		[Header("Fired Events")]
         public GameEvent levelCompleted;
         public GameEvent levelFailedEvent;
 		public GameEvent activatePlayerRagdoll;
@@ -37,6 +38,7 @@ namespace FFStudio
             levelLoadedListener  .OnEnable();
             levelRevealedListener.OnEnable();
             levelStartedListener .OnEnable();
+			playerTriggeredNetListener.OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 		}
@@ -46,6 +48,8 @@ namespace FFStudio
             levelLoadedListener  .OnDisable();
             levelRevealedListener.OnDisable();
             levelStartedListener .OnDisable();
+			playerTriggeredNetListener.OnDisable();
+
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
         }
@@ -56,8 +60,9 @@ namespace FFStudio
             levelLoadedListener.response   = LevelLoadedResponse;
             levelRevealedListener.response = LevelRevealedResponse;
             levelStartedListener.response  = LevelStartedResponse;
+			playerTriggeredNetListener.response = PlayerTriggeredNetResponse;
 
-            obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
+			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
 
 			update = ExtensionMethods.EmptyMethod;
 		}
@@ -84,6 +89,13 @@ namespace FFStudio
         {
 
         }
+
+        void PlayerTriggeredNetResponse()
+        {
+			// level fail seqeunce
+
+			activatePlayerRagdoll.Raise();
+		}
         
         void OnPlayerRigidbodyChange()
         {
