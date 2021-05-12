@@ -122,7 +122,6 @@ namespace FFStudio
         void PlayerTriggeredFinishLineResponse()
         {
             FFLogger.Log( "Finish Line Triggered" );
-			DOVirtual.DelayedCall( 2, resetLevel.Raise );
 			//TODO: close input
 			//TODO: start second phase ? 
 			//TODO: Level reset maybe ? 

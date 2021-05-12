@@ -1691,8 +1691,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389585786}
-  m_LocalRotation: {x: -0, y: 0.91833025, z: -0, w: 0.39581513}
-  m_LocalPosition: {x: 1.3, y: 0, z: 8.64}
+  m_LocalRotation: {x: -0, y: 0.3694744, z: -0, w: 0.92924094}
+  m_LocalPosition: {x: -1.24, y: 0, z: 8.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1959095463}
@@ -2948,6 +2948,7 @@ GameObject:
   - component: {fileID: 33101149766582218}
   - component: {fileID: 23515498786953094}
   - component: {fileID: 64300261619920898}
+  - component: {fileID: 1993260223733441}
   m_Layer: 0
   m_Name: balloon
   m_TagString: Untagged
@@ -2955,6 +2956,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1993260223733441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993260223733440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f846d710786ade74f8f92b1d229e3885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
+  parallaxRatio_X_Axis: {x: 0, y: 0, z: 0}
+  parallaxRatio_Y_Axis: {x: 0, y: 0, z: 0.25}
+  parallaxRatio_Z_Axis: {x: 0, y: 0, z: 0.8}
 --- !u!1 &1995065038916414
 GameObject:
   m_ObjectHideFlags: 0
