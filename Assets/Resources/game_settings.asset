@@ -26,5 +26,5 @@ MonoBehaviour:
     force: 10000
     angularSpeed: 150
     angularClamping: {x: -30, y: 30}
-    momentum_CountDownTime: 3
-    momentum_Magnitude: 0.1
+    lowMomentum_TimeThreshold: 3
+    lowMomentum_Threshold: 0.1

@@ -9,6 +9,7 @@ public class HammeringObstacle : MonoBehaviour
 {
 	#region Fields
 	[Header( "Fired Events" )]
+	public GameEvent activatePlayerRagdoll;
 	public GameEvent levelFailEvent;
 
     [HorizontalLine]
@@ -70,13 +71,8 @@ public class HammeringObstacle : MonoBehaviour
 
     void TriggerEnterResponse(Collider other)
     {
-        var controller = other.GetComponent<PlayerController>();
-
-        if(controller)
-        {
-            controller.ActivateFullRagdoll();
-			levelFailEvent.Raise();
-		}
+		activatePlayerRagdoll.Raise();
+		levelFailEvent.Raise();
     }
     #endregion
 }

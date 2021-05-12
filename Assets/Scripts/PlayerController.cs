@@ -68,8 +68,12 @@ public class PlayerController : MonoBehaviour
 #endregion
 
 #region API
+
+#endregion
+
+#region Implementation
 	[ Button() ]
-	public void ActivateFullRagdoll()
+	private void ActivateFullRagdoll()
 	{
 		if( enabled == false )
 			return;
@@ -94,9 +98,6 @@ public class PlayerController : MonoBehaviour
 		/* Disable the component. We are interested in the enabled flag actually. */
 		enabled = false;
 	}
-#endregion
-
-#region Implementation
 	private void ClampAndSetTotalRotationDelta()
 	{
 		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle,
