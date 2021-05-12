@@ -15,6 +15,7 @@ namespace FFStudio
 		public EventListenerDelegateResponse playerTriggeredFinishLine;
 		public EventListenerDelegateResponse playerTriggeredFenceListener;
 		public EventListenerDelegateResponse netTriggerListener;
+		public EventListenerDelegateResponse screenTapInputListener;
 
 		[Header("Fired Events")]
         public GameEvent levelCompleted;
@@ -41,12 +42,13 @@ namespace FFStudio
 
 		private void OnEnable()
         {
-            levelLoadedListener       .OnEnable();
-            levelRevealedListener     .OnEnable();
-            levelStartedListener      .OnEnable();
-			netTriggerListener     .OnEnable();
-			playerTriggeredFinishLine .OnEnable();
-			playerTriggeredFenceListener.OnEnable();
+            levelLoadedListener                .OnEnable();
+            levelRevealedListener              .OnEnable();
+            levelStartedListener               .OnEnable();
+			netTriggerListener                 .OnEnable();
+			screenTapInputListener                   .OnEnable();
+			playerTriggeredFinishLine          .OnEnable();
+			playerTriggeredFenceListener       .OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChanged;
@@ -54,12 +56,13 @@ namespace FFStudio
 
         private void OnDisable()
         {
-            levelLoadedListener       .OnDisable();
-            levelRevealedListener     .OnDisable();
-            levelStartedListener      .OnDisable();
-			netTriggerListener     .OnDisable();
-			playerTriggeredFinishLine .OnDisable();
-			playerTriggeredFenceListener.OnDisable();
+            levelLoadedListener                .OnDisable();
+            levelRevealedListener              .OnDisable();
+            levelStartedListener               .OnDisable();
+			netTriggerListener                 .OnDisable();
+			screenTapInputListener                   .OnDisable();
+			playerTriggeredFinishLine          .OnDisable();
+			playerTriggeredFenceListener       .OnDisable();
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent -= OnLevelFinishLineChanged;
@@ -67,12 +70,13 @@ namespace FFStudio
 
         private void Awake()
         {
-            levelLoadedListener.response        = LevelLoadedResponse;
-            levelRevealedListener.response      = LevelRevealedResponse;
-            levelStartedListener.response       = LevelStartedResponse;
-			netTriggerListener.response      = GroundTriggeredResponse;
-			playerTriggeredFenceListener.response = PlayerTriggeredNetResponse;
-			playerTriggeredFinishLine.response  = PlayerTriggeredFinishLineResponse;
+            levelLoadedListener.response          = LevelLoadedResponse;
+            levelRevealedListener.response        = LevelRevealedResponse;
+            levelStartedListener.response         = LevelStartedResponse;
+            netTriggerListener.response           = GroundTriggeredResponse;
+            playerTriggeredFenceListener.response = PlayerTriggeredNetResponse;
+            playerTriggeredFinishLine.response    = PlayerTriggeredFinishLineResponse;
+			screenTapInputListener.response             = ExtensionMethods.EmptyMethod;
 
 			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
 
@@ -92,7 +96,9 @@ namespace FFStudio
         void LevelLoadedResponse()
         {
             levelProgress.SetValue(0);
-        }
+
+			screenTapInputListener.response = StartChecks;
+		}
 
         void LevelRevealedResponse()
         {
@@ -103,6 +109,14 @@ namespace FFStudio
         {
 
         }
+
+        void StartChecks()
+        {
+			playerMomentumCheck = CheckPlayerMomentum;
+			levelProgressCheck  = CheckLevelProgress;
+
+			screenTapInputListener.response = ExtensionMethods.EmptyMethod;
+		}
 
         void PlayerTriggeredFinishLineResponse()
         {
@@ -139,8 +153,6 @@ namespace FFStudio
             {
 				levelFinishLine     = levelFinishLineReference.sharedValue as Transform;
 				finishLineDistance  = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
-
-				levelProgressCheck  = CheckLevelProgress;
 			}
 		}
         
@@ -155,7 +167,6 @@ namespace FFStudio
             {
                 playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
 				playerLowMomentumTimer = 0;
-				playerMomentumCheck = CheckPlayerMomentum;
 			}
         }
 
