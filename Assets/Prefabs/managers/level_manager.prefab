@@ -60,6 +60,7 @@ MonoBehaviour:
   levelCompleted: {fileID: 11400000, guid: 28d976b368abc004a924d98b1751a17d, type: 2}
   levelFailedEvent: {fileID: 11400000, guid: ec850936269bc2e47b26cfebd8bdad97, type: 2}
   activatePlayerRagdoll: {fileID: 11400000, guid: 783284a52a237dd4f94289115ae6c532, type: 2}
+  resetLevel: {fileID: 11400000, guid: 0a3e52cd505ecfc4ba9ef153d4f3ba93, type: 2}
   levelProgress: {fileID: 11400000, guid: 72113ece5a5901b42b4046db2223b8d7, type: 2}
   obstaclePhysicMaterial: {fileID: 13400000, guid: ee88e9c714ea1de449bea018a53b6010, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
