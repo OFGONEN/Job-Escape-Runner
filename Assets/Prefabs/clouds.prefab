@@ -3044,7 +3044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
-  parallaxAxis: {x: 0, y: 0, z: 0.8}
+  parallaxRatio: {x: 0, y: 0, z: 0.8}
 --- !u!1 &603004244313175706
 GameObject:
   m_ObjectHideFlags: 0
