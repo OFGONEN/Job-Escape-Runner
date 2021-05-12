@@ -9,16 +9,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Post Process
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Chair
+  - Ragdoll
+  - Obstacle
+  - OnlyCollideWithPlayer
   - 
   - 
   - 

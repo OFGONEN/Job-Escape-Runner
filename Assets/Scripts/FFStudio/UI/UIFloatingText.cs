@@ -14,11 +14,11 @@ public class UIFloatingText : UIText
 	}
 	private void OnDisable()
 	{
-		floatingTextStack.Push( this );
+		floatingTextStack.Stack.Push( this );
 	}
 	public override Tween GoTargetPosition()
 	{
-		textRenderer.DOFade( 0, GameSettings.instance.uiFloatingEntityTweenDuration ).SetEase( Ease.InExpo );
-		return uiTransform.DOMove( destinationTransform.position, GameSettings.instance.uiFloatingEntityTweenDuration );
+		textRenderer.DOFade( 0, GameSettings.Instance.ui_Entity_FloatingMove_TweenDuration ).SetEase( Ease.InExpo );
+		return uiTransform.DOMove( destinationTransform.position, GameSettings.Instance.ui_Entity_FloatingMove_TweenDuration );
 	}
 }

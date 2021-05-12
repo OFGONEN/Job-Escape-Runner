@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace FFStudio
@@ -7,34 +8,65 @@ namespace FFStudio
 	public class GameSettings : ScriptableObject
     {
         #region Fields
-        public static GameSettings instance;
-
         public int maxLevelCount;
-        [Tooltip("Duration of the movement for ui element")] public float uiEntityMoveTweenDuration;
-		[Tooltip("Duration of the scaling for ui element")] public float uiEntityScaleTweenDuration;
-		[Tooltip("Duration of the movement for floating ui element")] public float uiFloatingEntityTweenDuration;
-        [Tooltip("Percentage of the screen to register a swipe")] public int swipeThreshold;
-		
+        [Foldout("UI Settings"), Tooltip("Duration of the movement for ui element")] public float ui_Entity_Move_TweenDuration;
+        [Foldout("UI Settings"), Tooltip("Duration of the fading for ui element")] public float ui_Entity_Fade_TweenDuration;
+		[Foldout("UI Settings"), Tooltip("Duration of the scaling for ui element")] public float ui_Entity_Scale_TweenDuration;
+		[Foldout("UI Settings"), Tooltip("Duration of the movement for floating ui element")] public float ui_Entity_FloatingMove_TweenDuration;
+        [Foldout("UI Settings"), Tooltip("Percentage of the screen to register a swipe")] public int swipeThreshold;
 
-        #endregion
+        [Tooltip("Time until finger held input expires")] public float input_finger_ExprireTime;
 
-        #region UnityAPI
+        [Foldout("Obstacle Settings")] public float obstacle_bounciness;
+        [Foldout("Obstacle Settings")] public float obstacle_rotating_forceToApply;
 
-        private void Awake()
-        {
-            if(instance == null)
-            {
-				instance = this;
-                FFLogger.Log( "GameSettings instance is set" );
-            }
-            else if (instance != this)
-            {
-				Destroy( this );
-                FFLogger.Log( "New GameSettings Detected and Destroyed!" );
-			}
+		[Tooltip( "Threshold distance for level progress to be 1" )] public float finishLineDistanceThreshold = 2f;
+		[ System.Serializable ]
+        public class PlayerSettings
+		{
+			public float force = 10000.0f;
+			public float angularSpeed = 150.0f;
+			[ MinMaxSlider( -90, +90 ) ]
+            public Vector2 angularClamping = new Vector2( -30, +30 );
+
+            [Tooltip("If user exceeds this time without having enough momentum level fails")] 
+			public float momentum_CountDownTime = 1;
+
+            [Tooltip("Threshold value for momentum countdown to be count")]
+			public float momentum_Magnitude = 0.1f;
 		}
-        #endregion
-        
 
-	}
+		public PlayerSettings player;
+
+		private static GameSettings instance;
+
+        private delegate GameSettings ReturnGameSettings();
+        private static ReturnGameSettings returnInstance = LoadInstance;
+
+        public static GameSettings Instance
+        {
+            get
+            {
+                return returnInstance();
+            }
+        }
+        #endregion
+
+        #region Implementation
+        static GameSettings LoadInstance()
+        {
+            if (instance == null)
+                instance = Resources.Load<GameSettings>("game_settings");
+
+            returnInstance = ReturnInstance;
+
+            return instance;
+        }
+
+        static GameSettings ReturnInstance()
+        {
+            return instance;
+        }
+        #endregion
+    }
 }
