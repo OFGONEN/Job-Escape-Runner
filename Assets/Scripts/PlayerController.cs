@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
 	[ SerializeField ] private Rigidbody rotatingBody;
 	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
-	private float totalDeltaAngle = 0.0f;
-	private float startEulerYAngle;
+	public float totalDeltaAngle = 0.0f;
+	public float startEulerYAngle;
 #endregion
 
 #region Unity API
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 	}
 	private void Start()
 	{
-		startEulerYAngle = rotatingBody.rotation.y;
+		totalDeltaAngle = startEulerYAngle = rotatingBody.transform.eulerAngles.y;
 	}
 	
 	private void FixedUpdate()
@@ -108,10 +108,10 @@ public class PlayerController : MonoBehaviour
 	private void ClampAndSetTotalRotationDelta()
 	{
 		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle,
-									   GameSettings.Instance.player.angularClamping.x,
-									   GameSettings.Instance.player.angularClamping.y );
+									   startEulerYAngle + GameSettings.Instance.player.angularClamping.x,
+									   startEulerYAngle + GameSettings.Instance.player.angularClamping.y );
 
-		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( startEulerYAngle + totalDeltaAngle );
+		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
 	}
 
 	private void ScreenTapResponse()
