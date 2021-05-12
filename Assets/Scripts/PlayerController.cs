@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
 	[ SerializeField ] private Rigidbody rotatingBody;
 	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
-	public float totalDeltaAngle = 0.0f;
-	public float startEulerYAngle;
+	private float totalDeltaAngle = 0.0f;
+	private float startEulerYAngle;
 #endregion
 
 #region Unity API
