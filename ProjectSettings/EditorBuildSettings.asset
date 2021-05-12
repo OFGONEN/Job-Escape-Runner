@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/app.unity
     guid: ad0d37aebbbd4c54396618f1c151ebb7
   - enabled: 1
+    path: Assets/Scenes/game_1.unity
+    guid: 77bd79b3b08633c488ab2694e5563d64
+  - enabled: 1
     path: Assets/Test/Ragdoll/Scenes/test_game_1.unity
     guid: 116fce6ca08810b4c967844fc46a0cce
   m_configObjects: {}
