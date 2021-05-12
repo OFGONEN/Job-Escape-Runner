@@ -47,7 +47,7 @@ public class HammeringObstacle : MonoBehaviour
     }
     private void Awake()
     {
-        rotatePivot.eulerAngles = startAngle;
+        rotatePivot.localEulerAngles = startAngle;
 
         hammerSequence = StartHammerSequence();
     }
@@ -60,9 +60,9 @@ public class HammeringObstacle : MonoBehaviour
         var sequence = DOTween.Sequence();
 
 		sequence.AppendCallback( () => triggerCollider.enabled = true );
-		sequence.Append(rotatePivot.DORotate(endAngle, down_Duration).SetEase(down_Curve));
+		sequence.Append(rotatePivot.DOLocalRotate(endAngle, down_Duration).SetEase(down_Curve));
 		sequence.AppendCallback( () => triggerCollider.enabled = false );
-        sequence.Append(rotatePivot.DORotate(startAngle, up_Duration).SetEase(up_Curve));
+        sequence.Append(rotatePivot.DOLocalRotate(startAngle, up_Duration).SetEase(up_Curve));
 
         sequence.SetLoops( -1 );
 
