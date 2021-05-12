@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0befe0bbcc94c26449455e5d3f67ccc0, type: 3}
-  m_Name: player_activated_net
+  m_Name: net_activated
   m_EditorClassIdentifier: 
   canRaiseOtherEvents: 0
   eventsThatWillAlsoBeRaised: []

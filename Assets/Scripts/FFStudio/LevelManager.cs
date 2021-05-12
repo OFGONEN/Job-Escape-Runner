@@ -13,7 +13,8 @@ namespace FFStudio
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
 		public EventListenerDelegateResponse playerTriggeredFinishLine;
-		public EventListenerDelegateResponse playerTriggeredNetListener;
+		public EventListenerDelegateResponse playerTriggeredFenceListener;
+		public EventListenerDelegateResponse netTriggerListener;
 
 		[Header("Fired Events")]
         public GameEvent levelCompleted;
@@ -43,8 +44,9 @@ namespace FFStudio
             levelLoadedListener       .OnEnable();
             levelRevealedListener     .OnEnable();
             levelStartedListener      .OnEnable();
+			netTriggerListener     .OnEnable();
 			playerTriggeredFinishLine .OnEnable();
-			playerTriggeredNetListener.OnEnable();
+			playerTriggeredFenceListener.OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChanged;
@@ -55,8 +57,9 @@ namespace FFStudio
             levelLoadedListener       .OnDisable();
             levelRevealedListener     .OnDisable();
             levelStartedListener      .OnDisable();
+			netTriggerListener     .OnDisable();
 			playerTriggeredFinishLine .OnDisable();
-			playerTriggeredNetListener.OnDisable();
+			playerTriggeredFenceListener.OnDisable();
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent -= OnLevelFinishLineChanged;
@@ -67,7 +70,8 @@ namespace FFStudio
             levelLoadedListener.response        = LevelLoadedResponse;
             levelRevealedListener.response      = LevelRevealedResponse;
             levelStartedListener.response       = LevelStartedResponse;
-            playerTriggeredNetListener.response = PlayerTriggeredNetResponse;
+			netTriggerListener.response      = GroundTriggeredResponse;
+			playerTriggeredFenceListener.response = PlayerTriggeredNetResponse;
 			playerTriggeredFinishLine.response  = PlayerTriggeredFinishLineResponse;
 
 			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
@@ -105,7 +109,16 @@ namespace FFStudio
             FFLogger.Log( "Finish Line Triggered" );
             //TODO: close input
             //TODO: start second phase ? 
+            //TODO: Level reset maybe ? 
         }
+
+        void GroundTriggeredResponse()
+        {
+			var changeEvent = netTriggerListener.gameEvent as ReferenceGameEvent;
+			( changeEvent.eventValue as Collider ).gameObject.SetActive( false );
+
+            FFLogger.Log( "Disable:" + ( changeEvent.eventValue as Collider ).gameObject.name  );
+		}
 
         void PlayerTriggeredNetResponse()
         {
@@ -133,7 +146,7 @@ namespace FFStudio
         
         void OnPlayerRigidbodyChange()
         {
-            if(playerRigidbodyReference.sharedValue == null)
+            if( playerRigidbodyReference.sharedValue == null )
             {
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 				playerLowMomentumTimer = 0;
@@ -152,15 +165,15 @@ namespace FFStudio
 			var distance = Vector3.Distance( playerRigidbody.position, levelFinishLine.position );
 			var progress = distance / finishLineDistance;
 
-			if(distance <= GameSettings.Instance.finishLineDistanceThreshold)
-				progress = 1;
+			if( distance <= GameSettings.Instance.finishLineDistanceThreshold )
+				progress = 0;
 
 			levelProgress.SetValue( 1 - progress );
 		}
 
         void CheckPlayerMomentum()
         {
-            if(playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold)
+            if( playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold )
             {
                 FFLogger.Log( "Player lost momentum" );
 				activatePlayerRagdoll.Raise();
@@ -168,7 +181,7 @@ namespace FFStudio
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 
-			if(playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.lowMomentum_Threshold)
+			if( playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.lowMomentum_Threshold )
 				playerLowMomentumTimer += Time.deltaTime;
             else
 				playerLowMomentumTimer = 0;
