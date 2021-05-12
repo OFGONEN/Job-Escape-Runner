@@ -32,7 +32,7 @@ namespace FFStudio
 		private Rigidbody playerRigidbody;
 		private UnityMessage playerMomentumCheck;
 		private UnityMessage levelProgressCheck;
-		private float playerMomentumTime;
+		private float playerLowMomentumTimer;
 		private float finishLineDistance;
 		#endregion
 
@@ -136,12 +136,12 @@ namespace FFStudio
             if(playerRigidbodyReference.sharedValue == null)
             {
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
-				playerMomentumTime = 0;
+				playerLowMomentumTimer = 0;
 			}
             else 
             {
                 playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
-				playerMomentumTime = 0;
+				playerLowMomentumTimer = 0;
 				playerMomentumCheck = CheckPlayerMomentum;
 			}
         }
@@ -160,7 +160,7 @@ namespace FFStudio
 
         void CheckPlayerMomentum()
         {
-            if(playerMomentumTime >= GameSettings.Instance.player.momentum_CountDownTime)
+            if(playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold)
             {
                 FFLogger.Log( "Player lost momentum" );
 				activatePlayerRagdoll.Raise();
@@ -168,10 +168,10 @@ namespace FFStudio
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 
-			if(playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.momentum_Magnitude)
-				playerMomentumTime += Time.deltaTime;
+			if(playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.lowMomentum_Threshold)
+				playerLowMomentumTimer += Time.deltaTime;
             else
-				playerMomentumTime = 0;
+				playerLowMomentumTimer = 0;
 		}
 
         #endregion

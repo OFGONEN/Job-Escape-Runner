@@ -30,10 +30,10 @@ namespace FFStudio
             public Vector2 angularClamping = new Vector2( -30, +30 );
 
             [Tooltip("If user exceeds this time without having enough momentum level fails")] 
-			public float momentum_CountDownTime = 1;
+			public float lowMomentum_TimeThreshold = 1;
 
             [Tooltip("Threshold value for momentum countdown to be count")]
-			public float momentum_Magnitude = 0.1f;
+			public float lowMomentum_Threshold = 0.1f;
 		}
 
 		public PlayerSettings player;
