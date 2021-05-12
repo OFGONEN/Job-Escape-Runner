@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swipeInputEvent: {fileID: 11400000, guid: 098e32fbac85f404ba69e3d0dffc1fb1, type: 2}
   tapInputEvent: {fileID: 11400000, guid: 182cfa2632cfdba49bfaf3471d114d23, type: 2}
+  screenTapEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   shared_InputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   leanFingerHeld: {fileID: 4783297260515276072}
 --- !u!114 &4783297260515276074

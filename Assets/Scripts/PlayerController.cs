@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	#region Fields
 	[Header( "Event Listeners" )]
 	public EventListenerDelegateResponse activateRagdollListener;
+	public EventListenerDelegateResponse screenTapListener;
 
 	[HorizontalLine]
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
 	[HorizontalLine]
 
+	[ SerializeField ] private Animator animator;
 	[ SerializeField ] private Rigidbody playerRigidbody;
 	[ SerializeField ] private Rigidbody rotatingBody;
 	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
 	private void OnEnable()
 	{
 		activateRagdollListener.OnEnable();
+		screenTapListener      .OnEnable();
 
 		playerRigidbodyReference.SetValue( playerRigidbody );
 	}
@@ -37,13 +40,17 @@ public class PlayerController : MonoBehaviour
 	private void OnDisable()
 	{
 		activateRagdollListener.OnDisable();
+		screenTapListener      .OnDisable();
 
 		playerRigidbodyReference.SetValue( null );
+
+		FFLogger.Log( "PlayerController disabled" );
 	}
 	
 	private void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
+		screenTapListener.response 		 = ScreenTapResponse;
 	}
 	private void Start()
 	{
@@ -105,6 +112,12 @@ public class PlayerController : MonoBehaviour
 									   GameSettings.Instance.player.angularClamping.y );
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( startEulerYAngle + totalDeltaAngle );
+	}
+
+	private void ScreenTapResponse()
+	{
+		var changeEvent = screenTapListener.gameEvent as StringGameEvent;
+		animator.SetTrigger( changeEvent.eventValue );
 	}
 #endregion
 }
