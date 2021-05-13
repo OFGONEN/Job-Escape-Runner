@@ -26,5 +26,6 @@ MonoBehaviour:
     force: 15000
     angularSpeed: 150
     angularClamping: {x: -30, y: 30}
+    velocityClamp: 15
     lowMomentum_TimeThreshold: 3
     lowMomentum_Threshold: 0.1

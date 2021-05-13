@@ -28,6 +28,7 @@ namespace FFStudio
 			public float angularSpeed = 150.0f;
 			[ MinMaxSlider( -90, +90 ) ]
             public Vector2 angularClamping = new Vector2( -30, +30 );
+            public float velocityClamp = 20;
 
             [Tooltip("If user exceeds this time without having enough momentum level fails")] 
 			public float lowMomentum_TimeThreshold = 1;

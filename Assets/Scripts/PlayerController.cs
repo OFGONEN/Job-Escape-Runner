@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 		totalDeltaAngle += inputDirection.sharedValue.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
 		
 		ClampAndSetTotalRotationDelta();
+		ClampVelocity();
 	}
 #endregion
 
@@ -112,6 +113,18 @@ public class PlayerController : MonoBehaviour
 									   startEulerYAngle + GameSettings.Instance.player.angularClamping.y );
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
+	}
+
+	private void ClampVelocity()
+	{
+		var velocity = playerRigidbody.velocity;
+		var velocityMagnitude = velocity.magnitude;
+
+		velocityMagnitude = Mathf.Min( velocityMagnitude, GameSettings.Instance.player.velocityClamp );
+
+		playerRigidbody.velocity = velocity.normalized * velocityMagnitude;
+
+		FFLogger.Log( "Velocity: " + velocity.normalized * velocityMagnitude );
 	}
 
 	private void ScreenTapResponse()
