@@ -29,7 +29,16 @@ namespace FFStudio
 			[ MinMaxSlider( -90, +90 ) ]
             public Vector2 angularClamping = new Vector2( -30, +30 );
 
-            [Tooltip("If user exceeds this time without having enough momentum level fails")] 
+            [Tooltip("Velocity of the player")]
+			public float velocityClamp = 15;
+
+            [Tooltip("Mass of the player rigidbody")]
+			public float rigidBody_Mass = 5;
+
+            [Tooltip("Drag of the player rigidbody")]
+			public float rigidBody_Drag = 1;
+
+			[Tooltip("If user exceeds this time without having enough momentum level fails")] 
 			public float lowMomentum_TimeThreshold = 1;
 
             [Tooltip("Threshold value for momentum countdown to be count")]
