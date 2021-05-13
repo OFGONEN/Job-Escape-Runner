@@ -99,6 +99,8 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: 783284a52a237dd4f94289115ae6c532, type: 2}
   screenTapListener:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
+  tapInputListener:
+    gameEvent: {fileID: 11400000, guid: 2a456c730a4a92e458f7f5c9d0643ee2, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
   animator: {fileID: 3571083525753257351}

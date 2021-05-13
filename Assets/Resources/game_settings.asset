@@ -23,8 +23,8 @@ MonoBehaviour:
   obstacle_rotating_forceToApply: 3000
   finishLineDistanceThreshold: 2
   player:
-    force: 15000
-    angularSpeed: 150
+    force: 75000
+    angularSpeed: 750
     angularClamping: {x: -30, y: 30}
     lowMomentum_TimeThreshold: 3
     lowMomentum_Threshold: 0.1

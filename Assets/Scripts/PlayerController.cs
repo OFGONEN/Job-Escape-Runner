@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	[Header( "Event Listeners" )]
 	public EventListenerDelegateResponse activateRagdollListener;
 	public EventListenerDelegateResponse screenTapListener;
+	public EventListenerDelegateResponse tapInputListener;
 
 	[HorizontalLine]
 
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
 	{
 		activateRagdollListener.OnEnable();
 		screenTapListener      .OnEnable();
+		tapInputListener.OnEnable();
 
 		playerRigidbodyReference.SetValue( playerRigidbody );
 	}
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
 	{
 		activateRagdollListener.OnDisable();
 		screenTapListener      .OnDisable();
+		tapInputListener.OnDisable();
 
 		playerRigidbodyReference.SetValue( null );
 
@@ -51,13 +54,14 @@ public class PlayerController : MonoBehaviour
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
 		screenTapListener.response 		 = ScreenTapResponse;
+		tapInputListener.response = TapInputListener;
 	}
 	private void Start()
 	{
 		totalDeltaAngle = startEulerYAngle = rotatingBody.transform.eulerAngles.y;
 	}
 	
-	private void FixedUpdate()
+	private void TapInputListener()
     {
 		/* All cases regarding input and the value of inputDirection:
 		 * [INPUT]			[VALUE OF inputDirection]
@@ -65,11 +69,12 @@ public class PlayerController : MonoBehaviour
 		 * Right 						< -1,  0, +1 >
 		 * Both  						<  0,  0, +1 >
 		 * None							<  0,  0,  0 > */
-		
-		playerRigidbody.AddForce( inputDirection.sharedValue * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
 
-		totalDeltaAngle += inputDirection.sharedValue.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
-		
+		var changeEvent = tapInputListener.gameEvent as Vector2GameEvent;
+		var input = new Vector3( changeEvent.eventValue.x, 0, changeEvent.eventValue.y );
+		playerRigidbody.AddForce( input * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
+
+		totalDeltaAngle += input.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
 		ClampAndSetTotalRotationDelta();
 	}
 #endregion

@@ -266,6 +266,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: mobile_input
       objectReference: {fileID: 0}
+    - target: {fileID: 4783297260515276072, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+      propertyPath: onFingerDown.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783297260515276072, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+      propertyPath: onFingerDown.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783297260515276072, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+      propertyPath: onFingerDown.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783297260515276075, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+      propertyPath: inputEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a456c730a4a92e458f7f5c9d0643ee2, type: 2}
     - target: {fileID: 4783297260515276076, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -310,8 +326,72 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3051274565027558745, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+    - {fileID: 4783297260515276073, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+--- !u!1 &283980439 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4783297260515276055, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+  m_PrefabInstance: {fileID: 283980438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &283980440 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4783297260515276075, guid: c4489c7dcfeb1854b9db9d1dcf812b45, type: 3}
+  m_PrefabInstance: {fileID: 283980438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283980439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702ac59cd07692945a08dfba8421ea74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &283980441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283980439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c1c71d8ad5da9438de3b2e5990763f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreStartedOverGui: 1
+  IgnoreIsOverGui: 0
+  RequiredSelectable: {fileID: 0}
+  RequiredTapCount: 0
+  RequiredTapInterval: 0
+  onFinger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 283980440}
+        m_TargetAssemblyTypeName: FFStudio.MobileInput, Assembly-CSharp
+        m_MethodName: FingerTap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onCount:
+    m_PersistentCalls:
+      m_Calls: []
+  ScreenDepth:
+    Conversion: 1
+    Camera: {fileID: 0}
+    Object: {fileID: 0}
+    Layers:
+      serializedVersion: 2
+      m_Bits: 4294967291
+    Distance: 0
+  onWorld:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &515643351
 GameObject:
   m_ObjectHideFlags: 0
