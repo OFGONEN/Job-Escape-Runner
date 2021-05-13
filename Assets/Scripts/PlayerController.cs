@@ -60,6 +60,12 @@ public class PlayerController : MonoBehaviour
 	{
 		totalDeltaAngle = startEulerYAngle = rotatingBody.transform.eulerAngles.y;
 	}
+
+	private void FixedUpdate() 
+	{
+		ClampVelocity();
+		ClampAndSetTotalRotationDelta();
+	}
 	
 	private void TapInputListener()
     {
@@ -75,7 +81,6 @@ public class PlayerController : MonoBehaviour
 		playerRigidbody.AddForce( input * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
 
 		totalDeltaAngle += input.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
-		ClampAndSetTotalRotationDelta();
 	}
 #endregion
 
@@ -117,6 +122,18 @@ public class PlayerController : MonoBehaviour
 									   startEulerYAngle + GameSettings.Instance.player.angularClamping.y );
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
+	}
+
+	private void ClampVelocity()
+	{
+		var velocity = playerRigidbody.velocity;
+		var velocity_magnitude = velocity.magnitude;
+
+		FFLogger.Log( "Velocity:" + velocity_magnitude );
+
+		velocity_magnitude = Mathf.Min( velocity_magnitude, GameSettings.Instance.player.maxVelocity );
+
+		playerRigidbody.velocity = velocity.normalized * velocity_magnitude;
 	}
 
 	private void ScreenTapResponse()

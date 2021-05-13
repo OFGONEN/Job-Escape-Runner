@@ -34,6 +34,8 @@ namespace FFStudio
 
             [Tooltip("Threshold value for momentum countdown to be count")]
 			public float lowMomentum_Threshold = 0.1f;
+
+			public float maxVelocity = 20;
 		}
 
 		public PlayerSettings player;

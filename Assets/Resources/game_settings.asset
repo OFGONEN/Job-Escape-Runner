@@ -28,3 +28,4 @@ MonoBehaviour:
     angularClamping: {x: -30, y: 30}
     lowMomentum_TimeThreshold: 3
     lowMomentum_Threshold: 0.1
+    maxVelocity: 20
