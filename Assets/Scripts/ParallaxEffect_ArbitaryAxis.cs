@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using FFStudio;
 
-public class ParallaxEffect : MonoBehaviour
+public class ParallaxEffect_ArbitaryAxis : MonoBehaviour
 {
 	#region Fields
 	public SharedReferenceProperty targetReference; // Players rigidbody
-	public Vector3 parallaxRatio;
+	public Vector3 parallaxRatio_X_Axis;
+	public Vector3 parallaxRatio_Y_Axis;
+	public Vector3 parallaxRatio_Z_Axis;
 
 	// Private Fields
 	private Transform targetTransform;
@@ -30,11 +32,13 @@ public class ParallaxEffect : MonoBehaviour
     {
 		var diff = targetTransform.position - target_StartPosition;
 
-		diff.x *= parallaxRatio.x;
-		diff.y *= parallaxRatio.y;
-		diff.z *= parallaxRatio.z;
+		var final = startPosition;
 
-		transform.position = startPosition + diff;
+		final.x += diff.x * parallaxRatio_X_Axis.x + diff.y * parallaxRatio_X_Axis.y + diff.z * parallaxRatio_X_Axis.z;
+		final.y += diff.x * parallaxRatio_Y_Axis.x + diff.y * parallaxRatio_Y_Axis.y + diff.z * parallaxRatio_Y_Axis.z;
+		final.z += diff.x * parallaxRatio_Z_Axis.x + diff.y * parallaxRatio_Z_Axis.y + diff.z * parallaxRatio_Z_Axis.z;
+
+		transform.position = final;
 	}
 	#endregion
 

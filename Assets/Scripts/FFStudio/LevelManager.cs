@@ -21,6 +21,7 @@ namespace FFStudio
         public GameEvent levelCompleted;
         public GameEvent levelFailedEvent;
 		public GameEvent activatePlayerRagdoll;
+		public GameEvent resetLevel;
 
 		[Header("Level Releated")]
         public SharedFloatProperty levelProgress;
@@ -121,10 +122,10 @@ namespace FFStudio
         void PlayerTriggeredFinishLineResponse()
         {
             FFLogger.Log( "Finish Line Triggered" );
-            //TODO: close input
-            //TODO: start second phase ? 
-            //TODO: Level reset maybe ? 
-        }
+			//TODO: close input
+			//TODO: start second phase ? 
+			//TODO: Level reset maybe ? 
+		}
 
         void GroundTriggeredResponse()
         {
@@ -140,6 +141,7 @@ namespace FFStudio
             FFLogger.Log( "A Net Triggered" );
 			activatePlayerRagdoll.Raise();
 			levelFailedEvent.Raise();
+			DOVirtual.DelayedCall( 2, resetLevel.Raise );
 		}
 
         void OnLevelFinishLineChanged()
