@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		totalDeltaAngle = startEulerYAngle = rotatingBody.transform.eulerAngles.y;
+
+		playerRigidbody.mass = GameSettings.Instance.player.playerRigidbody_Mass;
+		playerRigidbody.drag = GameSettings.Instance.player.playerRigidbody_Drag;
 	}
 	
 	private void FixedUpdate()

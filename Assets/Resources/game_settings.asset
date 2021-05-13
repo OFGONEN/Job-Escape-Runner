@@ -18,14 +18,16 @@ MonoBehaviour:
   ui_Entity_Scale_TweenDuration: 0
   ui_Entity_FloatingMove_TweenDuration: 0
   swipeThreshold: 0
-  input_finger_ExprireTime: 0.1
+  input_finger_ExprireTime: 0.05
   obstacle_bounciness: 0.5
   obstacle_rotating_forceToApply: 3000
   finishLineDistanceThreshold: 2
   player:
-    force: 15000
+    force: 7500
     angularSpeed: 150
     angularClamping: {x: -30, y: 30}
-    velocityClamp: 15
+    velocityClamp: 20
+    playerRigidbody_Mass: 3
+    playerRigidbody_Drag: 0
     lowMomentum_TimeThreshold: 3
     lowMomentum_Threshold: 0.1
