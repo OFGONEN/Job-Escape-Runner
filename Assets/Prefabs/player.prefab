@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1695841675134466970, guid: 88da1ca80d4a5c744a5e444d97e6dfac, type: 3}
+  - {fileID: 2100000, guid: 0fa29dbb24d023c4f815d0a00e41584a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,9 +106,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3571083525753257350}
   - component: {fileID: 3571083525753257351}
-  - component: {fileID: 3571083525753257349}
   - component: {fileID: 3571083525753257369}
   - component: {fileID: 3571083525753257348}
+  - component: {fileID: 298956971037557369}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
@@ -151,19 +151,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &3571083525753257349
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571083525753257346}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.630938, z: 1}
-  m_Center: {x: 0, y: 0.81546605, z: 0}
 --- !u!54 &3571083525753257369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -209,6 +196,20 @@ MonoBehaviour:
   - {fileID: 920197684729918665}
   - {fileID: 920197683792698465}
   - {fileID: 920197684758889085}
+--- !u!136 &298956971037557369
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3571083525753257346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.2437553
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.62187594, z: 0}
 --- !u!1 &4079968393783958261
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1695841675134466970, guid: 88da1ca80d4a5c744a5e444d97e6dfac, type: 3}
+  - {fileID: 2100000, guid: 0fa29dbb24d023c4f815d0a00e41584a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -400,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306024206556, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -2.8194336e-11
+      value: -2.5465852e-11
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306024206556, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -408,11 +409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306024206556, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 9.313211e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306053670496, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -2.8194336e-11
+      value: -2.5465852e-11
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306053670496, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -420,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306053670496, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 9.313211e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1569434306086228382, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -444,11 +445,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1569434307271073329, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.0041584135
+      value: 0.0041584116
       objectReference: {fileID: 0}
     - target: {fileID: 1569434307271073329, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 0.00006292964
+      value: 0.000062929175
       objectReference: {fileID: 0}
     - target: {fileID: 1803315609515971558, guid: 7d6a8f4d3aaac1041ba1a31e7d1781d3, type: 3}
       propertyPath: m_Name
