@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 	[ SerializeField ] private Animator animator;
 	[ SerializeField ] private Rigidbody playerRigidbody;
 	[ SerializeField ] private Rigidbody rotatingBody;
+	[ SerializeField ] private Collider rotatingBody_Part;
+	[ SerializeField ] private Transform ragdollBody;
 	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
 	private float totalDeltaAngle = 0.0f;
@@ -91,8 +93,12 @@ public class PlayerController : MonoBehaviour
 
 		/* Let all children go! */
 		rotatingBody.transform.SetParent( null );
-		rotatingBody.transform.GetChild( 0 ).SetParent( null );
-		
+		// Reassemble rotating body
+		rotatingBody_Part.transform.SetParent( rotatingBody.transform );
+		rotatingBody_Part.enabled = true;
+
+		ragdollBody.transform.SetParent( null );
+
 		/* Make rigidbodies of ragdoll elements dynamic to activate them. */
 		rotatingBody.isKinematic = false;
 		
