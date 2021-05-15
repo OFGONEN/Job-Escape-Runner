@@ -30,4 +30,4 @@ MonoBehaviour:
     rigidBody_Mass: 5
     rigidBody_Drag: 0.1
     lowMomentum_TimeThreshold: 3
-    lowMomentum_Threshold: 0.1
+    lowMomentum_Threshold: 1
