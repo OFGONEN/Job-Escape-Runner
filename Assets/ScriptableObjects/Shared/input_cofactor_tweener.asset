@@ -15,5 +15,5 @@ MonoBehaviour:
   sharedValue: 0
   cleanUpListener:
     gameEvent: {fileID: 11400000, guid: f21917f15c7136344a403d144e13d6e2, type: 2}
-  changeDuration: 0
-  changeEase: 0
+  changeDuration: 0.75
+  changeEase: 1

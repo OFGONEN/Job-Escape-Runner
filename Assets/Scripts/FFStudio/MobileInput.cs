@@ -16,11 +16,12 @@ namespace FFStudio
 
 		[Header("Shared Variables")]
         public SharedVector3 shared_InputDirection;
+		public SharedFloatPropertyTweener input_cofactor;
 
-        // [Header("LeanFinger Components")]
-        // public LeanFingerHeld leanFingerHeld;
+		// [Header("LeanFinger Components")]
+		// public LeanFingerHeld leanFingerHeld;
 
-        float swipeThreshold;
+		float swipeThreshold;
 		float horizontalThreshold;
 		Vector2 inputOrigin;
 		LeanFingerDelegate fingerUpdate;
@@ -36,6 +37,7 @@ namespace FFStudio
 			inputOrigin                       = Vector2.zero;
 
 			// leanFingerHeld.MinimumAge = GameSettings.Instance.input_finger_ExprireTime;
+			input_cofactor.changeDuration = GameSettings.Instance.inputCofactorDuration;
 
 			fingerUpdate = FingerDown;
 		}		
@@ -62,6 +64,9 @@ namespace FFStudio
 		{
 			fingerUpdate = FingerDown;
 
+			input_cofactor.sharedValue = 0;
+			input_cofactor.KillTween();
+
 			inputOrigin                       = Vector2.zero;
 			shared_InputDirection.sharedValue = Vector3.zero;
 		}
@@ -72,6 +77,8 @@ namespace FFStudio
 		{
 			inputOrigin  = finger.ScreenPosition;
 			fingerUpdate = FingerUpdate;
+
+			input_cofactor.SetValue( 1 );
 
 			shared_InputDirection.sharedValue = Vector3.zero;
 		}
