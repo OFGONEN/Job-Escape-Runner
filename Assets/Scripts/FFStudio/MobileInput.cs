@@ -22,7 +22,6 @@ namespace FFStudio
 
         int swipeThreshold;
         Vector2 inputOrigin;
-		Vector2 lastInput; //TODO testing
 		LeanFingerDelegate fingerUpdate;
 
 		#endregion
@@ -62,7 +61,6 @@ namespace FFStudio
 			fingerUpdate = FingerDown;
 
 			inputOrigin                       = Vector2.zero;
-			lastInput                         = Vector2.zero;
 			shared_InputDirection.sharedValue = Vector3.zero;
 		}
 		#endregion
@@ -71,7 +69,6 @@ namespace FFStudio
 		void FingerDown( LeanFinger finger )
 		{
 			inputOrigin  = finger.ScreenPosition;
-			lastInput    = finger.ScreenPosition;  //TODO REMOVE
 			fingerUpdate = FingerUpdate;
 
 			shared_InputDirection.sharedValue = Vector3.zero;
@@ -87,8 +84,6 @@ namespace FFStudio
 				shared_InputDirection.sharedValue.x = diff.normalized.x;
 
 			shared_InputDirection.sharedValue.z = 1f;
-
-			lastInput = finger.ScreenPosition; //TODO REMOVE
 		}		
 		#endregion
     }
