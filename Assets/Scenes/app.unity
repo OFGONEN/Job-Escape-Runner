@@ -661,6 +661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIJoyStick_Input
       objectReference: {fileID: 0}
+    - target: {fileID: 3130003959021242863, guid: 63d76f3fab1b5f341b3890a7f94d852c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d76f3fab1b5f341b3890a7f94d852c, type: 3}
 --- !u!224 &1912461850 stripped

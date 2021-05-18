@@ -20,8 +20,9 @@ namespace FFStudio
         // [Header("LeanFinger Components")]
         // public LeanFingerHeld leanFingerHeld;
 
-        int swipeThreshold;
-        Vector2 inputOrigin;
+        float swipeThreshold;
+		float horizontalThreshold;
+		Vector2 inputOrigin;
 		LeanFingerDelegate fingerUpdate;
 
 		#endregion
@@ -30,6 +31,7 @@ namespace FFStudio
 		private void Awake()
 		{
 			swipeThreshold                    = Screen.width * GameSettings.Instance.swipeThreshold / 100;
+			horizontalThreshold 			  = Screen.width * GameSettings.Instance.horizontalInputCofactor / 100;
 			shared_InputDirection.sharedValue = Vector3.zero;
 			inputOrigin                       = Vector2.zero;
 
@@ -81,10 +83,15 @@ namespace FFStudio
 			if(Mathf.Abs(diff.x) <= swipeThreshold)
 				shared_InputDirection.sharedValue.x = 0;
 			else 
-				shared_InputDirection.sharedValue.x = diff.normalized.x;
+				shared_InputDirection.sharedValue.x = GiveNormalizedHorizontal(diff.x);
 
 			shared_InputDirection.sharedValue.z = 1f;
 		}		
+
+		float GiveNormalizedHorizontal(float horizontalDiff)
+		{
+			return Mathf.Min( horizontalDiff / horizontalThreshold, 1 );
+		}
 		#endregion
     }
 }
