@@ -7,6 +7,8 @@ namespace FFStudio
 {
     public class MobileInput : MonoBehaviour
     {
+		#region Fields
+			
 		[Header( "Fired Events" )]
 		public SwipeInputEvent swipeInputEvent;
 		public IntGameEvent tapInputEvent;
@@ -15,53 +17,79 @@ namespace FFStudio
 		[Header("Shared Variables")]
         public SharedVector3 shared_InputDirection;
 
-        [Header("Lean Components")]
-        public LeanFingerHeld leanFingerHeld;
+        // [Header("LeanFinger Components")]
+        // public LeanFingerHeld leanFingerHeld;
 
         int swipeThreshold;
-        Vector3 inputDirection;
-        private void Awake()
-		{
-			swipeThreshold = Screen.width * GameSettings.Instance.swipeThreshold / 100;
-            shared_InputDirection.sharedValue = inputDirection = Vector3.zero;
+        Vector2 inputOrigin;
+		Vector2 lastInput; //TODO testing
+		LeanFingerDelegate fingerUpdate;
 
-            leanFingerHeld.MinimumAge = GameSettings.Instance.input_finger_ExprireTime;
-        }
+		#endregion
+
+		#region UnityAPI
+		private void Awake()
+		{
+			swipeThreshold                    = Screen.width * GameSettings.Instance.swipeThreshold / 100;
+			shared_InputDirection.sharedValue = Vector3.zero;
+			inputOrigin                       = Vector2.zero;
+
+			// leanFingerHeld.MinimumAge = GameSettings.Instance.input_finger_ExprireTime;
+
+			fingerUpdate = FingerDown;
+		}		
+		#endregion
+
+		#region API
 		public void Swiped( Vector2 delta )
 		{
 			swipeInputEvent.ReceiveInput( delta );
 		}
+
 		public void Tapped( int count )
 		{
 			tapInputEvent.eventValue = count;
-
 			tapInputEvent.Raise();
 		}
 
-		public void FingerDown(LeanFinger finger)
+		public void LeanFingerUpdate(LeanFinger finger)
 		{
-			if(finger.ScreenPosition.x <= Screen.width / 2)
-			{
-                inputDirection.x = Mathf.Max(-1, inputDirection.x - 1); // Min value is -1 
-				screenTapEvent.eventValue = "left";
-			}
+			fingerUpdate( finger );
+		}
+
+		public void LeanFingerUp()
+		{
+			fingerUpdate = FingerDown;
+
+			inputOrigin                       = Vector2.zero;
+			lastInput                         = Vector2.zero;
+			shared_InputDirection.sharedValue = Vector3.zero;
+		}
+		#endregion
+
+		#region Implementation
+		void FingerDown( LeanFinger finger )
+		{
+			inputOrigin  = finger.ScreenPosition;
+			lastInput    = finger.ScreenPosition;  //TODO REMOVE
+			fingerUpdate = FingerUpdate;
+
+			shared_InputDirection.sharedValue = Vector3.zero;
+		}
+
+		void FingerUpdate( LeanFinger finger )
+		{
+			var diff = ( finger.ScreenPosition - inputOrigin );
+
+			if(Mathf.Abs(diff.x) <= swipeThreshold)
+				shared_InputDirection.sharedValue.x = 0;
 			else 
-			{
-                inputDirection.x = Mathf.Min(1, inputDirection.x + 1); // Max value is 1
-				screenTapEvent.eventValue = "right";
-            }
+				shared_InputDirection.sharedValue.x = diff.normalized.x;
 
-			screenTapEvent.Raise();
+			shared_InputDirection.sharedValue.z = 1f;
 
-			inputDirection.z = 1;
-            shared_InputDirection.sharedValue = inputDirection;
-        }
-
-		public void FingerExpire(LeanFinger finger)
-		{
-            shared_InputDirection.sharedValue = inputDirection = Vector3.zero;
-        }
-
-
+			lastInput = finger.ScreenPosition; //TODO REMOVE
+		}		
+		#endregion
     }
 }
