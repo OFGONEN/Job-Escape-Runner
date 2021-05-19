@@ -90,14 +90,14 @@ namespace FFStudio
 			if(Mathf.Abs(diff.x) <= deadZoneThreshold)
 				shared_InputDirection.sharedValue.x = 0;
 			else 
-				shared_InputDirection.sharedValue.x = GiveNormalizedHorizontal(diff.x) * GameSettings.Instance.inputHorizontalCofactor;
+				shared_InputDirection.sharedValue.x = NormalizedHorizontalDifference(diff.x) * GameSettings.Instance.inputHorizontalCofactor;
 
 			shared_InputDirection.sharedValue.z = 1f;
 		}		
 
-		float GiveNormalizedHorizontal(float horizontalDiff)
+		float NormalizedHorizontalDifference(float horizontalDiff)
 		{
-			return Mathf.Min( horizontalDiff / horizontalInputThreshold, 1 );
+			return Mathf.Clamp( horizontalDiff / horizontalInputThreshold, -1, 1 );
 		}
 		#endregion
     }
