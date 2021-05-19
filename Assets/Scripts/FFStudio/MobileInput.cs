@@ -21,8 +21,8 @@ namespace FFStudio
 		// [Header("LeanFinger Components")]
 		// public LeanFingerHeld leanFingerHeld;
 
-		float swipeThreshold;
-		float horizontalThreshold;
+		float deadZoneThreshold;
+		float horizontalInputThreshold;
 		Vector2 inputOrigin;
 		LeanFingerDelegate fingerUpdate;
 
@@ -31,13 +31,13 @@ namespace FFStudio
 		#region UnityAPI
 		private void Awake()
 		{
-			swipeThreshold                    = Screen.width * GameSettings.Instance.swipeThreshold / 100;
-			horizontalThreshold 			  = Screen.width * GameSettings.Instance.horizontalInputCofactor / 100;
+			deadZoneThreshold                 = Screen.width * GameSettings.Instance.deadZoneThreshold / 100;
+			horizontalInputThreshold          = Screen.width * GameSettings.Instance.horizontalInputPercentage / 100;
 			shared_InputDirection.sharedValue = Vector3.zero;
 			inputOrigin                       = Vector2.zero;
 
 			// leanFingerHeld.MinimumAge = GameSettings.Instance.input_finger_ExprireTime;
-			input_cofactor.changeDuration = GameSettings.Instance.inputCofactorDuration;
+			input_cofactor.changeDuration = GameSettings.Instance.inputAccelerationCofactorDuration;
 
 			fingerUpdate = FingerDown;
 		}		
@@ -87,7 +87,7 @@ namespace FFStudio
 		{
 			var diff = ( finger.ScreenPosition - inputOrigin );
 
-			if(Mathf.Abs(diff.x) <= swipeThreshold)
+			if(Mathf.Abs(diff.x) <= deadZoneThreshold)
 				shared_InputDirection.sharedValue.x = 0;
 			else 
 				shared_InputDirection.sharedValue.x = GiveNormalizedHorizontal(diff.x) * GameSettings.Instance.inputHorizontalCofactor;
@@ -97,7 +97,7 @@ namespace FFStudio
 
 		float GiveNormalizedHorizontal(float horizontalDiff)
 		{
-			return Mathf.Min( horizontalDiff / horizontalThreshold, 1 );
+			return Mathf.Min( horizontalDiff / horizontalInputThreshold, 1 );
 		}
 		#endregion
     }
