@@ -17,6 +17,7 @@ namespace FFStudio
         [Foldout("Input Settings"), Tooltip("Percentage of the screen to register a swipe")] public float swipeThreshold;
         [Foldout("Input Settings"), Tooltip("WTF to name this")] public float horizontalInputCofactor;
         [Foldout("Input Settings"), Tooltip("Duration for input cofactor to reach intented value")] public float inputCofactorDuration;
+        [Foldout("Input Settings"), Tooltip("Cofactor for x value of the input")] public float inputHorizontalCofactor = 0.5f;
 
         [Tooltip("Time until finger held input expires")] public float input_finger_ExprireTime;
 

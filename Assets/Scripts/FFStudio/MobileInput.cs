@@ -90,7 +90,7 @@ namespace FFStudio
 			if(Mathf.Abs(diff.x) <= swipeThreshold)
 				shared_InputDirection.sharedValue.x = 0;
 			else 
-				shared_InputDirection.sharedValue.x = GiveNormalizedHorizontal(diff.x);
+				shared_InputDirection.sharedValue.x = GiveNormalizedHorizontal(diff.x) * GameSettings.Instance.inputHorizontalCofactor;
 
 			shared_InputDirection.sharedValue.z = 1f;
 		}		

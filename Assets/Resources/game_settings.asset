@@ -20,6 +20,7 @@ MonoBehaviour:
   swipeThreshold: 2.5
   horizontalInputCofactor: 25
   inputCofactorDuration: 0.75
+  inputHorizontalCofactor: 0.5
   input_finger_ExprireTime: 0.1
   obstacle_bounciness: 0.5
   obstacle_rotating_forceToApply: 3000
