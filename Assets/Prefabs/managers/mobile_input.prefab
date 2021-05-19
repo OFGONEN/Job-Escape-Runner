@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 4783297260515276076}
   - component: {fileID: 4783297260515276075}
   - component: {fileID: 4783297260515276074}
-  - component: {fileID: 4783297260515276073}
-  - component: {fileID: 4783297260515276072}
   - component: {fileID: 3051274565027558745}
+  - component: {fileID: 283980441}
   m_Layer: 0
   m_Name: mobile_input
   m_TagString: Untagged
@@ -51,7 +50,7 @@ MonoBehaviour:
   tapInputEvent: {fileID: 11400000, guid: 5dc801aaa311abc46bb568b0b05529f7, type: 2}
   screenTapEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   shared_InputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
-  leanFingerHeld: {fileID: 4783297260515276072}
+  input_cofactor: {fileID: 11400000, guid: e668119c33c7788409c0b3e1c1071853, type: 2}
 --- !u!114 &4783297260515276074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,102 +77,6 @@ MonoBehaviour:
   MovePivotKey: 308
   MultiDragKey: 308
   FingerTexture: {fileID: 0}
---- !u!114 &4783297260515276073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4783297260515276055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb097c07812299498915a0a3e793843, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreStartedOverGui: 1
-  RequiredSelectable: {fileID: 0}
-  onFinger:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4783297260515276075}
-        m_TargetAssemblyTypeName: FFStudio.MobileInput, Assembly-CSharp
-        m_MethodName: FingerDown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  ScreenDepth:
-    Conversion: 1
-    Camera: {fileID: 0}
-    Object: {fileID: 0}
-    Layers:
-      serializedVersion: 2
-      m_Bits: 4294967291
-    Distance: 0
-  onWorld:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &4783297260515276072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4783297260515276055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b40c14fc6d3f894fa14ec4b6c180e7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreStartedOverGui: 1
-  IgnoreIsOverGui: 0
-  RequiredSelectable: {fileID: 0}
-  MinimumAge: 0.5
-  MaximumMovement: 5
-  onFingerDown:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4783297260515276075}
-        m_TargetAssemblyTypeName: FFStudio.MobileInput, Assembly-CSharp
-        m_MethodName: FingerExpire
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onFingerUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  onFingerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  ScreenDepth:
-    Conversion: 1
-    Camera: {fileID: 0}
-    Object: {fileID: 0}
-    Layers:
-      serializedVersion: 2
-      m_Bits: 4294967291
-    Distance: 0
-  onWorldDown:
-    m_PersistentCalls:
-      m_Calls: []
-  onWorldUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  onWorldUp:
-    m_PersistentCalls:
-      m_Calls: []
-  fingerDatas: []
 --- !u!114 &3051274565027558745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,8 +97,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4783297260515276075}
         m_TargetAssemblyTypeName: FFStudio.MobileInput, Assembly-CSharp
-        m_MethodName: FingerExpire
-        m_Mode: 0
+        m_MethodName: LeanFingerUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -213,5 +116,66 @@ MonoBehaviour:
       m_Bits: 4294967291
     Distance: 0
   onPosition:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &283980441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783297260515276055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca05b4057f181e4db28ff62498d46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreStartedOverGui: 1
+  IgnoreIsOverGui: 0
+  IgnoreIfStatic: 0
+  IgnoreIfDown: 0
+  IgnoreIfUp: 0
+  RequiredSelectable: {fileID: 0}
+  onFinger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4783297260515276075}
+        m_TargetAssemblyTypeName: FFStudio.MobileInput, Assembly-CSharp
+        m_MethodName: LeanFingerUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Coordinate: 0
+  Multiplier: 1
+  onDelta:
+    m_PersistentCalls:
+      m_Calls: []
+  onDistance:
+    m_PersistentCalls:
+      m_Calls: []
+  ScreenDepth:
+    Conversion: 1
+    Camera: {fileID: 0}
+    Object: {fileID: 0}
+    Layers:
+      serializedVersion: 2
+      m_Bits: 4294967291
+    Distance: 0
+  onWorldFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldTo:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldDelta:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldFromTo:
     m_PersistentCalls:
       m_Calls: []

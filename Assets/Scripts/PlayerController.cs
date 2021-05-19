@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Shared Variables")]
 	public SharedVector3 inputDirection;
+	public SharedFloatPropertyTweener input_cofactor;
 	public SharedReferenceProperty playerRigidbodyReference;
 
 	[HorizontalLine]
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
 		 * Both  						<  0,  0, +1 >
 		 * None							<  0,  0,  0 > */
 		
-		playerRigidbody.AddForce( inputDirection.sharedValue * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
+		playerRigidbody.AddForce( inputDirection.sharedValue * GameSettings.Instance.player.force * input_cofactor.sharedValue * Time.fixedDeltaTime, ForceMode.Force );
 
 		totalDeltaAngle += inputDirection.sharedValue.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
 

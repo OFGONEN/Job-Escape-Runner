@@ -95,7 +95,7 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.2388313, y: 0.25, z: 1.19}
-  m_Center: {x: 0.00000011920929, y: 0.16, z: 0.020182729}
+  m_Center: {x: 0.00000011920929, y: 0.2, z: 0.020182729}
 --- !u!1 &3571083525753257346
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   screenTapListener:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
+  input_cofactor: {fileID: 11400000, guid: e668119c33c7788409c0b3e1c1071853, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
   animator: {fileID: 3571083525753257351}
   playerRigidbody: {fileID: 3571083525753257369}
@@ -207,9 +208,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2.2437553
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.62187594, z: 0}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &4079968393783958261
 GameObject:
   m_ObjectHideFlags: 0
