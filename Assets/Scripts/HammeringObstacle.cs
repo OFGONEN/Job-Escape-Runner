@@ -10,7 +10,6 @@ public class HammeringObstacle : MonoBehaviour
 	#region Fields
 	[Header( "Fired Events" )]
 	public GameEvent activatePlayerRagdoll;
-	public GameEvent levelFailEvent;
 
     [HorizontalLine]
 	public Transform rotatePivot;
@@ -72,7 +71,6 @@ public class HammeringObstacle : MonoBehaviour
     void TriggerEnterResponse(Collider other)
     {
 		activatePlayerRagdoll.Raise();
-		levelFailEvent.Raise();
     }
     #endregion
 }

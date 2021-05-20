@@ -19,7 +19,6 @@ namespace FFStudio
 
 		[Header("Fired Events")]
         public GameEvent levelCompleted;
-        public GameEvent levelFailedEvent;
 		public GameEvent activatePlayerRagdoll;
 		public GameEvent resetLevel;
 
@@ -140,8 +139,6 @@ namespace FFStudio
 			// level fail seqeunce
             FFLogger.Log( "A Net Triggered" );
 			activatePlayerRagdoll.Raise();
-			levelFailedEvent.Raise();
-			DOVirtual.DelayedCall( 2, resetLevel.Raise );
 		}
 
         void OnLevelFinishLineChanged()
@@ -190,7 +187,6 @@ namespace FFStudio
             {
                 FFLogger.Log( "Player lost momentum" );
 				activatePlayerRagdoll.Raise();
-				levelFailedEvent.Raise();
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 
