@@ -58,6 +58,9 @@ namespace FFStudio
 
             [ Tooltip( "Drag of the player rigidbody" ) ]
 			public float rigidBody_Drag = 1;
+
+			public float waypointArrivalThreshold = 0.25f;
+			public float inputHorizontalCofactor = 1.0f;
 		}
         
 		public PlayerSettings player;

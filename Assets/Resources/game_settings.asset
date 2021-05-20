@@ -37,3 +37,5 @@ MonoBehaviour:
   aIAgent:
     rigidBody_Mass: 5
     rigidBody_Drag: 0.1
+    waypointArrivalThreshold: 1
+    inputHorizontalCofactor: 1.2
