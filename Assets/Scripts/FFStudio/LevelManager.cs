@@ -136,12 +136,8 @@ namespace FFStudio
 
         void PlayerTriggeredNetResponse()
         {
-
 			var changeEvent = playerTriggeredFenceListener.gameEvent as ReferenceGameEvent;
 			var instanceId = ( changeEvent.eventValue as Collider ).gameObject.GetInstanceID();
-
-			var go = ( changeEvent.eventValue as Collider ).gameObject.name;
-			FFLogger.Log( "Fence: " + go );
 
 			activateEntityRagdoll.eventValue = instanceId;
 			activateEntityRagdoll.Raise();
@@ -192,6 +188,7 @@ namespace FFStudio
             if( playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold )
             {
                 FFLogger.Log( "Player lost momentum" );
+				activateEntityRagdoll.eventValue = playerRigidbody.gameObject.GetInstanceID();
 				activateEntityRagdoll.Raise();
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
