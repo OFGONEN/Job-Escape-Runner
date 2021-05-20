@@ -14,11 +14,11 @@ TagManager:
   - UI
   - Post Process
   - 
-  - Player
+  - Entity
   - Chair
   - Ragdoll
   - Obstacle
-  - OnlyCollideWithPlayer
+  - OnlyCollideWithEntity
   - 
   - 
   - 
