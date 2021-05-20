@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0befe0bbcc94c26449455e5d3f67ccc0, type: 3}
-  m_Name: player_activated_fence
+  m_Script: {fileID: 11500000, guid: 531a668c6d72c1246979a97d639a327b, type: 3}
+  m_Name: entity_activate_ragdoll
   m_EditorClassIdentifier: 
   canRaiseOtherEvents: 0
   eventsThatWillAlsoBeRaised: []
+  eventValue: 0

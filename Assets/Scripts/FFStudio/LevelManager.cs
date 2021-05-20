@@ -19,7 +19,7 @@ namespace FFStudio
 
 		[Header("Fired Events")]
         public GameEvent levelCompleted;
-		public GameEvent activatePlayerRagdoll;
+		public IntGameEvent activateEntityRagdoll;
 		public GameEvent resetLevel;
 
 		[Header("Level Releated")]
@@ -136,9 +136,15 @@ namespace FFStudio
 
         void PlayerTriggeredNetResponse()
         {
-			// level fail seqeunce
-            FFLogger.Log( "A Net Triggered" );
-			activatePlayerRagdoll.Raise();
+
+			var changeEvent = playerTriggeredFenceListener.gameEvent as ReferenceGameEvent;
+			var instanceId = ( changeEvent.eventValue as Collider ).gameObject.GetInstanceID();
+
+			var go = ( changeEvent.eventValue as Collider ).gameObject.name;
+			FFLogger.Log( "Fence: " + go );
+
+			activateEntityRagdoll.eventValue = instanceId;
+			activateEntityRagdoll.Raise();
 		}
 
         void OnLevelFinishLineChanged()
@@ -186,7 +192,7 @@ namespace FFStudio
             if( playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold )
             {
                 FFLogger.Log( "Player lost momentum" );
-				activatePlayerRagdoll.Raise();
+				activateEntityRagdoll.Raise();
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 

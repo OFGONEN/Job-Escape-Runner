@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c4e783e43fe4f4fa08e6785f264a60, type: 3}
-  m_Name: player_activate_ragdoll
+  m_Script: {fileID: 11500000, guid: 0befe0bbcc94c26449455e5d3f67ccc0, type: 3}
+  m_Name: entity_activated_finishLine
   m_EditorClassIdentifier: 
   canRaiseOtherEvents: 0
   eventsThatWillAlsoBeRaised: []

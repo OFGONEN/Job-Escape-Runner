@@ -89,7 +89,9 @@ public class PlayerController : MonoBehaviour
 	[ Button() ]
 	private void ActivateFullRagdoll()
 	{
-		if( enabled == false )
+		var changeEvent = activateRagdollListener.gameEvent as IntGameEvent;
+
+		if( enabled == false || changeEvent.eventValue != gameObject.GetInstanceID() )
 			return;
 
 		/* Let all children go! */
