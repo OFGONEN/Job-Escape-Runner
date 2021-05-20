@@ -41,13 +41,13 @@ public abstract class EntityController : MonoBehaviour
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
 	}
-	
-	private void Start()
+
+	protected virtual void Start()
 	{
 		totalDeltaAngle = startEulerYAngle = rotatingBody.transform.eulerAngles.y;
 
-		topmostRigidbody.mass = GameSettings.Instance.player.rigidBody_Mass;
-		topmostRigidbody.drag = GameSettings.Instance.player.rigidBody_Drag;
+		topmostRigidbody.mass = RigidbodyMass();
+		topmostRigidbody.drag = RigidbodyDrag();
 	}
 	
 	private void FixedUpdate()
@@ -61,9 +61,9 @@ public abstract class EntityController : MonoBehaviour
 
 		var input = InputSource();
 
-		topmostRigidbody.AddForce( input * GameSettings.Instance.player.force * InputCofactor() * Time.fixedDeltaTime );
+		topmostRigidbody.AddForce( input * GameSettings.Instance.force * InputCofactor() * Time.fixedDeltaTime );
 
-		totalDeltaAngle += input.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
+		totalDeltaAngle += input.x * GameSettings.Instance.angularSpeed * Time.fixedDeltaTime;
 
 		ClampVelocity();
 		ClampAndSetTotalRotationDelta();
@@ -95,11 +95,11 @@ public abstract class EntityController : MonoBehaviour
 		foreach( var rigidbody in ragdollRigidbodiesToActivate )
 			rigidbody.isKinematic = false;
 
-		/* Transfer players velocity to chair. */
+		/* Transfer topmost rigidbody's velocity to chair. */
 		rotatingBody.velocity        = topmostRigidbody.velocity / 3;
 		rotatingBody.angularVelocity = topmostRigidbody.angularVelocity / 10;
 
-		/* Completely stop player rigidbody as well. */
+		/* Completely stop topmost rigidbody as well. */
 		topmostRigidbody.velocity = topmostRigidbody.angularVelocity = Vector3.zero;
 
 		/* Disable the component. We are interested in the enabled flag actually. */
@@ -109,8 +109,8 @@ public abstract class EntityController : MonoBehaviour
 	private void ClampAndSetTotalRotationDelta()
 	{
 		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle,
-									   startEulerYAngle + GameSettings.Instance.player.angularClamping.x,
-									   startEulerYAngle + GameSettings.Instance.player.angularClamping.y );
+									   startEulerYAngle + GameSettings.Instance.angularClamping.x,
+									   startEulerYAngle + GameSettings.Instance.angularClamping.y );
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
 	}
@@ -120,7 +120,7 @@ public abstract class EntityController : MonoBehaviour
 		var velocity = topmostRigidbody.velocity;
 		var velocityMagnitude = velocity.magnitude;
 
-		velocityMagnitude = Mathf.Min( velocityMagnitude, GameSettings.Instance.player.velocityClamp );
+		velocityMagnitude = Mathf.Min( velocityMagnitude, GameSettings.Instance.velocityClamp );
 
 		topmostRigidbody.velocity = velocity.normalized * velocityMagnitude;
 	}
@@ -129,5 +129,7 @@ public abstract class EntityController : MonoBehaviour
 #region Protected API 
 	abstract protected Vector3 InputSource();
 	abstract protected float   InputCofactor();
+	abstract protected float   RigidbodyMass();
+	abstract protected float   RigidbodyDrag();
 #endregion
 }

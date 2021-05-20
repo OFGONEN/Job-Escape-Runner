@@ -46,6 +46,11 @@ public class PlayerController : EntityController
 
 		screenTapListener.response = ScreenTapResponse;
 	}
+	
+	protected override void Start()
+	{
+		base.Start();
+	}
 #endregion
 
 #region API
@@ -68,6 +73,16 @@ public class PlayerController : EntityController
 	protected override float InputCofactor()
 	{
 		return input_cofactor.sharedValue;
+	}
+
+	protected override float RigidbodyMass()
+	{
+		return GameSettings.Instance.player.rigidBody_Mass;
+	}
+
+	protected override float RigidbodyDrag()
+	{
+		return GameSettings.Instance.player.rigidBody_Drag;
 	}
 #endregion
 }

@@ -1,8 +1,7 @@
 /* Created by and for usage of FF Studios (2021). */
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FFStudio;
 
 public class AgentController : EntityController
 {
@@ -30,6 +29,16 @@ public class AgentController : EntityController
 	protected override float InputCofactor()
 	{
 		return 1.0f; // Won't use this for agents.
+	}
+
+	protected override float RigidbodyMass()
+	{
+		return GameSettings.Instance.aIAgent.rigidBody_Mass;
+	}
+
+	protected override float RigidbodyDrag()
+	{
+		return GameSettings.Instance.aIAgent.rigidBody_Drag;
 	}
 #endregion
 }
