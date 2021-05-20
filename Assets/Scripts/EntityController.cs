@@ -27,17 +27,17 @@ public abstract class EntityController : MonoBehaviour
 #endregion
 
 #region Unity API
-	protected void OnEnable()
+	protected virtual void OnEnable()
 	{
 		activateRagdollListener.OnEnable();
 	}
 
-	protected void OnDisable()
+	protected virtual void OnDisable()
 	{
 		activateRagdollListener.OnDisable();
 	}
 	
-	protected void Awake()
+	protected virtual void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
 	}

@@ -20,7 +20,7 @@ public class PlayerController : EntityController
 #endregion
 
 #region Unity API
-	protected new /* Hiding is intentional. */ void OnEnable()
+	protected override void OnEnable()
 	{
 		base.OnEnable();
 
@@ -29,7 +29,7 @@ public class PlayerController : EntityController
 		playerRigidbodyReference.SetValue( topmostRigidbody );
 	}
 
-	protected new /* Hiding is intentional. */ void OnDisable()
+	protected override void OnDisable()
 	{
 		base.OnDisable();
 		
@@ -40,11 +40,11 @@ public class PlayerController : EntityController
 		FFLogger.Log( "PlayerController disabled" );
 	}
 
-	protected new /* Hiding is intentional. */ void Awake()
+	protected override void Awake()
 	{
 		base.Awake();
 
-		screenTapListener.response = OnScreenTap;
+		screenTapListener.response = ScreenTapResponse;
 	}
 #endregion
 
@@ -52,7 +52,7 @@ public class PlayerController : EntityController
 #endregion
 
 #region Implementation
-	private void OnScreenTap()
+	private void ScreenTapResponse()
 	{
 		var changeEvent = screenTapListener.gameEvent as StringGameEvent;
 		animator.SetTrigger( changeEvent.eventValue );
