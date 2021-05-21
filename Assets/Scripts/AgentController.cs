@@ -15,9 +15,14 @@ public class AgentController : EntityController
 
 	private int currentWaypointIndex = 0;
 	private Vector3 GoalWaypoint => waypoints[ currentWaypointIndex ];
-	
+
+	private Vector3 currentInputDirection;
+
 	private GameSettings.AIAgentSettings aIAgentSettings;
 	private GameSettings gameSettings;
+	
+	private float speedMultiplier;
+	private float burstForceCounter = 0.0f;
 #endregion
 
 #region Unity API
@@ -34,6 +39,8 @@ public class AgentController : EntityController
 		aIAgentSettings = gameSettings.aIAgent;
 
 		base.Start(); // Need to initialize gameSettings related stuff first as they will be used in base.Start().
+
+		speedMultiplier = aIAgentSettings.MoveSpeedAndForceRandomMultiplier();
 
 		sourceWaypoints = ( sourceWaypointsSharedReference.sharedValue as Transform ).GetComponentsInChildren< Transform >();
 		waypoints = sourceWaypoints.Where( ( sourceWaypointTransform, index ) => index > 0 )
@@ -75,11 +82,8 @@ public class AgentController : EntityController
 #region API
 #endregion
 
-#region Implementation
-#endregion
-
 #region EntityController Overrides
-	protected override Vector3 InputSource()
+	protected override Vector3 InputDirection()
 	{
 		/* Currently assuming: Levels always progress on +Z: Code below will barf on U-turns etc. */
 
@@ -87,7 +91,7 @@ public class AgentController : EntityController
 		    ( currentWaypointIndex + 1 ) < waypoints.Length )
 			currentWaypointIndex++;
 
-		return ( GoalWaypoint - transform.position ).normalized.SetZ ( 1.0f );
+		return currentInputDirection = ( GoalWaypoint - transform.position ).normalized.SetZ ( 1.0f );
 	}
 
 	protected override float InputCofactor()
@@ -103,6 +107,35 @@ public class AgentController : EntityController
 	protected override float RigidbodyDrag()
 	{
 		return aIAgentSettings.rigidBody_Drag;
+	}
+
+	protected override void ClampVelocity()
+	{
+		var velocity          = topmostRigidbody.velocity;
+		var velocityMagnitude = velocity.magnitude;
+
+		velocityMagnitude = Mathf.Min( velocityMagnitude, gameSettings.velocityClamp * speedMultiplier );
+
+		topmostRigidbody.velocity = velocity.normalized * velocityMagnitude;
+	}
+
+	protected override void MoveViaPhysics( Vector3 inputDirection )
+	{
+		/* AI agents apply force as one-frame bursts, on regular intervals. */
+		burstForceCounter += Time.fixedDeltaTime;
+
+		if( burstForceCounter > aIAgentSettings.forceBurstCooldown )
+		{
+			AddBurstForce_OneFrame();
+			burstForceCounter = 0;
+		}
+	}
+#endregion
+
+#region Implementation
+	private void AddBurstForce_OneFrame()
+	{
+		topmostRigidbody.AddForce( currentInputDirection * aIAgentSettings.force * InputCofactor() );
 	}
 #endregion
 }

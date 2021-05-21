@@ -24,7 +24,6 @@ namespace FFStudio
         [Foldout("Obstacle Settings")] public float obstacle_bounciness;
         [Foldout("Obstacle Settings")] public float obstacle_rotating_forceToApply;
         
-        [ Foldout( "Physics" ) ] public float force        = 7500.0f;
         [ Foldout( "Physics" ) ] public float angularSpeed = 150.0f;
         
         [ Foldout( "Physics" ), MinMaxSlider( -90, +90 ) ]
@@ -37,7 +36,9 @@ namespace FFStudio
 		[ System.Serializable ]
         public class PlayerSettings
 		{
-            [ Tooltip( "Mass of the player rigidbody" ) ]
+            [ Foldout( "Physics" ) ] public float force = 7500.0f;
+
+			[ Tooltip( "Mass of the player rigidbody" ) ]
 			public float rigidBody_Mass = 5;
 
             [ Tooltip( "Drag of the player rigidbody" ) ]
@@ -61,6 +62,17 @@ namespace FFStudio
 
 			public float waypointArrivalThreshold = 0.25f;
 			public float inputHorizontalCofactor = 1.0f;
+
+			public float force = 1000.0f;
+            [ Range( 0.01f, 1.0f ) ]
+			public float forceBurstCooldown = 0.1f;
+            [ MinMaxSlider( 0.0f, +2.0f ) ]
+            public Vector2 movespeedAndForceRandomMultiplier;
+            
+            public float MoveSpeedAndForceRandomMultiplier()
+            {
+				return Random.Range( movespeedAndForceRandomMultiplier.x, movespeedAndForceRandomMultiplier.y );
+			}
 		}
         
 		public PlayerSettings player;

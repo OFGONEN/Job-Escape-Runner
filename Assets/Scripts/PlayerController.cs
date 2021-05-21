@@ -17,6 +17,8 @@ public class PlayerController : EntityController
 	[ Label( "Input Cofactor" ) ]
 	public SharedFloatPropertyTweener input_cofactor;
 	public SharedReferenceProperty playerRigidbodyReference;
+	
+	private Vector3 currentInputDirection;
 #endregion
 
 #region Unity API
@@ -65,9 +67,9 @@ public class PlayerController : EntityController
 #endregion
 
 #region EntityController Overrides
-	protected override Vector3 InputSource()
+	protected override Vector3 InputDirection()
 	{
-		return inputDirection.sharedValue;
+		return currentInputDirection = inputDirection.sharedValue;
 	}
 
 	protected override float InputCofactor()
@@ -83,6 +85,11 @@ public class PlayerController : EntityController
 	protected override float RigidbodyDrag()
 	{
 		return GameSettings.Instance.player.rigidBody_Drag;
+	}
+
+	protected override void MoveViaPhysics( Vector3 inputDirection )
+	{
+		topmostRigidbody.AddForce( inputDirection * GameSettings.Instance.player.force * InputCofactor() * Time.fixedDeltaTime );
 	}
 #endregion
 }

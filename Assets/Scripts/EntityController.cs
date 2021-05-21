@@ -51,7 +51,7 @@ public abstract class EntityController : MonoBehaviour
 	}
 	
 	private void FixedUpdate()
-    {
+	{
 		/* All cases regarding input and the value of inputDirection:
 		 * [INPUT]			[VALUE OF inputDirection]
 		 * Left  						< +1,  0, +1 >
@@ -59,11 +59,10 @@ public abstract class EntityController : MonoBehaviour
 		 * Both  						<  0,  0, +1 >
 		 * None							<  0,  0,  0 > */
 
-		var input = InputSource();
+		var inputDirection = InputDirection();
 
-		topmostRigidbody.AddForce( input * GameSettings.Instance.force * InputCofactor() * Time.fixedDeltaTime );
-
-		totalDeltaAngle += input.x * GameSettings.Instance.angularSpeed * Time.fixedDeltaTime;
+		MoveViaPhysics( inputDirection );
+		Rotate( inputDirection );
 
 		ClampVelocity();
 		ClampAndSetTotalRotationDelta();
@@ -105,6 +104,11 @@ public abstract class EntityController : MonoBehaviour
 		/* Disable the component. We are interested in the enabled flag actually. */
 		enabled = false;
 	}
+
+	private void Rotate( Vector3 inputDirection )
+	{
+		totalDeltaAngle += inputDirection.x * GameSettings.Instance.angularSpeed * Time.fixedDeltaTime;
+	}
 	
 	private void ClampAndSetTotalRotationDelta()
 	{
@@ -114,8 +118,16 @@ public abstract class EntityController : MonoBehaviour
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
 	}
+#endregion
 
-	private void ClampVelocity()
+#region Protected API 
+	abstract protected Vector3 InputDirection();
+	abstract protected float   InputCofactor();
+	abstract protected float   RigidbodyMass();
+	abstract protected float   RigidbodyDrag();
+	abstract protected void	   MoveViaPhysics( Vector3 inputDirection );
+
+	protected virtual void ClampVelocity()
 	{
 		var velocity = topmostRigidbody.velocity;
 		var velocityMagnitude = velocity.magnitude;
@@ -124,12 +136,5 @@ public abstract class EntityController : MonoBehaviour
 
 		topmostRigidbody.velocity = velocity.normalized * velocityMagnitude;
 	}
-#endregion
-
-#region Protected API 
-	abstract protected Vector3 InputSource();
-	abstract protected float   InputCofactor();
-	abstract protected float   RigidbodyMass();
-	abstract protected float   RigidbodyDrag();
 #endregion
 }
