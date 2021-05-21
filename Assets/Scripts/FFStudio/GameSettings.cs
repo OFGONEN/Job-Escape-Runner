@@ -23,33 +23,60 @@ namespace FFStudio
 
         [Foldout("Obstacle Settings")] public float obstacle_bounciness;
         [Foldout("Obstacle Settings")] public float obstacle_rotating_forceToApply;
+        
+        [ Foldout( "Physics" ) ] public float angularSpeed = 150.0f;
+        
+        [ Foldout( "Physics" ), MinMaxSlider( -90, +90 ) ]
+        public Vector2 angularClamping = new Vector2( -30, +30 );
+        
+        [ Foldout( "Physics" ), Tooltip( "Velocity of the player" ) ]
+        public float velocityClamp = 15;
 
 		[Tooltip( "Threshold distance for level progress to be 1" )] public float finishLineDistanceThreshold = 2f;
 		[ System.Serializable ]
         public class PlayerSettings
 		{
-			public float force = 10000.0f;
-			public float angularSpeed = 150.0f;
-			[ MinMaxSlider( -90, +90 ) ]
-            public Vector2 angularClamping = new Vector2( -30, +30 );
+            [ Foldout( "Physics" ) ] public float force = 7500.0f;
 
-            [Tooltip("Velocity of the player")]
-			public float velocityClamp = 15;
-
-            [Tooltip("Mass of the player rigidbody")]
+			[ Tooltip( "Mass of the player rigidbody" ) ]
 			public float rigidBody_Mass = 5;
 
-            [Tooltip("Drag of the player rigidbody")]
+            [ Tooltip( "Drag of the player rigidbody" ) ]
 			public float rigidBody_Drag = 1;
 
-			[Tooltip("If user exceeds this time without having enough momentum level fails")] 
+			[ Tooltip( "If user exceeds this time without having enough momentum level fails" ) ] 
 			public float lowMomentum_TimeThreshold = 1;
 
-            [Tooltip("Threshold value for momentum countdown to be count")]
+            [ Tooltip( "Threshold value for momentum countdown to be count" ) ]
 			public float lowMomentum_Threshold = 0.1f;
 		}
+        
+		[ System.Serializable ]
+        public class AIAgentSettings
+		{
+            [ Tooltip( "Mass of the player rigidbody" ) ]
+			public float rigidBody_Mass = 5;
 
+            [ Tooltip( "Drag of the player rigidbody" ) ]
+			public float rigidBody_Drag = 1;
+
+			public float waypointArrivalThreshold = 0.25f;
+			public float inputHorizontalCofactor = 1.0f;
+
+			public float force = 1000.0f;
+            [ Range( 0.01f, 1.0f ) ]
+			public float forceBurstCooldown = 0.1f;
+            [ MinMaxSlider( 0.0f, +2.0f ) ]
+            public Vector2 movespeedAndForceRandomMultiplier;
+            
+            public float MoveSpeedAndForceRandomMultiplier()
+            {
+				return Random.Range( movespeedAndForceRandomMultiplier.x, movespeedAndForceRandomMultiplier.y );
+			}
+		}
+        
 		public PlayerSettings player;
+		public AIAgentSettings aIAgent;
 
 		private static GameSettings instance;
 

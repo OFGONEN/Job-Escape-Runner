@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea3c0b9fd00fd441b6cebc5941ee13b, type: 3}
-  m_Name: LevelData_1
+  m_Script: {fileID: 11500000, guid: 67516f72723bfae41865045eb7e4224d, type: 3}
+  m_Name: ai_agent_source_waypoints
   m_EditorClassIdentifier: 
-  sceneIndex: 1
-  horizontalWaypointOffset: 1
