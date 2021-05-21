@@ -9,7 +9,7 @@ public class ParallaxEffect : MonoBehaviour
 {
 	#region Fields
 	public SharedReferenceProperty targetReference; // Players rigidbody
-	public Vector3 parallaxAxis;
+	public Vector3 parallaxRatio;
 
 	// Private Fields
 	private Transform targetTransform;
@@ -30,9 +30,9 @@ public class ParallaxEffect : MonoBehaviour
     {
 		var diff = targetTransform.position - target_StartPosition;
 
-		diff.x *= parallaxAxis.x;
-		diff.y *= parallaxAxis.y;
-		diff.z *= parallaxAxis.z;
+		diff.x *= parallaxRatio.x;
+		diff.y *= parallaxRatio.y;
+		diff.z *= parallaxRatio.z;
 
 		transform.position = startPosition + diff;
 	}

@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c27bbdad55e412449b473783f44f27c, type: 3}
-  m_Name: SwipeInputEvent
+  m_Script: {fileID: 11500000, guid: 67516f72723bfae41865045eb7e4224d, type: 3}
+  m_Name: ai_agent_source_waypoints
   m_EditorClassIdentifier: 
-  canRaiseOtherEvents: 0
-  eventsThatWillAlsoBeRaised: []
-  eventValue: {x: 0, y: 0}
-  angleThreshold: 0
-  inputValue: {x: 0, y: 0}

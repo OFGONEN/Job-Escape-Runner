@@ -51,12 +51,16 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: efef06bf257ee27438d6c2aab4936226, type: 2}
   playerTriggeredFinishLine:
     gameEvent: {fileID: 11400000, guid: ad0b37e63f37f854189a36cc0ff28893, type: 2}
-  playerTriggeredNetListener:
+  playerTriggeredFenceListener:
     gameEvent: {fileID: 11400000, guid: d07fda7452df6b54e9518e05761e5abf, type: 2}
+  netTriggerListener:
+    gameEvent: {fileID: 11400000, guid: fd2640a1fdfac04449f59470a22ccd25, type: 2}
+  screenTapInputListener:
+    gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   levelCompleted: {fileID: 11400000, guid: 28d976b368abc004a924d98b1751a17d, type: 2}
-  levelFailedEvent: {fileID: 11400000, guid: ec850936269bc2e47b26cfebd8bdad97, type: 2}
-  activatePlayerRagdoll: {fileID: 11400000, guid: 783284a52a237dd4f94289115ae6c532, type: 2}
-  levelProgress: {fileID: 11400000, guid: 72113ece5a5901b42b4046db2223b8d7, type: 2}
+  activateEntityRagdoll: {fileID: 11400000, guid: a1bd7ddd64a66c946ba1a440e7f95d14, type: 2}
+  resetLevel: {fileID: 11400000, guid: 0a3e52cd505ecfc4ba9ef153d4f3ba93, type: 2}
+  levelProgress: {fileID: 11400000, guid: 43438d720c16f2e4aa5a19d520e1e15f, type: 2}
   obstaclePhysicMaterial: {fileID: 13400000, guid: ee88e9c714ea1de449bea018a53b6010, type: 2}
   playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
   levelFinishLineReference: {fileID: 11400000, guid: a57d59503d5762a46a894a271f5a6336, type: 2}

@@ -4,106 +4,92 @@ using UnityEngine;
 using FFStudio;
 using NaughtyAttributes;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : EntityController
 {
-	#region Fields
-	[Header( "Event Listeners" )]
-	public EventListenerDelegateResponse activateRagdollListener;
+#region Fields
+	[ Header( "Event Listeners" ) ]
+	public EventListenerDelegateResponse screenTapListener;
 
-	[HorizontalLine]
+	[ HorizontalLine ]
 
-	[Header("Shared Variables")]
+	[ Header( "Shared Variables" ) ]
 	public SharedVector3 inputDirection;
+	[ Label( "Input Cofactor" ) ]
+	public SharedFloatPropertyTweener input_cofactor;
 	public SharedReferenceProperty playerRigidbodyReference;
-
-	[HorizontalLine]
-
-	[ SerializeField ] private Rigidbody playerRigidbody;
-	[ SerializeField ] private Rigidbody rotatingBody;
-	[ SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
-
-	private float totalDeltaAngle = 0.0f;
-	private float startEulerYAngle;
+	
+	private Vector3 currentInputDirection;
 #endregion
 
 #region Unity API
-	private void OnEnable()
+	protected override void OnEnable()
 	{
-		activateRagdollListener.OnEnable();
+		base.OnEnable();
 
-		playerRigidbodyReference.SetValue( playerRigidbody );
+		screenTapListener.OnEnable();
+
+		playerRigidbodyReference.SetValue( topmostRigidbody );
 	}
 
-	private void OnDisable()
+	protected override void OnDisable()
 	{
-		activateRagdollListener.OnDisable();
+		base.OnDisable();
+		
+		screenTapListener.OnDisable();
 
 		playerRigidbodyReference.SetValue( null );
-	}
-	
-	private void Awake()
-	{
-		activateRagdollListener.response = ActivateFullRagdoll;
-	}
-	private void Start()
-	{
-		startEulerYAngle = rotatingBody.rotation.y;
-	}
-	
-	private void FixedUpdate()
-    {
-		/* All cases regarding input and the value of inputDirection:
-		 * [INPUT]			[VALUE OF inputDirection]
-		 * Left  						< +1,  0, +1 >
-		 * Right 						< -1,  0, +1 >
-		 * Both  						<  0,  0, +1 >
-		 * None							<  0,  0,  0 > */
-		
-		playerRigidbody.AddForce( inputDirection.sharedValue * GameSettings.Instance.player.force * Time.fixedDeltaTime, ForceMode.Force );
 
-		totalDeltaAngle += inputDirection.sharedValue.x * GameSettings.Instance.player.angularSpeed * Time.fixedDeltaTime;
-		
-		ClampAndSetTotalRotationDelta();
+		FFLogger.Log( "PlayerController disabled" );
+	}
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		screenTapListener.response = ScreenTapResponse;
+	}
+	
+	protected override void Start()
+	{
+		base.Start();
 	}
 #endregion
 
 #region API
-	[ Button() ]
-	public void ActivateFullRagdoll()
-	{
-		if( enabled == false )
-			return;
-
-		/* Let all children go! */
-		rotatingBody.transform.SetParent( null );
-		rotatingBody.transform.GetChild( 0 ).SetParent( null );
-		
-		/* Make rigidbodies of ragdoll elements dynamic to activate them. */
-		rotatingBody.isKinematic = false;
-		
-		foreach( var rigidbody in ragdollRigidbodiesToActivate )
-			rigidbody.isKinematic = false;
-
-		/* Transfer players velocity to chair. */
-		rotatingBody.velocity        = playerRigidbody.velocity / 3;
-		rotatingBody.angularVelocity = playerRigidbody.angularVelocity / 10;
-
-		/* Completely stop player rigidbody as well. */
-		playerRigidbody.velocity = playerRigidbody.angularVelocity = Vector3.zero;
-
-		/* Disable the component. We are interested in the enabled flag actually. */
-		enabled = false;
-	}
 #endregion
 
 #region Implementation
-	private void ClampAndSetTotalRotationDelta()
+	private void ScreenTapResponse()
 	{
-		totalDeltaAngle = Mathf.Clamp( totalDeltaAngle,
-									   GameSettings.Instance.player.angularClamping.x,
-									   GameSettings.Instance.player.angularClamping.y );
+		var changeEvent = screenTapListener.gameEvent as StringGameEvent;
+		animator.SetTrigger( changeEvent.eventValue );
+	}
+#endregion
 
-		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( startEulerYAngle + totalDeltaAngle );
+#region EntityController Overrides
+	protected override Vector3 InputDirection()
+	{
+		return currentInputDirection = inputDirection.sharedValue;
+	}
+
+	protected override float InputCofactor()
+	{
+		return input_cofactor.sharedValue;
+	}
+
+	protected override float RigidbodyMass()
+	{
+		return GameSettings.Instance.player.rigidBody_Mass;
+	}
+
+	protected override float RigidbodyDrag()
+	{
+		return GameSettings.Instance.player.rigidBody_Drag;
+	}
+
+	protected override void MoveViaPhysics( Vector3 inputDirection )
+	{
+		topmostRigidbody.AddForce( inputDirection * GameSettings.Instance.player.force * InputCofactor() * Time.fixedDeltaTime );
 	}
 #endregion
 }

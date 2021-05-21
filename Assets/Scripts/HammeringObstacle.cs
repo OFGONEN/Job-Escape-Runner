@@ -9,7 +9,7 @@ public class HammeringObstacle : MonoBehaviour
 {
 	#region Fields
 	[Header( "Fired Events" )]
-	public GameEvent levelFailEvent;
+	public IntGameEvent activateEntityRagdoll;
 
     [HorizontalLine]
 	public Transform rotatePivot;
@@ -46,7 +46,7 @@ public class HammeringObstacle : MonoBehaviour
     }
     private void Awake()
     {
-        rotatePivot.eulerAngles = startAngle;
+        rotatePivot.localEulerAngles = startAngle;
 
         hammerSequence = StartHammerSequence();
     }
@@ -59,9 +59,9 @@ public class HammeringObstacle : MonoBehaviour
         var sequence = DOTween.Sequence();
 
 		sequence.AppendCallback( () => triggerCollider.enabled = true );
-		sequence.Append(rotatePivot.DORotate(endAngle, down_Duration).SetEase(down_Curve));
+		sequence.Append(rotatePivot.DOLocalRotate(endAngle, down_Duration).SetEase(down_Curve));
 		sequence.AppendCallback( () => triggerCollider.enabled = false );
-        sequence.Append(rotatePivot.DORotate(startAngle, up_Duration).SetEase(up_Curve));
+        sequence.Append(rotatePivot.DOLocalRotate(startAngle, up_Duration).SetEase(up_Curve));
 
         sequence.SetLoops( -1 );
 
@@ -70,13 +70,8 @@ public class HammeringObstacle : MonoBehaviour
 
     void TriggerEnterResponse(Collider other)
     {
-        var controller = other.GetComponent<PlayerController>();
-
-        if(controller)
-        {
-            controller.ActivateFullRagdoll();
-			levelFailEvent.Raise();
-		}
+		activateEntityRagdoll.eventValue = other.gameObject.GetInstanceID();
+		activateEntityRagdoll.Raise();
     }
     #endregion
 }

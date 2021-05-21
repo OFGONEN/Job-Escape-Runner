@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: LevelData_1
   m_EditorClassIdentifier: 
   sceneIndex: 1
+  horizontalWaypointOffset: 1

@@ -3,7 +3,7 @@
 using UnityEngine;
 using FFStudio;
 
-public class SimpleCameraFollow : MonoBehaviour
+public class SimpleFollow : MonoBehaviour
 {
 #region Fields
     public Transform targetToFollow;

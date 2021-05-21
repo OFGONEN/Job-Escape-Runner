@@ -17,14 +17,28 @@ MonoBehaviour:
   ui_Entity_Fade_TweenDuration: 0
   ui_Entity_Scale_TweenDuration: 0
   ui_Entity_FloatingMove_TweenDuration: 0
-  swipeThreshold: 0
-  input_finger_ExprireTime: 1
+  deadZoneThreshold: 0
+  horizontalInputPercentage: 25
+  inputAccelerationCofactorDuration: 0
+  inputHorizontalCofactor: 0.5
+  input_finger_ExprireTime: 0.1
   obstacle_bounciness: 0.5
   obstacle_rotating_forceToApply: 3000
+  force: 7500
+  angularSpeed: 150
+  angularClamping: {x: -30, y: 30}
+  velocityClamp: 20
   finishLineDistanceThreshold: 2
   player:
-    force: 10000
-    angularSpeed: 150
-    angularClamping: {x: -30, y: 30}
-    momentum_CountDownTime: 3
-    momentum_Magnitude: 0.1
+    rigidBody_Mass: 5
+    rigidBody_Drag: 0.1
+    lowMomentum_TimeThreshold: 3
+    lowMomentum_Threshold: 1
+  aIAgent:
+    rigidBody_Mass: 7.5
+    rigidBody_Drag: 0.1
+    waypointArrivalThreshold: 1
+    inputHorizontalCofactor: 1.2
+    force: 850
+    forceBurstCooldown: 0.15
+    movespeedAndForceRandomMultiplier: {x: 0.8, y: 1.3}

@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0befe0bbcc94c26449455e5d3f67ccc0, type: 3}
-  m_Name: player_activated_net
+  m_Script: {fileID: 11500000, guid: 9c27bbdad55e412449b473783f44f27c, type: 3}
+  m_Name: input_swipe
   m_EditorClassIdentifier: 
   canRaiseOtherEvents: 0
   eventsThatWillAlsoBeRaised: []
+  eventValue: {x: 0, y: 0}
+  angleThreshold: 0
+  inputValue: {x: 0, y: 0}
