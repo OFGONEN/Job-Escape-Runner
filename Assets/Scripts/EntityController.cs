@@ -74,7 +74,7 @@ public abstract class EntityController : MonoBehaviour
 
 #region Implementation
 	[ Button() ]
-	private void ActivateFullRagdoll()
+	protected void ActivateFullRagdoll()
 	{
 		if( enabled == false || 
             ( activateRagdollListener.gameEvent as IntGameEvent ).eventValue != gameObject.GetInstanceID() )
@@ -89,8 +89,12 @@ public abstract class EntityController : MonoBehaviour
 
 		ragdollBodyTransform.SetParent( null );
 
+		/* Disable animator as it is controlling the lower body limbs. */
+		animator.enabled = false;
+		
 		/* Make rigidbodies of ragdoll elements dynamic to activate them. */
 		rotatingBody.isKinematic = false;
+
 		foreach( var rigidbody in ragdollRigidbodiesToActivate )
 			rigidbody.isKinematic = false;
 
