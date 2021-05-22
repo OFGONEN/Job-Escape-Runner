@@ -53,6 +53,16 @@ public class PlayerController : EntityController
 	{
 		base.Start();
 	}
+
+	protected void Update()
+	{
+		int parameter = 0;
+
+		if(!Mathf.Approximately(0, inputDirection.sharedValue.x))
+			parameter = ( int )Mathf.Sign( inputDirection.sharedValue.x );
+
+		animator.SetInteger( "leg", parameter );
+	}
 #endregion
 
 #region API
@@ -61,8 +71,8 @@ public class PlayerController : EntityController
 #region Implementation
 	private void ScreenTapResponse()
 	{
-		var changeEvent = screenTapListener.gameEvent as StringGameEvent;
-		animator.SetTrigger( changeEvent.eventValue );
+		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
+		animator.SetBool( "isInputActive", changeEvent.eventValue );
 	}
 #endregion
 
