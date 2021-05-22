@@ -22,6 +22,9 @@ public abstract class EntityController : MonoBehaviour
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody   rotatingBody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
+	private Rigidbody[] ragdollRigidbodies;
+
+	private TransformInfo[] transformInfos;
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
 #endregion
@@ -40,6 +43,8 @@ public abstract class EntityController : MonoBehaviour
 	protected virtual void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
+
+		GetTransformInfos();
 	}
 
 	protected virtual void Start()
@@ -107,6 +112,61 @@ public abstract class EntityController : MonoBehaviour
 
 		/* Disable the component. We are interested in the enabled flag actually. */
 		enabled = false;
+	}
+
+	protected void ReassembleRagdoll()
+	{
+		rotatingBody.transform.SetParent( transform );
+		
+		rotatingBody_Part.transform.SetParent( transform );
+		rotatingBody_Part.enabled = false;
+
+		ragdollBodyTransform.SetParent( rotatingBody.transform );
+
+		animator.enabled = true;
+		
+		rotatingBody.isKinematic = true;
+
+		foreach( var rigidbody in ragdollRigidbodiesToActivate )
+			rigidbody.isKinematic = true;
+
+		rotatingBody.velocity        = Vector3.zero;
+		rotatingBody.angularVelocity = Vector3.zero;;
+
+		topmostRigidbody.velocity = topmostRigidbody.angularVelocity = Vector3.zero;
+
+		enabled = true;
+
+
+		// Setting back the values
+
+		rotatingBody.SetTransformInfo( transformInfos[ 0 ] );
+		rotatingBody_Part.transform.SetTransformInfo( transformInfos[ 1 ] );
+		ragdollBodyTransform.SetTransformInfo( transformInfos[ 2 ] );
+
+		rotatingBody.gameObject.SetActive( true );
+		rotatingBody_Part.gameObject.SetActive( true );
+
+		for (int i = 0; i < ragdollRigidbodies.Length ; i++)
+		{
+			ragdollRigidbodies[ i ].SetTransformInfo( transformInfos[ i + 3 ] );
+			ragdollRigidbodies[ i ].gameObject.SetActive( true );
+		}
+	}
+
+	private void GetTransformInfos()
+	{
+		ragdollRigidbodies 	= ragdollBodyTransform.GetComponentsInChildren< Rigidbody >();
+		transformInfos 		= new TransformInfo[ ragdollRigidbodies.Length + 3 ];
+		transformInfos[ 0 ] = new TransformInfo( rotatingBody );
+		transformInfos[ 1 ] = new TransformInfo( rotatingBody_Part.transform );
+		transformInfos[ 2 ] = new TransformInfo( ragdollBodyTransform );
+
+
+		for (int i = 0; i < ragdollRigidbodies.Length; i++)
+		{
+			transformInfos[ i + 3 ] = new TransformInfo( ragdollRigidbodies[ i ] );
+		}
 	}
 
 	private void Rotate( Vector3 inputDirection )

@@ -13,7 +13,7 @@ namespace FFStudio
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
 		public EventListenerDelegateResponse playerTriggeredFinishLine;
-		public EventListenerDelegateResponse playerTriggeredFenceListener;
+		public EventListenerDelegateResponse entityTriggeredFenceListener;
 		public EventListenerDelegateResponse netTriggerListener;
 		public EventListenerDelegateResponse screenTapInputListener;
 
@@ -46,7 +46,7 @@ namespace FFStudio
 			netTriggerListener			.OnEnable();
 			screenTapInputListener		.OnEnable();
 			playerTriggeredFinishLine	.OnEnable();
-			playerTriggeredFenceListener.OnEnable();
+			entityTriggeredFenceListener.OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChange;
@@ -60,7 +60,7 @@ namespace FFStudio
 			netTriggerListener			.OnDisable();
 			screenTapInputListener		.OnDisable();
 			playerTriggeredFinishLine	.OnDisable();
-			playerTriggeredFenceListener.OnDisable();
+			entityTriggeredFenceListener.OnDisable();
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent -= OnLevelFinishLineChange;
@@ -72,7 +72,7 @@ namespace FFStudio
             levelRevealedListener.response        = LevelRevealedResponse;
             levelStartedListener.response         = LevelStartedResponse;
             netTriggerListener.response           = NetTriggeredResponse;
-            playerTriggeredFenceListener.response = FenceTriggeredResponse;
+            entityTriggeredFenceListener.response = FenceTriggeredResponse;
             playerTriggeredFinishLine.response    = PlayerTriggeredFinishLineResponse;
 			screenTapInputListener.response		  = ExtensionMethods.EmptyMethod;
 
@@ -131,7 +131,7 @@ namespace FFStudio
 
         void FenceTriggeredResponse()
         {
-			var changeEvent = playerTriggeredFenceListener.gameEvent as ReferenceGameEvent;
+			var changeEvent = entityTriggeredFenceListener.gameEvent as ReferenceGameEvent;
 			var instanceId = ( changeEvent.eventValue as Collider ).gameObject.GetInstanceID();
 
 			activateEntityRagdoll.eventValue = instanceId;

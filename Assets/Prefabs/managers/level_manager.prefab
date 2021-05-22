@@ -51,7 +51,7 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: efef06bf257ee27438d6c2aab4936226, type: 2}
   playerTriggeredFinishLine:
     gameEvent: {fileID: 11400000, guid: ad0b37e63f37f854189a36cc0ff28893, type: 2}
-  playerTriggeredFenceListener:
+  entityTriggeredFenceListener:
     gameEvent: {fileID: 11400000, guid: d07fda7452df6b54e9518e05761e5abf, type: 2}
   netTriggerListener:
     gameEvent: {fileID: 11400000, guid: fd2640a1fdfac04449f59470a22ccd25, type: 2}
