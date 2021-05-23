@@ -187,6 +187,10 @@ namespace FFStudio
                 FFLogger.Log( "Player lost momentum" );
 				activateEntityRagdoll.eventValue = playerRigidbody.gameObject.GetInstanceID();
 				activateEntityRagdoll.Raise();
+
+				resetEntityRagdoll.eventValue = playerRigidbody.gameObject.GetInstanceID();
+				resetEntityRagdoll.Raise();
+
 				playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			}
 
