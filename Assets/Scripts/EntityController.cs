@@ -16,6 +16,9 @@ public abstract class EntityController : MonoBehaviour
 	[ HorizontalLine]
 	[ BoxGroup( "Waypoint Properties" ) ] public SharedReferenceProperty sourceWaypointsSharedReference;
 
+	[HorizontalLine]
+	public UIWorldSpace entityInfoUI;
+
 	/* Protected Fields. */
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Rigidbody topmostRigidbody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Animator animator;
@@ -63,6 +66,8 @@ public abstract class EntityController : MonoBehaviour
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
 		resetRagdollListener.response = ResetEntity;
+
+		entityInfoUI = GetComponentInChildren<UIWorldSpace>();
 
 		GetTransformInfos();
 	}
@@ -120,6 +125,8 @@ public abstract class EntityController : MonoBehaviour
 			( activateRagdollListener.gameEvent as IntGameEvent ).eventValue != gameObject.GetInstanceID() )
 			return;
 
+		entityInfoUI.gameObject.SetActive( false );
+
 		/* Let all children go! */
 		rotatingBody.transform.SetParent( null );
 
@@ -151,6 +158,8 @@ public abstract class EntityController : MonoBehaviour
 
 	protected void ReassembleRagdoll()
 	{
+		entityInfoUI.gameObject.SetActive( true );
+
 		rotatingBody.transform.SetParent( transform );
 
 		rotatingBody_Part.transform.SetParent( transform );
