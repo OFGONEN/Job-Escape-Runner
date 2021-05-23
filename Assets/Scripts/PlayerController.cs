@@ -61,8 +61,8 @@ public class PlayerController : EntityController
 #region Implementation
 	private void ScreenTapResponse()
 	{
-		var changeEvent = screenTapListener.gameEvent as StringGameEvent;
-		animator.SetTrigger( changeEvent.eventValue );
+		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
+		animator.SetBool( "isInputActive", changeEvent.eventValue );
 	}
 #endregion
 

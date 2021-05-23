@@ -67,6 +67,17 @@ public abstract class EntityController : MonoBehaviour
 		ClampVelocity();
 		ClampAndSetTotalRotationDelta();
 	}
+
+	protected void Update()
+	{
+		int parameter = 0;
+		var inputHorizontal = InputDirection().x;
+
+		if(!Mathf.Approximately(0, inputHorizontal))
+			parameter = ( int )Mathf.Sign( inputHorizontal );
+
+		animator.SetInteger( "leg", parameter );
+	}
 #endregion
 
 #region API

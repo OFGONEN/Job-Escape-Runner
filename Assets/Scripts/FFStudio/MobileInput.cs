@@ -12,7 +12,7 @@ namespace FFStudio
 		[Header( "Fired Events" )]
 		public SwipeInputEvent swipeInputEvent;
 		public IntGameEvent tapInputEvent;
-		public StringGameEvent screenTapEvent;
+		public BoolGameEvent screenTapEvent;
 
 		[Header("Shared Variables")]
         public SharedVector3 shared_InputDirection;
@@ -69,6 +69,9 @@ namespace FFStudio
 
 			inputOrigin                       = Vector2.zero;
 			shared_InputDirection.sharedValue = Vector3.zero;
+
+			screenTapEvent.eventValue = false;
+			screenTapEvent.Raise();
 		}
 		#endregion
 
@@ -81,6 +84,9 @@ namespace FFStudio
 			input_cofactor.SetValue( 1 );
 
 			shared_InputDirection.sharedValue = Vector3.zero;
+
+			screenTapEvent.eventValue = true;
+			screenTapEvent.Raise();
 		}
 
 		void FingerUpdate( LeanFinger finger )

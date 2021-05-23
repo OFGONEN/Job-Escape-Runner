@@ -90,8 +90,13 @@ public class AgentController : EntityController
 		if( Vector3.Distance( GoalWaypoint, transform.position ) < aIAgentSettings.waypointArrivalThreshold &&
 		    ( currentWaypointIndex + 1 ) < waypoints.Length )
 			currentWaypointIndex++;
+		
+		currentInputDirection = ( GoalWaypoint - transform.position ).normalized.SetZ ( 1.0f );
 
-		return currentInputDirection = ( GoalWaypoint - transform.position ).normalized.SetZ ( 1.0f );
+		if(Mathf.Abs(currentInputDirection.x) <= GameSettings.Instance.deadZoneThreshold / 100)
+			currentInputDirection.x = 0;
+
+		return currentInputDirection;
 	}
 
 	protected override float InputCofactor()
@@ -126,8 +131,13 @@ public class AgentController : EntityController
 
 		if( burstForceCounter > aIAgentSettings.forceBurstCooldown )
 		{
+			animator.SetBool( "isInputActive", true );
 			AddBurstForce_OneFrame();
 			burstForceCounter = 0;
+		}
+		else 
+		{
+			animator.SetBool( "isInputActive", false );
 		}
 	}
 #endregion
