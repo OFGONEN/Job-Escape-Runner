@@ -170,6 +170,20 @@ namespace FFStudio
 			theVector.z = newZ;
 			return theVector;
 		}
+
+		public static void SetTransformInfo( this Transform transform, TransformInfo info )
+		{
+			transform.localPosition    = info.position;
+			transform.localEulerAngles = info.rotation;
+			transform.localScale       = info.scale;
+		}
+
+		public static void SetTransformInfo( this Rigidbody rigidbody, TransformInfo info )
+		{
+			rigidbody.transform.localPosition    = info.position;
+			rigidbody.transform.localEulerAngles = info.rotation;
+			rigidbody.transform.localScale       = info.scale;
+		}
 	}
 }
 

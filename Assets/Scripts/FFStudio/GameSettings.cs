@@ -49,21 +49,30 @@ namespace FFStudio
 
             [ Tooltip( "Threshold value for momentum countdown to be count" ) ]
 			public float lowMomentum_Threshold = 0.1f;
+
+            [ Tooltip( "Wait time for reseting the player after triggering a fence" ) ]
+			public float resetWaitTime = 1f;
+            
+			public float waypointArrivalThreshold = 1.0f;
 		}
         
 		[ System.Serializable ]
         public class AIAgentSettings
 		{
-            [ Tooltip( "Mass of the player rigidbody" ) ]
+			public float force = 1000.0f;
+
+			[ Tooltip( "Mass of the player rigidbody" ) ]
 			public float rigidBody_Mass = 5;
 
             [ Tooltip( "Drag of the player rigidbody" ) ]
 			public float rigidBody_Drag = 1;
 
+            [ Tooltip( "Wait time for reseting the entity after triggering a fence" ) ]
+			public float resetWaitTime = 1f;
+
 			public float waypointArrivalThreshold = 0.25f;
 			public float inputHorizontalCofactor = 1.0f;
 
-			public float force = 1000.0f;
             [ Range( 0.01f, 1.0f ) ]
 			public float forceBurstCooldown = 0.1f;
             [ MinMaxSlider( 0.0f, +2.0f ) ]

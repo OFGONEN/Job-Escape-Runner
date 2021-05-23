@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 1908469977782453619}
   m_Layer: 8
   m_Name: agent
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,6 +295,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateRagdollListener:
     gameEvent: {fileID: 11400000, guid: a1bd7ddd64a66c946ba1a440e7f95d14, type: 2}
+  resetRagdollListener:
+    gameEvent: {fileID: 11400000, guid: 3e0dc348a5752a04987264d4deaab471, type: 2}
+  sourceWaypointsSharedReference: {fileID: 11400000, guid: 51af2ea00883e9b46932985ca6f46d09, type: 2}
   topmostRigidbody: {fileID: 3446710677235776147}
   animator: {fileID: 3446710677235776141}
   ragdollBodyTransform: {fileID: 1519312884135738616}
@@ -306,7 +309,6 @@ MonoBehaviour:
   - {fileID: 1341815925453370307}
   - {fileID: 1341815925853346667}
   - {fileID: 1341815925423883639}
-  sourceWaypointsSharedReference: {fileID: 11400000, guid: 51af2ea00883e9b46932985ca6f46d09, type: 2}
 --- !u!136 &1908469977782453619
 CapsuleCollider:
   m_ObjectHideFlags: 0

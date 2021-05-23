@@ -17,7 +17,7 @@ public class PlayerController : EntityController
 	[ Label( "Input Cofactor" ) ]
 	public SharedFloatPropertyTweener input_cofactor;
 	public SharedReferenceProperty playerRigidbodyReference;
-	
+
 	private Vector3 currentInputDirection;
 #endregion
 
@@ -34,7 +34,7 @@ public class PlayerController : EntityController
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		
+
 		screenTapListener.OnDisable();
 
 		playerRigidbodyReference.SetValue( null );
@@ -48,7 +48,7 @@ public class PlayerController : EntityController
 
 		screenTapListener.response = ScreenTapResponse;
 	}
-	
+
 	protected override void Start()
 	{
 		base.Start();
@@ -69,6 +69,15 @@ public class PlayerController : EntityController
 #region EntityController Overrides
 	protected override Vector3 InputDirection()
 	{
+		/* Currently assuming: Levels always progress on +Z: Code below will barf on U-turns etc. */
+
+		/* Player does not use the waypoints as a guide, as it is controlled by the user directly, via mobile input.
+		 * But the waypoints are still updated, because current waypoint is used when resetting the player upon fail. */
+
+		if( Mathf.Abs( GoalWaypoint.z - transform.position.z ) < GameSettings.Instance.player.waypointArrivalThreshold &&
+			( currentWaypointIndex + 1 ) < waypoints.Length )
+			currentWaypointIndex++;
+
 		return currentInputDirection = inputDirection.sharedValue;
 	}
 

@@ -13,13 +13,14 @@ namespace FFStudio
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
 		public EventListenerDelegateResponse playerTriggeredFinishLine;
-		public EventListenerDelegateResponse playerTriggeredFenceListener;
+		public EventListenerDelegateResponse entityTriggeredFenceListener;
 		public EventListenerDelegateResponse netTriggerListener;
 		public EventListenerDelegateResponse screenTapInputListener;
 
 		[Header( "Fired Events" ) ]
         public GameEvent levelCompleted;
 		public IntGameEvent activateEntityRagdoll;
+		public IntGameEvent resetEntityRagdoll;
 		public GameEvent resetLevel;
 
 		[Header( "Level Releated" ) ]
@@ -46,7 +47,7 @@ namespace FFStudio
 			netTriggerListener			.OnEnable();
 			screenTapInputListener		.OnEnable();
 			playerTriggeredFinishLine	.OnEnable();
-			playerTriggeredFenceListener.OnEnable();
+			entityTriggeredFenceListener.OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChange;
@@ -60,7 +61,7 @@ namespace FFStudio
 			netTriggerListener			.OnDisable();
 			screenTapInputListener		.OnDisable();
 			playerTriggeredFinishLine	.OnDisable();
-			playerTriggeredFenceListener.OnDisable();
+			entityTriggeredFenceListener.OnDisable();
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent -= OnLevelFinishLineChange;
@@ -72,7 +73,7 @@ namespace FFStudio
             levelRevealedListener.response        = LevelRevealedResponse;
             levelStartedListener.response         = LevelStartedResponse;
             netTriggerListener.response           = NetTriggeredResponse;
-            playerTriggeredFenceListener.response = FenceTriggeredResponse;
+            entityTriggeredFenceListener.response = FenceTriggeredResponse;
             playerTriggeredFinishLine.response    = PlayerTriggeredFinishLineResponse;
 			screenTapInputListener.response		  = ExtensionMethods.EmptyMethod;
 
@@ -126,16 +127,21 @@ namespace FFStudio
 			var changeEvent = netTriggerListener.gameEvent as ReferenceGameEvent;
 			( changeEvent.eventValue as Collider ).gameObject.SetActive( false );
 
-            FFLogger.Log( "Disable:" + ( changeEvent.eventValue as Collider ).gameObject.name  );
+			// FFLogger.Log( "Disable:" + ( changeEvent.eventValue as Collider ).gameObject.name  );
 		}
 
         void FenceTriggeredResponse()
         {
-			var changeEvent = playerTriggeredFenceListener.gameEvent as ReferenceGameEvent;
-			var instanceId = ( changeEvent.eventValue as Collider ).gameObject.GetInstanceID();
+			var changeEvent = entityTriggeredFenceListener.gameEvent as ReferenceGameEvent;
+			var entity = ( changeEvent.eventValue as Collider ).gameObject;
+			var instanceId = entity.GetInstanceID();
 
 			activateEntityRagdoll.eventValue = instanceId;
 			activateEntityRagdoll.Raise();
+
+			// reset entity after delay
+			resetEntityRagdoll.eventValue = instanceId;
+			resetEntityRagdoll.Raise();
 		}
 
         void OnLevelFinishLineChange()
@@ -189,6 +195,6 @@ namespace FFStudio
             else
 				playerLowMomentumTimer = 0;
 		}
-	#endregion
-    }
+		#endregion
+	}
 }

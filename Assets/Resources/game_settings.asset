@@ -34,10 +34,13 @@ MonoBehaviour:
     rigidBody_Drag: 0.1
     lowMomentum_TimeThreshold: 3
     lowMomentum_Threshold: 1
+    resetWaitTime: 1
+    waypointArrivalThreshold: 2
   aIAgent:
     rigidBody_Mass: 7.5
     rigidBody_Drag: 0.1
-    waypointArrivalThreshold: 1
+    resetWaitTime: 1
+    waypointArrivalThreshold: 2
     inputHorizontalCofactor: 1.2
     force: 850
     forceBurstCooldown: 0.15
