@@ -300,6 +300,7 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: 3e0dc348a5752a04987264d4deaab471, type: 2}
   sourceWaypointsSharedReference: {fileID: 11400000, guid: 51af2ea00883e9b46932985ca6f46d09, type: 2}
   entityInfoUI: {fileID: 0}
+  entityInfoLibrary: {fileID: 11400000, guid: 99804f2924b9c244482be73ad36f4d26, type: 2}
   topmostRigidbody: {fileID: 3446710677235776147}
   animator: {fileID: 3446710677235776141}
   ragdollBodyTransform: {fileID: 1519312884135738616}

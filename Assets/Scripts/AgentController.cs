@@ -36,6 +36,13 @@ public class AgentController : EntityController
 		for( var i = 0; i < waypoints.Length; i++ )
 			waypoints[ i ] = sourceWaypoints[ i + 1 ].position +
 							 sourceWaypoints[ i + 1 ].right * currentLevelData.RandomHorizontalWaypointOffset();
+
+
+		// Set entity info for world space UI
+		var entityInfo = entityInfoLibrary.GiveRandomInfo();
+
+		entityInfoUI.entityName.text   = entityInfo.entityName;
+		entityInfoUI.entityFlag.sprite = entityInfo.entityFlag;
 	}
 
 #if UNITY_EDITOR // Required when Handles API is used, as it causes issues on build.

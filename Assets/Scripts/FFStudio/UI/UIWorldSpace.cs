@@ -3,13 +3,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using FFStudio;
+using TMPro;
+using NaughtyAttributes;
 
 public class UIWorldSpace : MonoBehaviour
 {
 #region Fields
 	[Header( "Shared Variables" )]
 	public SharedReferenceProperty mainCameraReference;
+
+	[HorizontalLine]
+
+	[Header( "UI Elements" )]
+	public TextMeshProUGUI entityName;
+	public Image entityFlag;
 
 	// Private Fields
 	private Transform mainCamera;

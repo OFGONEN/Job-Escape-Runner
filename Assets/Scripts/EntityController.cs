@@ -17,7 +17,7 @@ public abstract class EntityController : MonoBehaviour
 	[ BoxGroup( "Waypoint Properties" ) ] public SharedReferenceProperty sourceWaypointsSharedReference;
 
 	[HorizontalLine]
-	public UIWorldSpace entityInfoUI;
+	public EntityInfoLibrary entityInfoLibrary;
 
 	/* Protected Fields. */
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Rigidbody topmostRigidbody;
@@ -28,6 +28,9 @@ public abstract class EntityController : MonoBehaviour
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Collider rotatingBody_Part;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody rotatingBody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
+
+	// Entity Info
+	protected UIWorldSpace entityInfoUI;
 
 	/* Waypoint. */
 	protected Vector3[] waypoints = null;
