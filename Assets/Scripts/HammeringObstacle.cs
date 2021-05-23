@@ -10,6 +10,7 @@ public class HammeringObstacle : MonoBehaviour
 	#region Fields
 	[Header( "Fired Events" )]
 	public IntGameEvent activateEntityRagdoll;
+	public IntGameEvent resetEntityRagdoll;
 
     [HorizontalLine]
 	public Transform rotatePivot;
@@ -72,6 +73,9 @@ public class HammeringObstacle : MonoBehaviour
     {
 		activateEntityRagdoll.eventValue = other.gameObject.GetInstanceID();
 		activateEntityRagdoll.Raise();
-    }
+
+		resetEntityRagdoll.eventValue = other.gameObject.GetInstanceID();
+		resetEntityRagdoll.Raise();
+	}
     #endregion
 }
