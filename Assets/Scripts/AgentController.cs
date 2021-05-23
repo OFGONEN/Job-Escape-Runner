@@ -1,6 +1,5 @@
 /* Created by and for usage of FF Studios (2021). */
 
-using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using FFStudio;
@@ -21,8 +20,6 @@ public class AgentController : EntityController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		
-		// waypoints = null;
 	}
 
 	protected override void Start()
@@ -49,7 +46,7 @@ public class AgentController : EntityController
 
 		if( waypoints.Length == 0 && Application.isPlaying )
 		{
-			Debug.LogWarning( "Waypoints of " + name + " are not set!" );
+			FFLogger.LogError( "Waypoints of " + name + " are not set!", gameObject );
 			return;
 		}
 
@@ -57,7 +54,11 @@ public class AgentController : EntityController
 
 		for( var i = 0; i < waypoints.Length - 1; i++ )
 		{
-			Handles.DrawWireDisc( waypoints[ i     ], Vector3.up, 1.0f );
+			if( i == currentWaypointIndex )
+				Handles.DrawSolidDisc( waypoints[ i ], Vector3.up, 1.0f );
+			else
+				Handles.DrawWireDisc( waypoints[ i ], Vector3.up, 1.0f );
+				
 			Handles.DrawWireDisc( waypoints[ i + 1 ], Vector3.up, 1.0f );
 
 			Handles.DrawDottedLine( waypoints[ i ], waypoints[ i + 1 ], 10.0f );
@@ -74,7 +75,7 @@ public class AgentController : EntityController
 	{
 		/* Currently assuming: Levels always progress on +Z: Code below will barf on U-turns etc. */
 
-		if( Vector3.Distance( GoalWaypoint, transform.position ) < aIAgentSettings.waypointArrivalThreshold &&
+		if( Mathf.Abs( GoalWaypoint.z - transform.position.z ) < aIAgentSettings.waypointArrivalThreshold &&
 		    ( currentWaypointIndex + 1 ) < waypoints.Length )
 			currentWaypointIndex++;
 
