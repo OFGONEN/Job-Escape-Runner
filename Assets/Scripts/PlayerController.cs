@@ -47,6 +47,11 @@ public class PlayerController : EntityController
 		base.Awake();
 
 		screenTapListener.response = ScreenTapResponse;
+
+		// Set entity info for world space UI
+		entityInfoUI.entityName.text = "Player";
+		entityInfoUI.entityFlag.sprite = null;
+		entityInfoUI.entityFlag.enabled = false;
 	}
 
 	protected override void Start()

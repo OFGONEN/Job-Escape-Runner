@@ -1,5 +1,6 @@
 /* Created by and for usage of FF Studios (2021). */
 
+using System;
 using UnityEngine;
 
 namespace FFStudio
@@ -23,5 +24,12 @@ namespace FFStudio
 			rotation = rigidbody.transform.localEulerAngles;
 			scale = rigidbody.transform.localScale;
 		}
+	}
+
+	[Serializable]
+	public struct UIEntityInfo
+	{
+		public Sprite entityFlag;
+		public string entityName;
 	}
 }
