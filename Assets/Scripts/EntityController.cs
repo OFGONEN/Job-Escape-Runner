@@ -190,7 +190,11 @@ public abstract class EntityController : MonoBehaviour
 			return;
 
 		FFLogger.Log( "Resetting: " + name, gameObject );
-		DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll );
+
+		if(gameObject.CompareTag("Player"))
+			DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll );
+		else if (gameObject.CompareTag("Agent"))
+			DOVirtual.DelayedCall( GameSettings.Instance.aIAgent.resetWaitTime, ReassembleRagdoll );
 	}
 
 	private void GetTransformInfos()
