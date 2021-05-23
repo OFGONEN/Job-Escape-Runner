@@ -31,6 +31,7 @@ public abstract class EntityController : MonoBehaviour
 	protected Transform[] sourceWaypoints = null;
 	protected int currentWaypointIndex = 0;
 	protected Vector3 GoalWaypoint => waypoints[ currentWaypointIndex ];
+	protected Vector3 PrevWaypoint => waypoints[ Mathf.Max( 0, currentWaypointIndex ) ];
 
 	/* Resetting ragdoll. */
 	private Rigidbody[] ragdollRigidbodies;
@@ -185,7 +186,7 @@ public abstract class EntityController : MonoBehaviour
 			ragdollRigidbodies[ i ].gameObject.SetActive( true );
 		}
 
-		transform.position = GoalWaypoint.SetY( transform.position.y );
+		transform.position = PrevWaypoint.SetY( transform.position.y );
 	}
 
 	private void ResetEntity()
