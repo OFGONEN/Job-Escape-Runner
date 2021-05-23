@@ -3,16 +3,21 @@
 using UnityEngine;
 using FFStudio;
 using NaughtyAttributes;
+using System.Linq;
+using DG.Tweening;
 
 public abstract class EntityController : MonoBehaviour
 {
-#region Fields
-	[ BoxGroup( "Base Entity Controller Properties" ), Header( "Event Listeners" ) ]
-	public EventListenerDelegateResponse activateRagdollListener;
+	#region Fields
+	[Header( "Event Listeners" )]
+	[BoxGroup( "Base Entity Controller Properties" )] public EventListenerDelegateResponse activateRagdollListener;
+	[BoxGroup( "Base Entity Controller Properties" )] public EventListenerDelegateResponse resetRagdollListener;
 
 	[ HorizontalLine ]
+	[BoxGroup( "Waypoint Properties" )] public SharedReferenceProperty sourceWaypointsSharedReference;
 
-    /* Protected Fields. */
+
+	/* Protected Fields. */
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Rigidbody  topmostRigidbody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Animator   animator;
     
@@ -22,9 +27,17 @@ public abstract class EntityController : MonoBehaviour
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody   rotatingBody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] private Rigidbody[] ragdollRigidbodiesToActivate;
 
-	private Rigidbody[] ragdollRigidbodies;
+	//Waypoint
+	protected Vector3[] waypoints = null;
+	protected Transform[] sourceWaypoints = null;
+	protected int currentWaypointIndex = 0;
+	protected Vector3 GoalWaypoint => waypoints[ currentWaypointIndex ];
 
+	// Resetting ragdoll
+	private Rigidbody[] ragdollRigidbodies;
 	private TransformInfo[] transformInfos;
+
+	// Rotation Clamping
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
 #endregion
@@ -33,16 +46,23 @@ public abstract class EntityController : MonoBehaviour
 	protected virtual void OnEnable()
 	{
 		activateRagdollListener.OnEnable();
+		resetRagdollListener.OnEnable();
 	}
 
 	protected virtual void OnDisable()
 	{
 		activateRagdollListener.OnDisable();
 	}
+
+	private void OnDestroy() 
+	{
+		resetRagdollListener.OnDisable();
+	}
 	
 	protected virtual void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
+		resetRagdollListener.response = ResetEntity;
 
 		GetTransformInfos();
 	}
@@ -53,6 +73,13 @@ public abstract class EntityController : MonoBehaviour
 
 		topmostRigidbody.mass = RigidbodyMass();
 		topmostRigidbody.drag = RigidbodyDrag();
+
+		sourceWaypoints = ( sourceWaypointsSharedReference.sharedValue as Transform ).GetComponentsInChildren<Transform>();
+		waypoints = sourceWaypoints.Where( ( sourceWaypointTransform, index ) => index > 0 )
+								   .Select( sourceWaypointTransform => sourceWaypointTransform.position )
+								   .ToArray();
+
+
 	}
 	
 	private void FixedUpdate()
@@ -72,13 +99,12 @@ public abstract class EntityController : MonoBehaviour
 		ClampVelocity();
 		ClampAndSetTotalRotationDelta();
 	}
-#endregion
+	#endregion
 
-#region API
-#endregion
+	#region API
+	#endregion
 
-#region Implementation
-	[ Button() ]
+	#region Implementation
 	protected void ActivateFullRagdoll()
 	{
 		if( enabled == false || 
@@ -152,6 +178,19 @@ public abstract class EntityController : MonoBehaviour
 			ragdollRigidbodies[ i ].SetTransformInfo( transformInfos[ i + 3 ] );
 			ragdollRigidbodies[ i ].gameObject.SetActive( true );
 		}
+
+		var resetPosition  = GoalWaypoint;
+		resetPosition.y    = transform.position.y;
+		transform.position = resetPosition;
+	}
+
+	private void ResetEntity()	
+	{
+		if( ( resetRagdollListener.gameEvent as IntGameEvent ).eventValue != gameObject.GetInstanceID() )
+			return;
+
+		FFLogger.Log( "Resetting: " + name, gameObject );
+		DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll );
 	}
 
 	private void GetTransformInfos()
@@ -182,9 +221,9 @@ public abstract class EntityController : MonoBehaviour
 
 		rotatingBody.transform.eulerAngles = rotatingBody.transform.eulerAngles.SetY( totalDeltaAngle );
 	}
-#endregion
+	#endregion
 
-#region Protected API 
+	#region Protected API 
 	abstract protected Vector3 InputDirection();
 	abstract protected float   InputCofactor();
 	abstract protected float   RigidbodyMass();

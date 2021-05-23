@@ -20,6 +20,7 @@ namespace FFStudio
 		[Header( "Fired Events" ) ]
         public GameEvent levelCompleted;
 		public IntGameEvent activateEntityRagdoll;
+		public IntGameEvent resetEntityRagdoll;
 		public GameEvent resetLevel;
 
 		[Header( "Level Releated" ) ]
@@ -126,16 +127,21 @@ namespace FFStudio
 			var changeEvent = netTriggerListener.gameEvent as ReferenceGameEvent;
 			( changeEvent.eventValue as Collider ).gameObject.SetActive( false );
 
-            FFLogger.Log( "Disable:" + ( changeEvent.eventValue as Collider ).gameObject.name  );
+			// FFLogger.Log( "Disable:" + ( changeEvent.eventValue as Collider ).gameObject.name  );
 		}
 
         void FenceTriggeredResponse()
         {
 			var changeEvent = entityTriggeredFenceListener.gameEvent as ReferenceGameEvent;
-			var instanceId = ( changeEvent.eventValue as Collider ).gameObject.GetInstanceID();
+			var entity = ( changeEvent.eventValue as Collider ).gameObject;
+			var instanceId = entity.GetInstanceID();
 
 			activateEntityRagdoll.eventValue = instanceId;
 			activateEntityRagdoll.Raise();
+
+			// reset entity after delay
+			resetEntityRagdoll.eventValue = instanceId;
+			resetEntityRagdoll.Raise();
 		}
 
         void OnLevelFinishLineChange()
@@ -189,6 +195,6 @@ namespace FFStudio
             else
 				playerLowMomentumTimer = 0;
 		}
-	#endregion
-    }
+		#endregion
+	}
 }

@@ -49,6 +49,9 @@ namespace FFStudio
 
             [ Tooltip( "Threshold value for momentum countdown to be count" ) ]
 			public float lowMomentum_Threshold = 0.1f;
+
+            [ Tooltip( "Wait time for reseting the player after triggering a fence" ) ]
+			public float resetWaitTime = 1f;
 		}
         
 		[ System.Serializable ]
@@ -59,6 +62,9 @@ namespace FFStudio
 
             [ Tooltip( "Drag of the player rigidbody" ) ]
 			public float rigidBody_Drag = 1;
+
+            [ Tooltip( "Wait time for reseting the entity after triggering a fence" ) ]
+			public float resetWaitTime = 1f;
 
 			public float waypointArrivalThreshold = 0.25f;
 			public float inputHorizontalCofactor = 1.0f;

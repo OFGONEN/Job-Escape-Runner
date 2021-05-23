@@ -8,14 +8,6 @@ using FFStudio;
 public class AgentController : EntityController
 {
 #region Fields
-	public SharedReferenceProperty sourceWaypointsSharedReference;
-
-	private Vector3[] waypoints = null;
-	private Transform[] sourceWaypoints = null;
-
-	private int currentWaypointIndex = 0;
-	private Vector3 GoalWaypoint => waypoints[ currentWaypointIndex ];
-
 	private Vector3 currentInputDirection;
 
 	private GameSettings.AIAgentSettings aIAgentSettings;
@@ -30,7 +22,7 @@ public class AgentController : EntityController
 	{
 		base.OnEnable();
 		
-		waypoints = null;
+		// waypoints = null;
 	}
 
 	protected override void Start()
@@ -41,11 +33,6 @@ public class AgentController : EntityController
 		base.Start(); // Need to initialize gameSettings related stuff first as they will be used in base.Start().
 
 		speedMultiplier = aIAgentSettings.MoveSpeedAndForceRandomMultiplier();
-
-		sourceWaypoints = ( sourceWaypointsSharedReference.sharedValue as Transform ).GetComponentsInChildren< Transform >();
-		waypoints = sourceWaypoints.Where( ( sourceWaypointTransform, index ) => index > 0 )
-								   .Select( sourceWaypointTransform => sourceWaypointTransform.position )
-								   .ToArray();
 
 		var currentLevelData = CurrentLevelData.Instance.levelData;
 		

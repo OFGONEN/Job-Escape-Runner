@@ -22,7 +22,7 @@ public class RotatingObstacle : MonoBehaviour
     {
         other.GetComponentInChildren< Rigidbody >().AddForce(push_Direction * GameSettings.Instance.obstacle_rotating_forceToApply);
 
-        FFLogger.Log( "Pushed:" + other.gameObject );
+        // FFLogger.Log( "Pushed:" + other.gameObject );
     }
     #endregion
 

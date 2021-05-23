@@ -69,6 +69,13 @@ public class PlayerController : EntityController
 #region EntityController Overrides
 	protected override Vector3 InputDirection()
 	{
+		/* Currently assuming: Levels always progress on +Z: Code below will barf on U-turns etc. */
+
+		//TODO Player does use agent's settings for deciding if it is okey to set a new waypoint
+		if( Vector3.Distance( GoalWaypoint, transform.position ) < GameSettings.Instance.aIAgent.waypointArrivalThreshold &&
+		    ( currentWaypointIndex + 1 ) < waypoints.Length )
+			currentWaypointIndex++;
+
 		return currentInputDirection = inputDirection.sharedValue;
 	}
 

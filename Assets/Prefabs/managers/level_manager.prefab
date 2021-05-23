@@ -59,6 +59,7 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   levelCompleted: {fileID: 11400000, guid: 28d976b368abc004a924d98b1751a17d, type: 2}
   activateEntityRagdoll: {fileID: 11400000, guid: a1bd7ddd64a66c946ba1a440e7f95d14, type: 2}
+  resetEntityRagdoll: {fileID: 11400000, guid: 3e0dc348a5752a04987264d4deaab471, type: 2}
   resetLevel: {fileID: 11400000, guid: 0a3e52cd505ecfc4ba9ef153d4f3ba93, type: 2}
   levelProgress: {fileID: 11400000, guid: 43438d720c16f2e4aa5a19d520e1e15f, type: 2}
   obstaclePhysicMaterial: {fileID: 13400000, guid: ee88e9c714ea1de449bea018a53b6010, type: 2}
