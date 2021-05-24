@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 891629415065304982}
   m_Layer: 5
   m_Name: UIJoyStick_Input
-  m_TagString: DebugOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,6 +204,8 @@ MonoBehaviour:
   destinationTransform: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   startScale: {x: 0, y: 0, z: 0}
+  screenTapListener:
+    gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   joyStickMethod: 0
   joyStick_InputCofactor: 50
   input_V2: {fileID: 0}

@@ -4,12 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Lean.Touch;
 using FFStudio;
 using NaughtyAttributes;
 
 public class UIJoyStick : UIEntity
 {
 	#region Fields
+	[Header( "Event Listeners" )]
+	public EventListenerDelegateResponse screenTapListener;
+
+	[ HorizontalLine ]
+
 	public JoyStickMethod joyStickMethod;
 	public float joyStick_InputCofactor = 1;
 
@@ -26,9 +32,14 @@ public class UIJoyStick : UIEntity
 	// Private Fields
 	private Vector2 joyStick_startPosition; // Anchored
 	private UnityMessage update;
-	#endregion
+#endregion
 
-	#region Unity API
+#region Unity API
+
+	private void OnDestroy()
+	{
+		screenTapListener.OnDisable();
+	}
 
 	private void Awake()
     {
@@ -40,19 +51,34 @@ public class UIJoyStick : UIEntity
 			update = UpdateJoyStick_V3Y;
         else if(joyStickMethod == JoyStickMethod.Vector3Z)
 			update = UpdateJoyStick_V3Z;
+
+		screenTapListener.OnEnable();
+		screenTapListener.response = OriginatePosition;
+
+		gameObject.SetActive( false );
 	}
 
     private void Update()
     {
 		update();
 	}
+#endregion
 
-	#endregion
+#region API
+#endregion
 
-	#region API
-	#endregion
+#region Implementation
 
-	#region Implementation
+	// Originate the joy stick where the player is touching the screen
+	void OriginatePosition()
+	{
+		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
+
+		if( changeEvent.eventValue )
+			uiTransform.position = Input.mousePosition;
+
+		gameObject.SetActive( changeEvent.eventValue );
+	}
 
     void UpdateJoyStick_V2()
     {
@@ -82,5 +108,5 @@ public class UIJoyStick : UIEntity
 		return joyStickMethod == JoyStickMethod.Vector3Y || joyStickMethod == JoyStickMethod.Vector3Z;
 	}
 
-	#endregion
+#endregion
 }
