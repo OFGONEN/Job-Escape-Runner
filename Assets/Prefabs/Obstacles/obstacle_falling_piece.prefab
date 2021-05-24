@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1283976300476514893}
   - component: {fileID: 1283976300476514892}
   m_Layer: 11
-  m_Name: photocopier_4
+  m_Name: obstacle_falling_piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
