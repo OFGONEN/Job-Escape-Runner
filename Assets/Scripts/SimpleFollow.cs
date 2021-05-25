@@ -8,12 +8,14 @@ public class SimpleFollow : MonoBehaviour
 #region Fields
     public Transform targetToFollow;
     public float followingOffset;
+	public float lookingSpeed;
 #endregion
 
-#region Unity API
-    private void Update()
+	#region Unity API
+	private void Update()
     {
 		transform.position = transform.position.SetZ( targetToFollow.transform.position.z - followingOffset );
+		transform.LookAtOverTimeAxis( targetToFollow.position, Vector3.up, lookingSpeed );
 	}
 #endregion
 
