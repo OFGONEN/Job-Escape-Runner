@@ -32,6 +32,9 @@ namespace FFStudio
         [ Foldout( "Physics" ), Tooltip( "Velocity of the player" ) ]
         public float velocityClamp = 15;
 
+		[ Foldout( "Camera" ) ] public float camera_followingOffSet = 10f;
+		[ Foldout( "Camera" ) ] public float camera_rotationSpeed = 5f;
+
 		[Tooltip( "Threshold distance for level progress to be 1" )] public float finishLineDistanceThreshold = 2f;
 		[ System.Serializable ]
         public class PlayerSettings

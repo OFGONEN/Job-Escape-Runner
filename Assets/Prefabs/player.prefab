@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 3571083525753257369}
   - component: {fileID: 3571083525753257348}
   - component: {fileID: 298956971037557369}
+  - component: {fileID: 4486959737888394387}
   m_Layer: 8
   m_Name: player
   m_TagString: Player
@@ -201,7 +202,6 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   input_cofactor: {fileID: 11400000, guid: e668119c33c7788409c0b3e1c1071853, type: 2}
-  playerRigidbodyReference: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
 --- !u!136 &298956971037557369
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -216,6 +216,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &4486959737888394387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3571083525753257346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8b9286af946534c832e5352b9db9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedReferanceProperty: {fileID: 11400000, guid: 0fa4194404498c148a750d6cafc5aeaa, type: 2}
+  referanceComponent: {fileID: 3571083525753257369}
 --- !u!1 &4079968393783958261
 GameObject:
   m_ObjectHideFlags: 0

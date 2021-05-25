@@ -16,7 +16,6 @@ public class PlayerController : EntityController
 	public SharedVector3 inputDirection;
 	[ Label( "Input Cofactor" ) ]
 	public SharedFloatPropertyTweener input_cofactor;
-	public SharedReferenceProperty playerRigidbodyReference;
 
 	private Vector3 currentInputDirection;
 #endregion
@@ -27,8 +26,6 @@ public class PlayerController : EntityController
 		base.OnEnable();
 
 		screenTapListener.OnEnable();
-
-		playerRigidbodyReference.SetValue( topmostRigidbody );
 	}
 
 	protected override void OnDisable()
@@ -36,8 +33,6 @@ public class PlayerController : EntityController
 		base.OnDisable();
 
 		screenTapListener.OnDisable();
-
-		playerRigidbodyReference.SetValue( null );
 
 		FFLogger.Log( "PlayerController disabled" );
 	}
