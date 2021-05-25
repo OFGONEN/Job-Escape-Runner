@@ -23,6 +23,7 @@ public class HammeringObstacle : MonoBehaviour
     public Vector3 endAngle;
 
     [Header("Durations"), HorizontalLine]
+    [Tooltip("Hammer down delay. Amount of time to await after the first frame of the Scene")] public float down_Delay;
     [Tooltip("Hammer down duration")] public float down_Duration;
     [Tooltip("Hammer down curve")] public AnimationCurve down_Curve;
     [Tooltip("Hammer returning duration")] public float up_Duration;
@@ -49,7 +50,7 @@ public class HammeringObstacle : MonoBehaviour
     {
         rotatePivot.localEulerAngles = startAngle;
 
-        hammerSequence = StartHammerSequence();
+		DOVirtual.DelayedCall( down_Delay, () => hammerSequence = StartHammerSequence() );
     }
     #endregion
 
