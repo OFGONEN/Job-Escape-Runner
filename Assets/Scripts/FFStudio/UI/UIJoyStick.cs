@@ -75,7 +75,7 @@ public class UIJoyStick : UIEntity
 		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
 
 		if( changeEvent.eventValue )
-			uiTransform.position = Input.mousePosition;
+			uiTransform.position = uiTransform.position.SetX( Input.mousePosition.x );
 
 		gameObject.SetActive( changeEvent.eventValue );
 	}
