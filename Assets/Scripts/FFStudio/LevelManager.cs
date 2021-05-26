@@ -95,11 +95,11 @@ namespace FFStudio
         {
             levelProgress.SetValue(0);
 
-			screenTapInputListener.response = StartChecks;
 		}
 
         void LevelRevealedResponse()
         {
+			screenTapInputListener.response = StartChecks;
         }
 
         void LevelStartedResponse()
@@ -108,6 +108,7 @@ namespace FFStudio
 
         void StartChecks()
         {
+			FFLogger.Log( "Checks Started!" );
 			playerMomentumCheck = CheckPlayerMomentum;
 			levelProgressCheck  = CheckLevelProgress;
 

@@ -206,8 +206,8 @@ MonoBehaviour:
   startScale: {x: 0, y: 0, z: 0}
   screenTapListener:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
-  joyStickMethod: 0
+  joyStickMethod: 2
   joyStick_InputCofactor: 50
   input_V2: {fileID: 0}
-  input_V3: {fileID: 0}
+  input_V3: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   joyStick: {fileID: 3130003957929711931}

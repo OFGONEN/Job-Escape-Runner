@@ -29,7 +29,8 @@ namespace FFStudio
 
         [Header("Fired Events")]
         public GameEvent levelRevealedEvent;
-        public GameEvent loadNewLevelEvent;
+		public GameEvent levelStartEvent;
+		public GameEvent loadNewLevelEvent;
         public GameEvent resetLevelEvent;
         public ElephantLevelEvent elephantLevelEvent;
 
@@ -61,7 +62,7 @@ namespace FFStudio
             levelCompleteResponse.response = LevelCompleteResponse;
             tapInputListener.response = ExtensionMethods.EmptyMethod;
 
-            informationText.textRenderer.text = "Tap to Foo";
+            informationText.textRenderer.text = "Tap to Start";
         }
         #endregion
 
@@ -139,7 +140,11 @@ namespace FFStudio
         void StartLevel()
         {
             foreGroundImage.DOFade(0, GameSettings.Instance.ui_Entity_Fade_TweenDuration);
-            informationText.GoPopIn().OnComplete(levelRevealedEvent.Raise);
+            informationText.GoPopIn().OnComplete(() => 
+            {
+				levelRevealedEvent.Raise();
+				levelStartEvent.Raise();
+			});
             tutorialObjects.gameObject.SetActive(false);
 
             tapInputListener.response = ExtensionMethods.EmptyMethod;

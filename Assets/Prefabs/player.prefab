@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b59375a9b13244a821315e04b8ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelStartedListener:
+    gameEvent: {fileID: 11400000, guid: efef06bf257ee27438d6c2aab4936226, type: 2}
   activateRagdollListener:
     gameEvent: {fileID: 11400000, guid: a1bd7ddd64a66c946ba1a440e7f95d14, type: 2}
   resetRagdollListener:

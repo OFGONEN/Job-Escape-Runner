@@ -10,6 +10,7 @@ public abstract class EntityController : MonoBehaviour
 {
 #region Fields
 	[ Header( "Event Listeners" ) ]
+	[ BoxGroup( "Base Entity Controller Properties" ) ] public EventListenerDelegateResponse levelStartedListener;
 	[ BoxGroup( "Base Entity Controller Properties" ) ] public EventListenerDelegateResponse activateRagdollListener;
 	[ BoxGroup( "Base Entity Controller Properties" ) ] public EventListenerDelegateResponse resetRagdollListener;
 
@@ -46,18 +47,21 @@ public abstract class EntityController : MonoBehaviour
 	/* Rotation Clamping. */
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
+	private UnityMessage fixedUpdate;
 #endregion
 
 #region Unity API
 	protected virtual void OnEnable()
 	{
 		activateRagdollListener.OnEnable();
-		resetRagdollListener.OnEnable();
+		levelStartedListener   .OnEnable();
+		resetRagdollListener   .OnEnable();
 	}
 
 	protected virtual void OnDisable()
 	{
 		activateRagdollListener.OnDisable();
+		levelStartedListener   .OnDisable();
 	}
 
 	private void OnDestroy()
@@ -68,9 +72,12 @@ public abstract class EntityController : MonoBehaviour
 	protected virtual void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
-		resetRagdollListener.response = ResetEntity;
+		resetRagdollListener.response    = ResetEntity;
+		levelStartedListener.response    = () => fixedUpdate = PhysicMovement;
 
 		entityInfoUI = GetComponentInChildren<UIWorldSpace>();
+
+		fixedUpdate = ExtensionMethods.EmptyMethod;
 
 		GetTransformInfos();
 	}
@@ -90,20 +97,7 @@ public abstract class EntityController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		/* All cases regarding input and the value of inputDirection:
-		 * [INPUT]			[VALUE OF inputDirection]
-		 * Left  						< +1,  0, +1 >
-		 * Right 						< -1,  0, +1 >
-		 * Both  						<  0,  0, +1 >
-		 * None							<  0,  0,  0 > */
-
-		var inputDirection = InputDirection();
-
-		MoveViaPhysics( inputDirection );
-		Rotate( inputDirection );
-
-		ClampVelocity();
-		ClampAndSetTotalRotationDelta();
+		fixedUpdate();
 	}
 
 	protected void Update()
@@ -122,6 +116,23 @@ public abstract class EntityController : MonoBehaviour
 #endregion
 
 #region Implementation
+	private void PhysicMovement()
+	{
+		/* All cases regarding input and the value of inputDirection:
+		 * [INPUT]			[VALUE OF inputDirection]
+		 * Left  						< +1,  0, +1 >
+		 * Right 						< -1,  0, +1 >
+		 * Both  						<  0,  0, +1 >
+		 * None							<  0,  0,  0 > */
+
+		var inputDirection = InputDirection();
+
+		MoveViaPhysics( inputDirection );
+		Rotate( inputDirection );
+
+		ClampVelocity();
+		ClampAndSetTotalRotationDelta();
+	}
 	protected void ActivateFullRagdoll()
 	{
 		if( enabled == false ||
