@@ -15,6 +15,10 @@ public abstract class EntityController : MonoBehaviour
 	[ BoxGroup( "Base Entity Controller Properties" ) ] public EventListenerDelegateResponse resetRagdollListener;
 
 	[ HorizontalLine]
+	[ Header( "Fired Events" ) ]
+	public ReferenceGameEvent participateEvent;
+
+	[ HorizontalLine]
 	[ BoxGroup( "Waypoint Properties" ) ] public SharedReferenceProperty sourceWaypointsSharedReference;
 
 	[HorizontalLine]
@@ -48,9 +52,26 @@ public abstract class EntityController : MonoBehaviour
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
 	private UnityMessage fixedUpdate;
-#endregion
 
-#region Unity API
+	/* Rank in the Race */
+	public float finishLineDistance;
+	private int rank;
+	public virtual int Rank
+	{
+		get 
+		{
+			return rank;
+		}
+
+		set 
+		{
+			rank = value;
+		}
+	}
+
+	#endregion
+
+	#region Unity API
 	protected virtual void OnEnable()
 	{
 		activateRagdollListener.OnEnable();
@@ -93,6 +114,9 @@ public abstract class EntityController : MonoBehaviour
 		waypoints = sourceWaypoints.Where( ( sourceWaypointTransform, index ) => index > 0 ) // Don't include parent.
 								   .Select( sourceWaypointTransform => sourceWaypointTransform.position )
 								   .ToArray();
+
+		participateEvent.eventValue = this;
+		participateEvent.Raise();
 	}
 
 	private void FixedUpdate()

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FFStudio;
 using DG.Tweening;
+using NaughtyAttributes;
 
 namespace FFStudio
 {
@@ -12,7 +14,8 @@ namespace FFStudio
         public EventListenerDelegateResponse levelLoadedListener;
         public EventListenerDelegateResponse levelRevealedListener;
         public EventListenerDelegateResponse levelStartedListener;
-		public EventListenerDelegateResponse playerTriggeredFinishLine;
+		public EventListenerDelegateResponse entityParticipateListener;
+		public EventListenerDelegateResponse entityTriggeredFinishLine;
 		public EventListenerDelegateResponse entityTriggeredFenceListener;
 		public EventListenerDelegateResponse netTriggerListener;
 		public EventListenerDelegateResponse screenTapInputListener;
@@ -32,13 +35,23 @@ namespace FFStudio
 		/* Private Fields */
 		private Transform levelFinishLine;
 		private Rigidbody playerRigidbody;
+		private float playerLowMomentumTimer;
+		private float playerFinishLineDistance;
+
+		// Delegates
 		private UnityMessage playerMomentumCheck;
 		private UnityMessage levelProgressCheck;
-		private float playerLowMomentumTimer;
-		private float finishLineDistance;
-	#endregion
+		private UnityMessage entitiesRankCheck;
 
-	#region UnityAPI
+		// Race Rank
+		[ReadOnly , SerializeField] private List< EntityController > raceParticipants = new List< EntityController >( 4 );
+		[ReadOnly , SerializeField] private List< EntityController > currentRanks     = new List< EntityController >( 4 );
+		[ReadOnly , SerializeField] private List< EntityController > finishedRanks     = new List< EntityController >( 4 );
+
+
+		#endregion
+
+		#region UnityAPI
 		private void OnEnable()
         {
             levelLoadedListener			.OnEnable();
@@ -46,8 +59,9 @@ namespace FFStudio
             levelStartedListener		.OnEnable();
 			netTriggerListener			.OnEnable();
 			screenTapInputListener		.OnEnable();
-			playerTriggeredFinishLine	.OnEnable();
+			entityTriggeredFinishLine	.OnEnable();
 			entityTriggeredFenceListener.OnEnable();
+			entityParticipateListener   .OnEnable();
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChange;
@@ -60,8 +74,9 @@ namespace FFStudio
             levelStartedListener		.OnDisable();
 			netTriggerListener			.OnDisable();
 			screenTapInputListener		.OnDisable();
-			playerTriggeredFinishLine	.OnDisable();
+			entityTriggeredFinishLine	.OnDisable();
 			entityTriggeredFenceListener.OnDisable();
+			entityParticipateListener   .OnDisable();
 
 			playerRigidbodyReference.changeEvent -= OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent -= OnLevelFinishLineChange;
@@ -74,19 +89,22 @@ namespace FFStudio
             levelStartedListener.response         = LevelStartedResponse;
             netTriggerListener.response           = NetTriggeredResponse;
             entityTriggeredFenceListener.response = FenceTriggeredResponse;
-            playerTriggeredFinishLine.response    = PlayerTriggeredFinishLineResponse;
+            entityTriggeredFinishLine.response    = EntityTriggeredFinishLineResponse;
+			entityParticipateListener.response    = EntityParticipatedRace;
 			screenTapInputListener.response		  = ExtensionMethods.EmptyMethod;
 
 			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
 
 			playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			levelProgressCheck  = ExtensionMethods.EmptyMethod;
+			entitiesRankCheck   = ExtensionMethods.EmptyMethod;
 		}
 
         private void Update()
         {
 			playerMomentumCheck();
 			levelProgressCheck();
+			entitiesRankCheck();
 		}
 	#endregion
 
@@ -94,30 +112,55 @@ namespace FFStudio
         void LevelLoadedResponse()
         {
             levelProgress.SetValue(0);
-
+			raceParticipants.Clear();
+			finishedRanks.Clear();
 		}
 
         void LevelRevealedResponse()
         {
 			screenTapInputListener.response = StartChecks;
+			
+			entitiesRankCheck   = CheckEntityRanks;
         }
 
         void LevelStartedResponse()
         {
+
         }
+
+		void EntityParticipatedRace()
+		{
+			var changeEvent = entityParticipateListener.gameEvent as ReferenceGameEvent;
+			raceParticipants.Add( changeEvent.eventValue as EntityController );
+		}
 
         void StartChecks()
         {
 			FFLogger.Log( "Checks Started!" );
+
 			playerMomentumCheck = CheckPlayerMomentum;
 			levelProgressCheck  = CheckLevelProgress;
 
 			screenTapInputListener.response = ExtensionMethods.EmptyMethod;
 		}
 
-        void PlayerTriggeredFinishLineResponse()
+        void EntityTriggeredFinishLineResponse()
         {
             FFLogger.Log( "Finish Line Triggered" );
+			var changeEvent = entityTriggeredFinishLine.gameEvent as ReferenceGameEvent;
+			var entity = ( changeEvent.eventValue as Collider ).gameObject;
+			var instanceId = entity.GetInstanceID();
+
+			activateEntityRagdoll.eventValue = instanceId;
+			activateEntityRagdoll.Raise();
+
+
+			var entityController = entity.GetComponent< EntityController >();
+			raceParticipants.Remove( entityController );
+			finishedRanks.Add( entityController );
+
+			FFLogger.Log( entityController.Rank + " Rank: " + entity.name );
+
 			//TODO: close input.
 			//TODO: start second phase ? 
 			//TODO: Level reset maybe ? 
@@ -151,11 +194,12 @@ namespace FFStudio
             {
 				levelFinishLine = null;
 				levelProgressCheck = ExtensionMethods.EmptyMethod;
+				entitiesRankCheck  = ExtensionMethods.EmptyMethod;
 			}
             else 
             {
 				levelFinishLine    = levelFinishLineReference.sharedValue as Transform;
-				finishLineDistance = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
+				playerFinishLineDistance = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
 			}
 		}
         
@@ -173,7 +217,7 @@ namespace FFStudio
         void CheckLevelProgress()
         {
 			var distance = Vector3.Distance( playerRigidbody.position, levelFinishLine.position );
-			var progress = distance / finishLineDistance;
+			var progress = distance / playerFinishLineDistance;
 
 			if( distance <= GameSettings.Instance.finishLineDistanceThreshold )
 				progress = 0;
@@ -199,6 +243,26 @@ namespace FFStudio
 				playerLowMomentumTimer += Time.deltaTime;
             else
 				playerLowMomentumTimer = 0;
+		}
+
+		void CheckEntityRanks()
+		{
+			currentRanks.Clear();
+
+			for( var i = 0; i < raceParticipants.Count; i++ )
+			{
+				var entity = raceParticipants[ i ];
+				entity.finishLineDistance = Vector3.Distance( levelFinishLine.position, entity.transform.position );
+
+				currentRanks.Add( entity );
+			}
+
+			currentRanks.Sort(( x, y ) => x.finishLineDistance.CompareTo( y.finishLineDistance ) );
+
+			for( var i = 0; i < currentRanks.Count; i++ )
+			{
+				currentRanks[ i ].Rank = finishedRanks.Count + i + 1;
+			}
 		}
 		#endregion
 	}

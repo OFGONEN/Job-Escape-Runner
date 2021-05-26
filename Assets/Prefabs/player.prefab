@@ -187,6 +187,7 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: a1bd7ddd64a66c946ba1a440e7f95d14, type: 2}
   resetRagdollListener:
     gameEvent: {fileID: 11400000, guid: 3e0dc348a5752a04987264d4deaab471, type: 2}
+  participateEvent: {fileID: 11400000, guid: 9a925f0facb898f42a01df20febcf97c, type: 2}
   sourceWaypointsSharedReference: {fileID: 11400000, guid: 51af2ea00883e9b46932985ca6f46d09, type: 2}
   entityInfoLibrary: {fileID: 11400000, guid: 99804f2924b9c244482be73ad36f4d26, type: 2}
   topmostRigidbody: {fileID: 3571083525753257369}
@@ -200,6 +201,7 @@ MonoBehaviour:
   - {fileID: 920197684729918665}
   - {fileID: 920197683792698465}
   - {fileID: 920197684758889085}
+  finishLineDistance: 0
   screenTapListener:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}

@@ -49,7 +49,9 @@ MonoBehaviour:
     gameEvent: {fileID: 11400000, guid: be5502ede7f194b4cad32082aa9196eb, type: 2}
   levelStartedListener:
     gameEvent: {fileID: 11400000, guid: efef06bf257ee27438d6c2aab4936226, type: 2}
-  playerTriggeredFinishLine:
+  entityParticipateListener:
+    gameEvent: {fileID: 11400000, guid: 9a925f0facb898f42a01df20febcf97c, type: 2}
+  entityTriggeredFinishLine:
     gameEvent: {fileID: 11400000, guid: ad0b37e63f37f854189a36cc0ff28893, type: 2}
   entityTriggeredFenceListener:
     gameEvent: {fileID: 11400000, guid: d07fda7452df6b54e9518e05761e5abf, type: 2}
