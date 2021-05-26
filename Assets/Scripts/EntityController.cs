@@ -46,6 +46,7 @@ public abstract class EntityController : MonoBehaviour
 	protected Vector3 PrevWaypoint => waypoints[ Mathf.Max( 0, currentWaypointIndex ) ];
 
 	/* Resetting ragdoll. */
+	private Collider entityCollider;
 	private Rigidbody[] ragdollRigidbodies;
 	private TransformInfo[] transformInfos;
 
@@ -97,7 +98,8 @@ public abstract class EntityController : MonoBehaviour
 		resetRagdollListener.response    = ResetEntity;
 		levelStartedListener.response    = () => fixedUpdate = PhysicMovement;
 
-		entityInfoUI = GetComponentInChildren<UIWorldSpace>();
+		entityInfoUI   = GetComponentInChildren< UIWorldSpace >();
+		entityCollider = GetComponent< Collider >();
 
 		fixedUpdate = ExtensionMethods.EmptyMethod;
 
@@ -191,6 +193,9 @@ public abstract class EntityController : MonoBehaviour
 		/* Completely stop topmost rigidbody as well. */
 		topmostRigidbody.velocity = topmostRigidbody.angularVelocity = Vector3.zero;
 
+		/* Disable entity collider so that while waiting for a reset another agents would not collide with it */
+		entityCollider.enabled = false;
+
 		/* Disable the component. We are interested in the enabled flag actually. */
 		enabled = false;
 	}
@@ -217,6 +222,8 @@ public abstract class EntityController : MonoBehaviour
 		rotatingBody.angularVelocity = Vector3.zero; ;
 
 		topmostRigidbody.velocity = topmostRigidbody.angularVelocity = Vector3.zero;
+
+		entityCollider.enabled = true;
 
 		enabled = true;
 
