@@ -19,3 +19,5 @@ MonoBehaviour:
     entityName: Batin
   - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
     entityName: Burak
+  - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
+    entityName: Yusuf

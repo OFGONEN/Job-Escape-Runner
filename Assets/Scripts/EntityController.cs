@@ -36,6 +36,7 @@ public abstract class EntityController : MonoBehaviour
 
 	// Entity Info
 	protected UIWorldSpace entityInfoUI;
+	protected UIEntityInfo entityInfo;
 
 	/* Waypoint. */
 	protected Vector3[] waypoints = null;
@@ -55,7 +56,7 @@ public abstract class EntityController : MonoBehaviour
 
 	/* Rank in the Race */
 	public float finishLineDistance;
-	private int rank;
+	protected int rank;
 	public virtual int Rank
 	{
 		get 

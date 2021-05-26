@@ -7,6 +7,17 @@ using FFStudio;
 public class AgentController : EntityController
 {
 #region Fields
+	public override int Rank
+	{
+		set 
+		{
+			if( rank != value )
+				entityInfoUI.entityName.text = entityInfo.entityName + $"#{value}";
+
+			rank = value;
+		}
+	}
+
 	private Vector3 currentInputDirection;
 
 	private GameSettings.AIAgentSettings aIAgentSettings;
@@ -39,9 +50,9 @@ public class AgentController : EntityController
 
 
 		// Set entity info for world space UI
-		var entityInfo = entityInfoLibrary.GiveRandomInfo();
+		entityInfo = entityInfoLibrary.GiveRandomInfo();
 
-		entityInfoUI.entityName.text   = entityInfo.entityName;
+		entityInfoUI.entityName.text   = entityInfo.entityName + "#0";
 		entityInfoUI.entityFlag.sprite = entityInfo.entityFlag;
 	}
 

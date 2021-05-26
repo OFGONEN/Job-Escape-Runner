@@ -14,8 +14,19 @@ public class PlayerController : EntityController
 
 	[ Header( "Shared Variables" ) ]
 	public SharedVector3 inputDirection;
-	[ Label( "Input Cofactor" ) ]
-	public SharedFloatPropertyTweener input_cofactor;
+
+	[ Label( "Input Cofactor" ) ] public SharedFloatPropertyTweener input_cofactor;
+
+	public override int Rank
+	{
+		set 
+		{
+			if( rank != value )
+				entityInfoUI.entityName.text = "Player" + $"#{value}";
+
+			rank = value;
+		}
+	}
 
 	private Vector3 currentInputDirection;
 #endregion
@@ -42,16 +53,16 @@ public class PlayerController : EntityController
 		base.Awake();
 
 		screenTapListener.response = ScreenTapResponse;
-
-		// Set entity info for world space UI
-		entityInfoUI.entityName.text = "Player";
-		entityInfoUI.entityFlag.sprite = null;
-		entityInfoUI.entityFlag.enabled = false;
 	}
 
 	protected override void Start()
 	{
 		base.Start();
+
+		// Set entity info for world space UI
+		entityInfoUI.entityName.text = "Player#0";
+		entityInfoUI.entityFlag.sprite = null;
+		entityInfoUI.entityFlag.enabled = false;
 	}
 #endregion
 
