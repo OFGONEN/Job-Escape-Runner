@@ -310,20 +310,20 @@ public abstract class EntityController : MonoBehaviour
 	{
 		if(Rank <= 3)
 		{
-			Rigidbody targetBody;
+			Transform target;
 
-			transitionBodies.itemDictionary.TryGetValue( Rank - 1, out targetBody );
+			transitionBodies.itemDictionary.TryGetValue( Rank - 1, out target );
 
-			if(targetBody != null)
+			if(target != null)
 			{
-				transitionRigidbody.isKinematic = targetBody.isKinematic;
-				transitionRigidbody.useGravity = targetBody.useGravity;
+				transitionRigidbody.isKinematic = true;
+				transitionRigidbody.useGravity = false;
 
-				transitionRigidbody.DOMove( targetBody.position, GameSettings.Instance.finishLineDistanceThreshold )
+				transitionRigidbody.DOMove( target.position, GameSettings.Instance.finishLineDistanceThreshold )
 				.OnComplete( podiumTransitionDone )
 				.OnKill( NullMoveTween );
 
-				transitionRigidbody.DORotate( targetBody.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold )
+				transitionRigidbody.DORotate( target.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold )
 				.OnKill( NullRotationTween );
 			}
 		}

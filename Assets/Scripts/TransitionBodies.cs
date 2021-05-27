@@ -11,20 +11,20 @@ public class TransitionBodies : MonoBehaviour
 {
 #region Fields
     [InfoBox("Order of the array is the order of the rank")]
-    public Rigidbody[] transitionBodies;
+    public Transform[] transitionTargets;
     public TransitionBodySet bodySet;
 #endregion
 
 #region Unity API
     private void OnEnable()
     {
-        for( var i = 0; i < transitionBodies.Length; i++ )
-			bodySet.AddDictionary( i, transitionBodies[ i ] );
+        for( var i = 0; i < transitionTargets.Length; i++ )
+			bodySet.AddDictionary( i, transitionTargets[ i ] );
 	}
 
     private void OnDisable()
     {
-         for( var i = 0; i < transitionBodies.Length; i++ )
+         for( var i = 0; i < transitionTargets.Length; i++ )
 			bodySet.RemoveDictionary( i );
     }
 #endregion
@@ -41,9 +41,21 @@ public class TransitionBodies : MonoBehaviour
     {
 		Handles.color = Color.blue;
 
-		for( var i = 0; i < transitionBodies.Length; i++ )
+		for( var i = 0; i < transitionTargets.Length; i++ )
         {
-			Handles.DrawWireCube( transitionBodies[ i ].position, Vector3.one / 2 );
+			Handles.DrawWireCube( transitionTargets[ i ].position, Vector3.one / 2 );
+		}
+	}
+
+	public Transform[] dollSpines;
+
+	[Button]
+    private void SetTargetPositions()
+    {
+        for( var i = 0; i < transitionTargets.Length; i++ )
+        {
+			transitionTargets[ i ].position = dollSpines[ i ].position;
+			transitionTargets[ i ].rotation = dollSpines[ i ].rotation;
 		}
 	}
     #endregion

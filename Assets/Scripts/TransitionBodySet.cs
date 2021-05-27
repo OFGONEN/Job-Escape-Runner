@@ -6,6 +6,6 @@ using UnityEngine;
 using FFStudio;
 
 [CreateAssetMenu( fileName = "TransitionBodySet", menuName = "FF/Data/Sets/TransitionBodySet" )]
-public class TransitionBodySet : RuntimeSet< int, Rigidbody >
+public class TransitionBodySet : RuntimeSet< int, Transform >
 {
 }
