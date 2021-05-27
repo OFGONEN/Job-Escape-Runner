@@ -190,6 +190,8 @@ MonoBehaviour:
   participateEvent: {fileID: 11400000, guid: 9a925f0facb898f42a01df20febcf97c, type: 2}
   sourceWaypointsSharedReference: {fileID: 11400000, guid: 51af2ea00883e9b46932985ca6f46d09, type: 2}
   entityInfoLibrary: {fileID: 11400000, guid: 99804f2924b9c244482be73ad36f4d26, type: 2}
+  transitionRigidbody: {fileID: 920197684879706688}
+  transitionBodies: {fileID: 11400000, guid: 0ca0e86c085c1df44ba285cea2d8efad, type: 2}
   topmostRigidbody: {fileID: 3571083525753257369}
   animator: {fileID: 3571083525753257351}
   ragdollBodyTransform: {fileID: 815023534316141554}

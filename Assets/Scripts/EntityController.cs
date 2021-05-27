@@ -24,6 +24,10 @@ public abstract class EntityController : MonoBehaviour
 	[HorizontalLine]
 	public EntityInfoLibrary entityInfoLibrary;
 
+	[HorizontalLine] /* Transition */
+	public Rigidbody transitionRigidbody;
+	public TransitionBodySet transitionBodies;
+
 	/* Protected Fields. */
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Rigidbody topmostRigidbody;
 	[ BoxGroup( "Base Entity Controller Properties" ), SerializeField ] protected Animator animator;
@@ -54,9 +58,10 @@ public abstract class EntityController : MonoBehaviour
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
 	private UnityMessage fixedUpdate;
+	private TweenCallback podiumTransitionDone;
 
 	/* Rank in the Race */
-	public float finishLineDistance;
+	[ ReadOnly ] public float finishLineDistance;
 	protected int rank;
 	public virtual int Rank
 	{
@@ -101,7 +106,8 @@ public abstract class EntityController : MonoBehaviour
 		entityInfoUI   = GetComponentInChildren< UIWorldSpace >();
 		entityCollider = GetComponent< Collider >();
 
-		fixedUpdate = ExtensionMethods.EmptyMethod;
+		fixedUpdate          = ExtensionMethods.EmptyMethod;
+		podiumTransitionDone = ExtensionMethods.EmptyMethod;
 
 		GetTransformInfos();
 	}
@@ -140,6 +146,7 @@ public abstract class EntityController : MonoBehaviour
 #endregion
 
 #region API
+	public abstract void FinishLineCrossed();
 #endregion
 
 #region Implementation
@@ -268,6 +275,25 @@ public abstract class EntityController : MonoBehaviour
 
 		for( int i = 0; i < ragdollRigidbodies.Length; i++ )
 			transformInfos[ i + 3 ] = new TransformInfo( ragdollRigidbodies[ i ] );
+	}
+
+	protected void TransitionToPodium()
+	{
+		if(Rank <= 3)
+		{
+			Rigidbody targetBody;
+
+			transitionBodies.itemDictionary.TryGetValue( Rank - 1, out targetBody );
+
+			if(targetBody != null)
+			{
+				transitionRigidbody.isKinematic = targetBody.isKinematic;
+				transitionRigidbody.useGravity = targetBody.useGravity;
+
+				transitionRigidbody.DOMove( targetBody.position, GameSettings.Instance.finishLineDistanceThreshold ).OnComplete( podiumTransitionDone );
+				transitionRigidbody.DORotate( targetBody.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold );
+			}
+		}
 	}
 
 	private void Rotate( Vector3 inputDirection )

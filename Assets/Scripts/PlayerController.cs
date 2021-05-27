@@ -3,6 +3,7 @@
 using UnityEngine;
 using FFStudio;
 using NaughtyAttributes;
+using DG.Tweening;
 
 public class PlayerController : EntityController
 {
@@ -67,6 +68,10 @@ public class PlayerController : EntityController
 #endregion
 
 #region API
+	public override void FinishLineCrossed()
+	{
+		DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium );
+	}
 #endregion
 
 #region Implementation

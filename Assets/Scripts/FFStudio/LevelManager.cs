@@ -22,6 +22,7 @@ namespace FFStudio
 
 		[Header( "Fired Events" ) ]
         public GameEvent levelCompleted;
+        public GameEvent levelFailed;
 		public IntGameEvent activateEntityRagdoll;
 		public IntGameEvent resetEntityRagdoll;
 		public GameEvent resetLevel;
@@ -144,6 +145,12 @@ namespace FFStudio
 			screenTapInputListener.response = ExtensionMethods.EmptyMethod;
 		}
 
+		void StopChecks()
+		{
+			playerMomentumCheck = ExtensionMethods.EmptyMethod;
+			levelProgressCheck  = ExtensionMethods.EmptyMethod;
+		}
+
         void EntityTriggeredFinishLineResponse()
         {
             FFLogger.Log( "Finish Line Triggered" );
@@ -154,16 +161,19 @@ namespace FFStudio
 			activateEntityRagdoll.eventValue = instanceId;
 			activateEntityRagdoll.Raise();
 
-
 			var entityController = entity.GetComponent< EntityController >();
 			raceParticipants.Remove( entityController );
 			finishedRanks.Add( entityController );
 
 			FFLogger.Log( entityController.Rank + " Rank: " + entity.name );
 
-			//TODO: close input.
-			//TODO: start second phase ? 
-			//TODO: Level reset maybe ? 
+			entityController.FinishLineCrossed();
+
+			if(entityController.CompareTag("Player"))
+			{
+				FFLogger.Log( "Player finished Race at rank:" + entityController.Rank );
+				StopChecks();
+			}
 		}
 
         void NetTriggeredResponse()
