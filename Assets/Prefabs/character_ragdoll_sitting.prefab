@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3570038051571671135, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_Name
-      value: character_ragdoll
+      value: character_ragdoll_sitting
       objectReference: {fileID: 0}
     - target: {fileID: 3570038051571671135, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_Layer
@@ -189,11 +189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4416407670620646792, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.0041584135
+      value: 0.0041584116
       objectReference: {fileID: 0}
     - target: {fileID: 4416407670620646792, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 0.00006292964
+      value: 0.000062929175
       objectReference: {fileID: 0}
     - target: {fileID: 4416407670620646793, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_CollisionDetection
@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00045533624
       objectReference: {fileID: 0}
+    - target: {fileID: 4416407670949315975, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
+      propertyPath: m_LowTwistLimit.limit
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4416407671600030244, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
@@ -257,11 +261,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4416407671808263013, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 5.866241e-11
+      value: 5.9117156e-11
       objectReference: {fileID: 0}
     - target: {fileID: 4416407671808263013, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.0045419433
+      value: 0.0045419447
       objectReference: {fileID: 0}
     - target: {fileID: 4416407671808263013, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.z
@@ -281,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4416407671838045657, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.0045419433
+      value: 0.0045419447
       objectReference: {fileID: 0}
     - target: {fileID: 4416407671838045657, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.z
@@ -310,6 +314,10 @@ PrefabInstance:
     - target: {fileID: 4416407671982792055, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.00045533624
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416407671982792055, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
+      propertyPath: m_LowTwistLimit.limit
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 4416407672008809615, guid: eca04933e7a31d5449fe14bc62e9865f, type: 3}
       propertyPath: m_CollisionDetection
