@@ -38,6 +38,10 @@ namespace FFStudio
         [ Tooltip( "Wait time for to start transition into podium after finish line is crossed" ) ]
 		public float finishLineTransitionWaitTime = 1.5f;
 		[Tooltip( "Transition duration for ragdoll into podium" )] public float finishLineTransitionDuration = 1f;
+
+        [ Tooltip( "Wait time for announcing finish state after transition to podium" ) ]
+		public float announceLevelFinishStateWaitTime = 0.5f;
+
 		[Tooltip( "Threshold distance for level progress to be 1" )] public float finishLineDistanceThreshold = 2f;
 		[ System.Serializable ]
         public class PlayerSettings

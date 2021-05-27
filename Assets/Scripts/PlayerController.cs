@@ -11,9 +11,11 @@ public class PlayerController : EntityController
 	[ Header( "Event Listeners" ) ]
 	public EventListenerDelegateResponse screenTapListener;
 
-	[ HorizontalLine ]
+	[ HorizontalLine, Header( "Fired Events" ) ]
+	public GameEvent levelFailed;
+	public GameEvent levelCompleted;
 
-	[ Header( "Shared Variables" ) ]
+	[ HorizontalLine, Header( "Shared Variables" ) ]
 	public SharedVector3 inputDirection;
 
 	[ Label( "Input Cofactor" ) ] public SharedFloatPropertyTweener input_cofactor;
@@ -54,6 +56,7 @@ public class PlayerController : EntityController
 		base.Awake();
 
 		screenTapListener.response = ScreenTapResponse;
+		podiumTransitionDone       = OnPodiumTransition;
 	}
 
 	protected override void Start()
@@ -68,10 +71,6 @@ public class PlayerController : EntityController
 #endregion
 
 #region API
-	public override void FinishLineCrossed()
-	{
-		DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium );
-	}
 #endregion
 
 #region Implementation
@@ -80,6 +79,20 @@ public class PlayerController : EntityController
 		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
 		animator.SetBool( "isInputActive", changeEvent.eventValue );
 	}
+
+	private void OnPodiumTransition()
+	{
+		GameEvent eventToCall;
+
+		if(Rank <= 3)
+			eventToCall = levelCompleted;
+		else
+			eventToCall = levelFailed;
+
+		FFLogger.Log( "Calling :" + eventToCall.ToString() );
+		DOVirtual.DelayedCall( GameSettings.Instance.announceLevelFinishStateWaitTime, eventToCall.Raise );
+	}
+	
 #endregion
 
 #region EntityController Overrides

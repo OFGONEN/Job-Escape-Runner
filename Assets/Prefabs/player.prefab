@@ -206,6 +206,8 @@ MonoBehaviour:
   finishLineDistance: 0
   screenTapListener:
     gameEvent: {fileID: 11400000, guid: f63ebb285e09ba04c905efe5cca8da02, type: 2}
+  levelFailed: {fileID: 11400000, guid: ec850936269bc2e47b26cfebd8bdad97, type: 2}
+  levelCompleted: {fileID: 11400000, guid: 28d976b368abc004a924d98b1751a17d, type: 2}
   inputDirection: {fileID: 11400000, guid: 45b224e741b21574b8e80635ba908706, type: 2}
   input_cofactor: {fileID: 11400000, guid: e668119c33c7788409c0b3e1c1071853, type: 2}
 --- !u!136 &298956971037557369

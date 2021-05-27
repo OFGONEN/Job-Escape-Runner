@@ -57,8 +57,15 @@ public abstract class EntityController : MonoBehaviour
 	/* Rotation Clamping. */
 	private float totalDeltaAngle = 0.0f;
 	private float startEulerYAngle;
+
+	/* Delegates */
 	private UnityMessage fixedUpdate;
-	private TweenCallback podiumTransitionDone;
+	protected TweenCallback podiumTransitionDone;
+
+	/* Podium Transition Tweens */
+	private Tween moveTween;
+	private Tween rotationTween;
+	private Tween transitionCallTween;
 
 	/* Rank in the Race */
 	[ ReadOnly ] public float finishLineDistance;
@@ -90,6 +97,24 @@ public abstract class EntityController : MonoBehaviour
 	{
 		activateRagdollListener.OnDisable();
 		levelStartedListener   .OnDisable();
+
+		if(moveTween != null)
+		{
+			moveTween.Kill();
+			moveTween = null;
+		}
+
+		if(rotationTween != null)
+		{
+			rotationTween.Kill();
+			rotationTween = null;
+		}
+
+		if(transitionCallTween != null)
+		{
+			transitionCallTween.Kill();
+			transitionCallTween = null;
+		}
 	}
 
 	private void OnDestroy()
@@ -146,7 +171,11 @@ public abstract class EntityController : MonoBehaviour
 #endregion
 
 #region API
-	public abstract void FinishLineCrossed();
+	public void FinishLineCrossed()
+	{
+		transitionCallTween = DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium )
+		.OnKill( NullTransitionTween );
+	}
 #endregion
 
 #region Implementation
@@ -290,10 +319,33 @@ public abstract class EntityController : MonoBehaviour
 				transitionRigidbody.isKinematic = targetBody.isKinematic;
 				transitionRigidbody.useGravity = targetBody.useGravity;
 
-				transitionRigidbody.DOMove( targetBody.position, GameSettings.Instance.finishLineDistanceThreshold ).OnComplete( podiumTransitionDone );
-				transitionRigidbody.DORotate( targetBody.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold );
+				transitionRigidbody.DOMove( targetBody.position, GameSettings.Instance.finishLineDistanceThreshold )
+				.OnComplete( podiumTransitionDone )
+				.OnKill( NullMoveTween );
+
+				transitionRigidbody.DORotate( targetBody.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold )
+				.OnKill( NullRotationTween );
 			}
 		}
+		else
+		{
+			DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, podiumTransitionDone );
+		}
+	}
+
+	private void NullRotationTween()
+	{
+		rotationTween = null;
+	}
+
+	private void NullMoveTween()
+	{
+		moveTween = null;
+	}
+
+	private void NullTransitionTween()
+	{
+		transitionCallTween = null;
 	}
 
 	private void Rotate( Vector3 inputDirection )

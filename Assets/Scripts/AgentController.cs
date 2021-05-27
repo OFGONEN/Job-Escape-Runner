@@ -87,10 +87,6 @@ public class AgentController : EntityController
 #endregion
 
 #region API
-	public override void FinishLineCrossed()
-	{
-		DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium );
-	}
 #endregion
 
 #region EntityController Overrides
