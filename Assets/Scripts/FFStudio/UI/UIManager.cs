@@ -131,6 +131,7 @@ namespace FFStudio
             sequence.Append(foreGroundImage.DOFade(0, GameSettings.Instance.ui_Entity_Fade_TweenDuration));
             sequence.Append(tween); //TODO: UIElements tween
             sequence.AppendCallback(levelRevealedEvent.Raise);
+            sequence.AppendCallback(levelStartEvent.Raise);
 
             elephantLevelEvent.level = CurrentLevelData.Instance.currentConsecutiveLevel;
             elephantLevelEvent.elephantEventType = ElephantEvent.LevelStarted;
