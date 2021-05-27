@@ -13,7 +13,7 @@ public class AgentController : EntityController
 		set 
 		{
 			if( rank != value )
-				entityInfoUI.entityName.text = entityInfo.entityName + $"#{value}";
+				entityInfoUI.entityName.text = entityInfo.entityName + $" #{value}";
 
 			rank = value;
 		}
@@ -53,7 +53,7 @@ public class AgentController : EntityController
 		// Set entity info for world space UI
 		entityInfo = entityInfoLibrary.GiveRandomInfo();
 
-		entityInfoUI.entityName.text   = entityInfo.entityName + "#0";
+		entityInfoUI.entityName.text   = entityInfo.entityName + " #0";
 		entityInfoUI.entityFlag.sprite = entityInfo.entityFlag;
 	}
 

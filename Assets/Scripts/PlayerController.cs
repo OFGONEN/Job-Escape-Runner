@@ -25,7 +25,7 @@ public class PlayerController : EntityController
 		set 
 		{
 			if( rank != value )
-				entityInfoUI.entityName.text = "Player" + $"#{value}";
+				entityInfoUI.entityName.text = "Player" + $" #{value}";
 
 			rank = value;
 		}
@@ -64,7 +64,7 @@ public class PlayerController : EntityController
 		base.Start();
 
 		// Set entity info for world space UI
-		entityInfoUI.entityName.text = "Player#0";
+		entityInfoUI.entityName.text = "Player #0";
 		entityInfoUI.entityFlag.sprite = null;
 		entityInfoUI.entityFlag.enabled = false;
 	}

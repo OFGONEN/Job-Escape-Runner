@@ -73,7 +73,7 @@ namespace FFStudio
             var sequance = DOTween.Sequence();
 
             sequance.Append(levelLoadingBar.GoPopIn());
-            sequance.Append(levelLoadingText.GoPopIn());
+            // sequance.Append(levelLoadingText.GoPopIn());
             sequance.Append(loadingScreenImage.DOFade(0, GameSettings.Instance.ui_Entity_Fade_TweenDuration)); 
             sequance.AppendCallback(() => tapInputListener.response = StartLevel);
 
