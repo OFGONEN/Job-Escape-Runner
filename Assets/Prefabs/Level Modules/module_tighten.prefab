@@ -51,7 +51,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5987631610407084241}
-  m_LocalRotation: {x: -0, y: 0.7072302, z: 0.7069834, w: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0.5, y: 0, z: 138}
   m_LocalScale: {x: 100.000046, y: 100, z: 100.000015}
   m_Children:
@@ -61,7 +61,7 @@ Transform:
   - {fileID: 5034795628158215415}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
 --- !u!1001 &3199823671739953429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,6 +125,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: cd97fe6a5234114439992755df9a2c06, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: be1cc3578c8785246b71734c1f2a5862, type: 2}
     - target: {fileID: 919132149155446097, guid: cd97fe6a5234114439992755df9a2c06, type: 3}
       propertyPath: m_Name
       value: ground_tighten
@@ -174,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3c7f58f91636b4641bb6dfadd6a96e0e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00016759749
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3c7f58f91636b4641bb6dfadd6a96e0e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -204,6 +208,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3c7f58f91636b4641bb6dfadd6a96e0e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: be1cc3578c8785246b71734c1f2a5862, type: 2}
     - target: {fileID: 919132149155446097, guid: 3c7f58f91636b4641bb6dfadd6a96e0e, type: 3}
       propertyPath: m_Name
       value: ground_narrow
