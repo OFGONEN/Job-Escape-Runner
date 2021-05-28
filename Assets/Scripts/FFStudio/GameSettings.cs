@@ -34,6 +34,7 @@ namespace FFStudio
 
 		[ Foldout( "Camera" ) ] public float camera_followingOffSet = 10f;
 		[ Foldout( "Camera" ) ] public float camera_rotationSpeed = 5f;
+		[ Foldout( "Camera" ), MinMaxSlider( -90, +90 ) ] public Vector2 camera_horizontalClamping;
 
         [ Tooltip( "Wait time for to start transition into podium after finish line is crossed" ) ]
 		public float finishLineTransitionWaitTime = 1.5f;
