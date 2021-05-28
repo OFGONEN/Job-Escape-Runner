@@ -18,7 +18,13 @@ namespace FFStudio
         
         public bool playOnStart;
 
-        [ DisableIf( "IsPlaying" ) ]
+        [ ShowIf( "playOnStart" ) ]
+		public bool hasDelay;
+
+        [ ShowIf( "hasDelay" ) ]
+		public float delayAmount;
+
+		[ DisableIf( "IsPlaying" ) ]
         public bool loop;
 
         [ ShowIf( "loop" ) ]
@@ -59,7 +65,12 @@ namespace FFStudio
                 return;
 
             if( playOnStart )
-                Play();
+            {
+                if(hasDelay)
+					DOVirtual.DelayedCall( delayAmount, Play );
+                else
+					Play();
+			}
         }
         
         private void OnDestroy()
