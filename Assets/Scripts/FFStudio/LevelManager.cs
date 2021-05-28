@@ -36,11 +36,9 @@ namespace FFStudio
 		/* Private Fields */
 		private Transform levelFinishLine;
 		private Rigidbody playerRigidbody;
-		private float playerLowMomentumTimer;
 		private float playerFinishLineDistance;
 
 		// Delegates
-		private UnityMessage playerMomentumCheck;
 		private UnityMessage levelProgressCheck;
 		private UnityMessage entitiesRankCheck;
 
@@ -96,14 +94,12 @@ namespace FFStudio
 
 			obstaclePhysicMaterial.bounciness = GameSettings.Instance.obstacle_bounciness;
 
-			playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			levelProgressCheck  = ExtensionMethods.EmptyMethod;
 			entitiesRankCheck   = ExtensionMethods.EmptyMethod;
 		}
 
         private void Update()
         {
-			playerMomentumCheck();
 			levelProgressCheck();
 			entitiesRankCheck();
 		}
@@ -139,7 +135,6 @@ namespace FFStudio
         {
 			FFLogger.Log( "Checks Started!" );
 
-			playerMomentumCheck = CheckPlayerMomentum;
 			levelProgressCheck  = CheckLevelProgress;
 
 			screenTapInputListener.response = ExtensionMethods.EmptyMethod;
@@ -147,7 +142,6 @@ namespace FFStudio
 
 		void StopChecks()
 		{
-			playerMomentumCheck = ExtensionMethods.EmptyMethod;
 			levelProgressCheck  = ExtensionMethods.EmptyMethod;
 		}
 
@@ -215,12 +209,7 @@ namespace FFStudio
         
         void OnPlayerRigidbodyChange()
         {
-            if( playerRigidbodyReference.sharedValue == null )
-				playerMomentumCheck = ExtensionMethods.EmptyMethod;
-            else 
-                playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
-				
-			playerLowMomentumTimer = 0;
+            playerRigidbody = playerRigidbodyReference.sharedValue as Rigidbody;
         }
 
         // This method is only for UI display of level progression, not for actually deciding if the user finished the run.
@@ -233,26 +222,6 @@ namespace FFStudio
 				progress = 0;
 
 			levelProgress.SetValue( 1 - progress );
-		}
-
-        void CheckPlayerMomentum()
-        {
-            if( playerLowMomentumTimer >= GameSettings.Instance.player.lowMomentum_TimeThreshold )
-            {
-                FFLogger.Log( "Player lost momentum" );
-				activateEntityRagdoll.eventValue = playerRigidbody.gameObject.GetInstanceID();
-				activateEntityRagdoll.Raise();
-
-				resetEntityRagdoll.eventValue = playerRigidbody.gameObject.GetInstanceID();
-				resetEntityRagdoll.Raise();
-
-				playerMomentumCheck = ExtensionMethods.EmptyMethod;
-			}
-
-			if( playerRigidbody.velocity.magnitude <= GameSettings.Instance.player.lowMomentum_Threshold )
-				playerLowMomentumTimer += Time.deltaTime;
-            else
-				playerLowMomentumTimer = 0;
 		}
 
 		void CheckEntityRanks()

@@ -147,6 +147,32 @@ public class AgentController : EntityController
 			animator.SetBool( "isInputActive", false );
 		}
 	}
+
+	protected override void LevelStartedResponse()
+	{
+		base.LevelStartedResponse();
+		momentumCheck = CheckEntityMomentum;
+
+	}
+
+	protected override void ReassembleRagdoll()
+	{
+		base.ReassembleRagdoll();
+
+		FFLogger.Log( "Reassembled", gameObject );
+
+		momentumCheck = CheckEntityMomentum;
+	}
+
+	protected override float MomentumTimeThreshold()
+	{
+		return GameSettings.Instance.aIAgent.lowMomentum_TimeThreshold;
+	}
+
+	protected override float MomentumVelocityThreshold()
+	{
+		return GameSettings.Instance.aIAgent.lowMomentum_Threshold;
+	}
 #endregion
 
 #region Implementation

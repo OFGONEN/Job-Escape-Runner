@@ -55,7 +55,7 @@ public class PlayerController : EntityController
 	{
 		base.Awake();
 
-		screenTapListener.response = ScreenTapResponse;
+		screenTapListener.response = ExtensionMethods.EmptyMethod;
 		podiumTransitionDone       = OnPodiumTransition;
 	}
 
@@ -74,6 +74,19 @@ public class PlayerController : EntityController
 #endregion
 
 #region Implementation
+	protected override void LevelStartedResponse()
+	{
+		base.LevelStartedResponse();
+		screenTapListener.response = FirstScreenTapResponse;
+	}
+	private void FirstScreenTapResponse()
+	{
+		ScreenTapResponse();
+
+		momentumCheck              = CheckEntityMomentum;
+		screenTapListener.response = ScreenTapResponse;
+	}
+
 	private void ScreenTapResponse()
 	{
 		var changeEvent = screenTapListener.gameEvent as BoolGameEvent;
@@ -128,6 +141,23 @@ public class PlayerController : EntityController
 	protected override void MoveViaPhysics( Vector3 inputDirection )
 	{
 		topmostRigidbody.AddForce( inputDirection * GameSettings.Instance.player.force * InputCofactor() * Time.fixedDeltaTime );
+	}
+
+	protected override void ReassembleRagdoll()
+	{
+		base.ReassembleRagdoll();
+
+		screenTapListener.response = FirstScreenTapResponse;
+	}
+
+	protected override float MomentumTimeThreshold()
+	{
+		return GameSettings.Instance.player.lowMomentum_TimeThreshold;
+	}
+
+	protected override float MomentumVelocityThreshold()
+	{
+		return GameSettings.Instance.player.lowMomentum_Threshold;
 	}
 #endregion
 }

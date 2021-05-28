@@ -27,13 +27,18 @@ MonoBehaviour:
   angularSpeed: 150
   angularClamping: {x: -30, y: 30}
   velocityClamp: 20
+  camera_followingOffSet: 10
+  camera_rotationSpeed: 5
+  finishLineTransitionWaitTime: 1.5
+  finishLineTransitionDuration: 1
+  announceLevelFinishStateWaitTime: 0.5
   finishLineDistanceThreshold: 2
   player:
     force: 7500
     rigidBody_Mass: 5
     rigidBody_Drag: 0.1
-    lowMomentum_TimeThreshold: 3
-    lowMomentum_Threshold: 1
+    lowMomentum_TimeThreshold: 2.5
+    lowMomentum_Threshold: 4
     resetWaitTime: 1
     waypointArrivalThreshold: 2
   aIAgent:
@@ -41,6 +46,8 @@ MonoBehaviour:
     rigidBody_Mass: 7.5
     rigidBody_Drag: 0.1
     resetWaitTime: 1
+    lowMomentum_TimeThreshold: 1
+    lowMomentum_Threshold: 5
     waypointArrivalThreshold: 2
     inputHorizontalCofactor: 1.2
     forceBurstCooldown: 0.15

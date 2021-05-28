@@ -47,7 +47,7 @@ public abstract class EntityController : MonoBehaviour
 	protected Transform[] sourceWaypoints = null;
 	protected int currentWaypointIndex = 0;
 	protected Vector3 GoalWaypoint => waypoints[ currentWaypointIndex ];
-	protected Vector3 PrevWaypoint => waypoints[ Mathf.Max( 0, currentWaypointIndex ) ];
+	protected Vector3 PrevWaypoint => waypoints[ Mathf.Max( 0, currentWaypointIndex - 1 ) ];
 
 	/* Resetting ragdoll. */
 	private Collider entityCollider;
@@ -61,6 +61,10 @@ public abstract class EntityController : MonoBehaviour
 	/* Delegates */
 	private UnityMessage fixedUpdate;
 	protected TweenCallback podiumTransitionDone;
+
+	/* Momentum Check */
+	protected float lowMomentumTimer = 0;
+	protected UnityMessage momentumCheck;
 
 	/* Podium Transition Tweens */
 	private Tween moveTween;
@@ -125,14 +129,15 @@ public abstract class EntityController : MonoBehaviour
 	protected virtual void Awake()
 	{
 		activateRagdollListener.response = ActivateFullRagdoll;
-		resetRagdollListener.response    = ResetEntity;
-		levelStartedListener.response    = () => fixedUpdate = PhysicMovement;
+		resetRagdollListener.response    = ResetEntityResponse;
+		levelStartedListener.response    = LevelStartedResponse;
 
 		entityInfoUI   = GetComponentInChildren< UIWorldSpace >();
 		entityCollider = GetComponent< Collider >();
 
 		fixedUpdate          = ExtensionMethods.EmptyMethod;
 		podiumTransitionDone = ExtensionMethods.EmptyMethod;
+		momentumCheck   	 = ExtensionMethods.EmptyMethod;
 
 		GetTransformInfos();
 	}
@@ -167,6 +172,8 @@ public abstract class EntityController : MonoBehaviour
 			parameter = ( int )Mathf.Sign( inputHorizontal );
 
 		animator.SetInteger( "leg", parameter );
+
+		momentumCheck();
 	}
 #endregion
 
@@ -176,9 +183,13 @@ public abstract class EntityController : MonoBehaviour
 		transitionCallTween = DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium )
 		.OnKill( NullTransitionTween );
 	}
-#endregion
+	#endregion
 
-#region Implementation
+	#region Implementation
+	protected virtual void LevelStartedResponse()
+	{
+		fixedUpdate = PhysicMovement;
+	}
 	private void PhysicMovement()
 	{
 		/* All cases regarding input and the value of inputDirection:
@@ -236,7 +247,7 @@ public abstract class EntityController : MonoBehaviour
 		enabled = false;
 	}
 
-	protected void ReassembleRagdoll()
+	protected virtual void ReassembleRagdoll()
 	{
 		entityInfoUI.gameObject.SetActive( true );
 
@@ -280,12 +291,12 @@ public abstract class EntityController : MonoBehaviour
 		transform.position = PrevWaypoint.SetY( transform.position.y );
 	}
 
-	private void ResetEntity()
+	private void ResetEntityResponse()
 	{
 		if( ( resetRagdollListener.gameEvent as IntGameEvent ).eventValue != gameObject.GetInstanceID() )
 			return;
 
-		FFLogger.Log( "Resetting: " + name, gameObject );
+		FFLogger.Log( "Resetting Response:" + name, gameObject );
 
 		if( gameObject.CompareTag( "Player" ) )
 			DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll );
@@ -348,6 +359,25 @@ public abstract class EntityController : MonoBehaviour
 		transitionCallTween = null;
 	}
 
+	protected void CheckEntityMomentum()
+	{
+		if( lowMomentumTimer >= MomentumTimeThreshold() )
+		{
+			FFLogger.Log( gameObject.name + " Entity lost momentum", gameObject );
+
+			momentumCheck = ExtensionMethods.EmptyMethod;
+			lowMomentumTimer = 0;
+
+			ActivateFullRagdoll();
+			ReassembleRagdoll();
+		}
+
+		if( topmostRigidbody.velocity.magnitude <= MomentumVelocityThreshold() )
+			lowMomentumTimer += Time.deltaTime;
+		else
+			lowMomentumTimer = 0;
+	}
+
 	private void Rotate( Vector3 inputDirection )
 	{
 		totalDeltaAngle += inputDirection.x * GameSettings.Instance.angularSpeed * Time.fixedDeltaTime;
@@ -368,6 +398,8 @@ public abstract class EntityController : MonoBehaviour
 	abstract protected float InputCofactor();
 	abstract protected float RigidbodyMass();
 	abstract protected float RigidbodyDrag();
+	abstract protected float MomentumTimeThreshold();
+	abstract protected float MomentumVelocityThreshold();
 	abstract protected void MoveViaPhysics( Vector3 inputDirection );
 
 	protected virtual void ClampVelocity()

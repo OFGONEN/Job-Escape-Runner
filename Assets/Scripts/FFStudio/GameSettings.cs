@@ -80,6 +80,13 @@ namespace FFStudio
             [ Tooltip( "Wait time for reseting the entity after triggering a fence" ) ]
 			public float resetWaitTime = 1f;
 
+			[ Tooltip( "If agent exceeds this time without having enough momentum level fails" ) ] 
+			public float lowMomentum_TimeThreshold = 1;
+
+            [ Tooltip( "Threshold value for momentum countdown to be count" ) ]
+			public float lowMomentum_Threshold = 0.2f;
+
+
 			public float waypointArrivalThreshold = 0.25f;
 			public float inputHorizontalCofactor = 1.0f;
 
