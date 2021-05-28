@@ -64,6 +64,8 @@ namespace FFStudio
 
 			playerRigidbodyReference.changeEvent += OnPlayerRigidbodyChange;
 			levelFinishLineReference.changeEvent += OnLevelFinishLineChange;
+
+			FFLogger.Log( "LevelManager OnEnable" );
 		}
 
         private void OnDisable()
@@ -118,6 +120,9 @@ namespace FFStudio
 			screenTapInputListener.response = StartChecks;
 			
 			entitiesRankCheck   = CheckEntityRanks;
+
+			levelFinishLine    = levelFinishLineReference.sharedValue as Transform;
+			playerFinishLineDistance = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
         }
 
         void LevelStartedResponse()
@@ -199,11 +204,6 @@ namespace FFStudio
 				levelFinishLine = null;
 				levelProgressCheck = ExtensionMethods.EmptyMethod;
 				entitiesRankCheck  = ExtensionMethods.EmptyMethod;
-			}
-            else 
-            {
-				levelFinishLine    = levelFinishLineReference.sharedValue as Transform;
-				playerFinishLineDistance = Vector3.Distance( levelFinishLine.position, playerRigidbody.position );
 			}
 		}
         

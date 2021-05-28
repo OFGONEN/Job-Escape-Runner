@@ -61,7 +61,10 @@ public class CameraManager : MonoBehaviour
 #region Implementation
 	void OnTargetRigidbodyChange()
 	{
-		followTarget_Transform = ( followTarget_Rigidbody.sharedValue as Rigidbody ).transform;
+		if(followTarget_Rigidbody.sharedValue == null)
+			followTarget_Transform = null;
+		else 
+			followTarget_Transform = ( followTarget_Rigidbody.sharedValue as Rigidbody ).transform;
 	}
 
 	void ClampHorizontally()
