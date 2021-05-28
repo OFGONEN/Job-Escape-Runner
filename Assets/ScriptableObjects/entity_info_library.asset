@@ -13,11 +13,45 @@ MonoBehaviour:
   m_Name: entity_info_library
   m_EditorClassIdentifier: 
   entityInfos:
-  - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
-    entityName: Omer
-  - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
-    entityName: Batin
-  - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
-    entityName: Burak
-  - entityFlag: {fileID: 21300000, guid: 013d4464d7afd601098d8116b665bba4, type: 3}
-    entityName: Yusuf
+  - entityFlag: {fileID: 6356632054987546715, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Adriel
+  - entityFlag: {fileID: -7858788262442410435, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Lucas
+  - entityFlag: {fileID: 2474233907157199686, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Hrant
+  - entityFlag: {fileID: -7531011346372572665, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: David
+  - entityFlag: {fileID: 6089401747053245849, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Yasemin
+  - entityFlag: {fileID: -4699548671627458655, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Maria
+  - entityFlag: {fileID: -8207172110540127640, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Gisele
+  - entityFlag: {fileID: -6158020157603826145, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Fuad
+  - entityFlag: {fileID: -7449558140616503163, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Ivan
+  - entityFlag: {fileID: -7449558140616503163, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Josip
+  - entityFlag: {fileID: 5389815266756453789, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Stjepan
+  - entityFlag: {fileID: 3454863560612208700, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Giorgos
+  - entityFlag: {fileID: -24397455177556957, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Ludvic
+  - entityFlag: {fileID: 4724920185416182895, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Iben
+  - entityFlag: {fileID: -4497219208250069360, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Peeter
+  - entityFlag: {fileID: -7874707236043112937, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Hanne
+  - entityFlag: {fileID: 6655825503154312046, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Claire
+  - entityFlag: {fileID: -7361853458126592370, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Shalva
+  - entityFlag: {fileID: 6588899061115312804, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Traude
+  - entityFlag: {fileID: -2147595794686029052, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Maya
+  - entityFlag: {fileID: -8922442547081164103, guid: 0cf0cc7818b7ee14eac7bb0fc66fb75a, type: 3}
+    entityName: Dimiter
