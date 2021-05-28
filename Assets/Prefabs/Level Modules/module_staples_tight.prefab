@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: obstacle_hammering_6
       objectReference: {fileID: 0}
+    - target: {fileID: 4392108199029592301, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
+      propertyPath: down_Delay
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
 --- !u!4 &692031638274076572 stripped
@@ -836,6 +840,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: obstacle_hammering_2
       objectReference: {fileID: 0}
+    - target: {fileID: 4392108199029592301, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
+      propertyPath: down_Delay
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
 --- !u!4 &692031637157900110 stripped
@@ -959,6 +967,10 @@ PrefabInstance:
     - target: {fileID: 4392108199029592300, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
       propertyPath: m_Name
       value: obstacle_hammering
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392108199029592301, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
+      propertyPath: down_Delay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e258a88006fd2c54781afb76d3010cb4, type: 3}
