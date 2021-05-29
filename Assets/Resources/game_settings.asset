@@ -29,7 +29,7 @@ MonoBehaviour:
   velocityClamp: 20
   camera_followingOffSet: 10
   camera_rotationSpeed: 5
-  camera_horizontalClamping: {x: -5, y: 5}
+  camera_horizontalClamping: {x: -7.5, y: 7.5}
   finishLineTransitionWaitTime: 1.5
   finishLineTransitionDuration: 1
   announceLevelFinishStateWaitTime: 0.5
