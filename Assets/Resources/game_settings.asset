@@ -20,7 +20,7 @@ MonoBehaviour:
   deadZoneThreshold: 2.5
   horizontalInputPercentage: 25
   inputAccelerationCofactorDuration: 0
-  inputHorizontalCofactor: 0.5
+  inputHorizontalCofactor: 0.75
   input_finger_ExprireTime: 0.1
   obstacle_bounciness: 0.5
   obstacle_rotating_forceToApply: 3000
