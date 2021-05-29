@@ -70,6 +70,7 @@ public abstract class EntityController : MonoBehaviour
 	private Tween moveTween;
 	private Tween rotationTween;
 	private Tween transitionCallTween;
+	private Tween reassembleTween;
 
 	/* Rank in the Race */
 	[ ReadOnly ] public float finishLineDistance;
@@ -102,28 +103,36 @@ public abstract class EntityController : MonoBehaviour
 		activateRagdollListener.OnDisable();
 		levelStartedListener   .OnDisable();
 
-		if(moveTween != null)
-		{
-			moveTween.Kill();
-			moveTween = null;
-		}
 
-		if(rotationTween != null)
-		{
-			rotationTween.Kill();
-			rotationTween = null;
-		}
-
-		if(transitionCallTween != null)
-		{
-			transitionCallTween.Kill();
-			transitionCallTween = null;
-		}
 	}
 
 	private void OnDestroy()
 	{
 		resetRagdollListener.OnDisable();
+
+		if( moveTween != null )
+		{
+			moveTween.Kill();
+			moveTween = null;
+		}
+
+		if( rotationTween != null )
+		{
+			rotationTween.Kill();
+			rotationTween = null;
+		}
+
+		if( transitionCallTween != null )
+		{
+			transitionCallTween.Kill();
+			transitionCallTween = null;
+		}
+
+		if( reassembleTween != null )
+		{
+			reassembleTween.Kill();
+			reassembleTween = null;
+		}
 	}
 
 	protected virtual void Awake()
@@ -181,7 +190,7 @@ public abstract class EntityController : MonoBehaviour
 	public void FinishLineCrossed()
 	{
 		transitionCallTween = DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, TransitionToPodium )
-		.OnKill( NullTransitionTween );
+		.OnComplete( NullTransitionTween );
 	}
 	#endregion
 
@@ -299,9 +308,9 @@ public abstract class EntityController : MonoBehaviour
 		FFLogger.Log( "Resetting Response:" + name, gameObject );
 
 		if( gameObject.CompareTag( "Player" ) )
-			DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll );
+			reassembleTween = DOVirtual.DelayedCall( GameSettings.Instance.player.resetWaitTime, ReassembleRagdoll ).OnComplete( NullReassembleRagdoll );
 		else if( gameObject.CompareTag( "Agent" ) )
-			DOVirtual.DelayedCall( GameSettings.Instance.aIAgent.resetWaitTime, ReassembleRagdoll );
+			reassembleTween = DOVirtual.DelayedCall( GameSettings.Instance.aIAgent.resetWaitTime, ReassembleRagdoll ).OnComplete( NullReassembleRagdoll );
 	}
 
 	private void GetTransformInfos()
@@ -330,17 +339,20 @@ public abstract class EntityController : MonoBehaviour
 				transitionRigidbody.isKinematic = true;
 				transitionRigidbody.useGravity = false;
 
-				transitionRigidbody.DOMove( target.position, GameSettings.Instance.finishLineDistanceThreshold )
-				.OnComplete( podiumTransitionDone )
-				.OnKill( NullMoveTween );
+				moveTween = transitionRigidbody.DOMove( target.position, GameSettings.Instance.finishLineDistanceThreshold )
+				.OnComplete( () =>
+				{
+					NullMoveTween();
+					podiumTransitionDone();
+				} );
 
-				transitionRigidbody.DORotate( target.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold )
-				.OnKill( NullRotationTween );
+				rotationTween = transitionRigidbody.DORotate( target.rotation.eulerAngles, GameSettings.Instance.finishLineDistanceThreshold )
+				.OnComplete( NullRotationTween );
 			}
 		}
 		else
 		{
-			DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, podiumTransitionDone );
+			reassembleTween = DOVirtual.DelayedCall( GameSettings.Instance.finishLineTransitionWaitTime, podiumTransitionDone ).OnComplete( NullReassembleRagdoll );
 		}
 	}
 
@@ -351,6 +363,7 @@ public abstract class EntityController : MonoBehaviour
 
 	private void NullMoveTween()
 	{
+		FFLogger.Log( "Nulled Move Tween: " + gameObject.name, gameObject );
 		moveTween = null;
 	}
 
@@ -358,6 +371,12 @@ public abstract class EntityController : MonoBehaviour
 	{
 		transitionCallTween = null;
 	}
+
+	private void NullReassembleRagdoll()
+	{
+		reassembleTween = null;
+	}
+
 
 	protected void CheckEntityMomentum()
 	{

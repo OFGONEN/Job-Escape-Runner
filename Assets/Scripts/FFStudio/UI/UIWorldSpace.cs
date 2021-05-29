@@ -53,7 +53,10 @@ public class UIWorldSpace : MonoBehaviour
 #region Implementation
 	void OnMainCameraChange()
 	{
-		mainCamera = mainCameraReference.sharedValue as Transform;
+		if(mainCameraReference.sharedValue == null)
+			mainCamera = null;
+		else 
+			mainCamera = mainCameraReference.sharedValue as Transform;
 	}
 #endregion
 }
