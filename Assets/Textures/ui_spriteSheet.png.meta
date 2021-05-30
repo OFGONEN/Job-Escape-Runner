@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: 1228206033716120068
     second: ui_loading_foreGround
+  - first:
+      213: 5518347441158632970
+    second: ui_spriteSheet_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -158,6 +161,48 @@ TextureImporter:
       bones: []
       spriteID: 40a04ae51e67b0110800000000000000
       internalID: 1228206033716120068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_spriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 589
+        width: 240
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc6f4034af4a9f6a0800000000000000
+      internalID: -6414914799439382836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_spriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 345
+        width: 240
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a063271a2cb159c40800000000000000
+      internalID: 5518347441158632970
       vertices: []
       indices: 
       edges: []
