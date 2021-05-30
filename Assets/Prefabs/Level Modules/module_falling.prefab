@@ -1211,6 +1211,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3458534227459590471, guid: 055c262206b62d5418b84a0b55b01e52, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
+    - target: {fileID: 3458534227588172332, guid: 055c262206b62d5418b84a0b55b01e52, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
+    - target: {fileID: 3458534228308794525, guid: 055c262206b62d5418b84a0b55b01e52, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 3993058569073455122, guid: 055c262206b62d5418b84a0b55b01e52, type: 3}
       propertyPath: m_LocalPosition.y
       value: 9.5
@@ -1241,6 +1253,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_9
@@ -1302,6 +1318,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_6
@@ -1434,6 +1454,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_10
@@ -1495,6 +1519,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_5
@@ -1556,6 +1584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_8
@@ -1617,6 +1649,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_7
@@ -1674,6 +1710,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4534843282935505022}
     m_Modifications:
+    - target: {fileID: 667806764372045516, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4611b25a2b5e98a46bbebae02407b71a, type: 2}
     - target: {fileID: 1283976300476514882, guid: 52c628bbbc6a82240a00321d58bfeccd, type: 3}
       propertyPath: m_Name
       value: obstacle_falling_piece_4
