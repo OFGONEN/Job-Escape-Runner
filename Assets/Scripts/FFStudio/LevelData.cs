@@ -10,5 +10,13 @@ namespace FFStudio
     {
         [Scene()]
 		public int sceneIndex;
-    }
+        
+        [ Foldout( "AI Agent" ) ]
+        public float horizontalWaypointOffset = 0.5f;
+
+		public float RandomHorizontalWaypointOffset()
+        {
+			return Random.Range( -horizontalWaypointOffset, +horizontalWaypointOffset );
+		}
+	}
 }

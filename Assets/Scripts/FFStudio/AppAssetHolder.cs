@@ -8,7 +8,30 @@ public class AppAssetHolder : MonoBehaviour
 {
 
 	#region Fields
+	[Header( "Event Listeners" )]
+	public MultipleEventListenerDelegateResponse levelChangesListener;
+
 	public GameSettings gameSettings;
 	public CurrentLevelData currentLevelData;
+	public EntityInfoLibrary entityInfoLibrary;
+	#endregion
+
+	#region UnityAPI
+	private void OnEnable()
+	{
+		levelChangesListener.OnEnable();
+	}
+
+	private void OnDisable()
+	{
+		levelChangesListener.OnDisable();
+	}
+
+	private void Awake()
+	{
+		entityInfoLibrary.ResetRemainingInfo();
+
+		levelChangesListener.response = entityInfoLibrary.ResetRemainingInfo;
+	}
 	#endregion
 }

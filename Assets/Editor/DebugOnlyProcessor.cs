@@ -48,7 +48,11 @@ public class DebugOnlyProcessor : IProcessSceneWithReport
 
                 foreach (var child in children)
                 {
-                    if (child.CompareTag(debugOnlyTag)) Object.DestroyImmediate(child.gameObject);
+                    if (child.CompareTag(debugOnlyTag)) 
+                    {
+                        Debug.Log( "DebugOnly name:" + child.gameObject.name );
+						Object.DestroyImmediate(child.gameObject);
+                    }
                 }
             }
         }

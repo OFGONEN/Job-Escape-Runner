@@ -5,20 +5,21 @@ TagManager:
   serializedVersion: 2
   tags:
   - DebugOnly
+  - Agent
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
+  - Post Process
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Entity
+  - Chair
+  - Ragdoll
+  - Obstacle
+  - OnlyCollideWithEntity
   - 
   - 
   - 
