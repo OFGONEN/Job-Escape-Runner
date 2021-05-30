@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elephantEventListener:
-    gameEvent: {fileID: 0}
+    gameEvent: {fileID: 11400000, guid: 33ccf5f609258ea46b63b78483df10f5, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
